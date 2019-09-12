@@ -7,7 +7,7 @@ public class POOcaixa {
     Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
-        ContaBancaria caixa = new ContaBancaria();
+        ContaBancaria caixa = new ContaBancaria(100);
         for (int i = 0; i < 3; i++) {
 
             Scanner sc = new Scanner(System.in);
@@ -23,9 +23,9 @@ public class POOcaixa {
             } else {
                 caixa.depositar(vlacao);
             }
-            System.out.println("quantidade em caixa "+caixa.quantiaDinheiro+".");
-            System.out.println("quantidade de saques "+caixa.numeroSaques+".");
-            System.out.println("quantidade de depositos "+caixa.numeroDepositos+".");
+            System.out.println("quantidade em caixa "+caixa.getQuantiaDinheiro()+".");
+            System.out.println("quantidade de saques "+caixa.getNumeroSaques()+".");
+            System.out.println("quantidade de depositos "+caixa.getNumeroDepositos()+".");
         }
     }
 

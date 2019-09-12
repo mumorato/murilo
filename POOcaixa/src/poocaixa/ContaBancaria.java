@@ -1,18 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package poocaixa;
 
-/**
- *
- * @author macbook
- */
+package poocaixa;
 public class ContaBancaria {
-    int quantiaDinheiro;
-    int numeroSaques;
-    int numeroDepositos;
+    private int quantiaDinheiro;
+    private int numeroSaques;
+    private int numeroDepositos;
+
+
+    public ContaBancaria(int quantiaDinheiro) {
+        this.quantiaDinheiro = quantiaDinheiro;
+    }
+    
+    public int getQuantiaDinheiro() {
+        return quantiaDinheiro;
+    }
+
+
+    public int getNumeroSaques() {
+        return numeroSaques;
+    }
+
+
+    public int getNumeroDepositos() {
+        return numeroDepositos;
+    }
+
     
     void sacar(int vlinserido){
     quantiaDinheiro -=  vlinserido;
