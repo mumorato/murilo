@@ -9,6 +9,11 @@ public class Empresa {
     private String bairro;
     private String numero;
 
+    
+    
+    
+    
+    
     public int getId() {
         return id;
     }
