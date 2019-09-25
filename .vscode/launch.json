@@ -1,0 +1,25 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - hello",
+            "request": "launch",
+            "mainClass": "hello",
+            "projectName": "murilo_4d949ef9"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - TesteCarro",
+            "request": "launch",
+            "mainClass": "TesteCarro",
+            "projectName": "murilo_4d949ef9"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Teste",
+            "request": "launch",
+            "mainClass": "Teste",
+            "projectName": "murilo_4d949ef9"
+        }
+    ]
+}
