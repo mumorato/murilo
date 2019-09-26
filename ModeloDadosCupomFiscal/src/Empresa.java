@@ -1,6 +1,8 @@
 
+import java.util.ArrayList;
+
 public class Empresa {
-    
+
     private int id;
     private String nome;
     private String cnpj;
@@ -8,11 +10,23 @@ public class Empresa {
     private String rua;
     private String bairro;
     private String numero;
+    private ArrayList <Venda> vendas;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    public ArrayList<Venda> getVendas() {
+        return vendas;
+    }
 
-    
-    
-    
-    
+    public void setVendas(ArrayList<Venda> vendas) {
+        this.vendas = vendas;
+    }
     
     public int getId() {
         return id;
