@@ -21,13 +21,10 @@ public class Dados {
 
         try {
 
-            Connection c = DriverManager.getConnection("jdbc:sqlite:LPexercicio1.db");
-            Statement stm = c.createStatement();
-
-            //Lendo registros
             String sql = "SELECT * FROM estado";
-            PreparedStatement pstm = c.prepareStatement(sql);
-            ResultSet rs = pstm.executeQuery();
+            Conexao conexao = new Conexao();
+            ResultSet rs = conexao.executarConsulta(sql);
+
             while (rs.next()) {
 //                cbEstado.addItem(rs.getString("nome"));
                 Estado e = new Estado();
@@ -35,16 +32,12 @@ public class Dados {
                 e.setNome(rs.getString("nome"));
                 e.setSigla(rs.getString("sigla"));
                 lista.add(e);
-
             }
-            c.close();
 
         } catch (SQLException ex) {
             Logger.getLogger(Dados.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return lista;
-
     }
 
     public List<Cidade> getCidades(int idEstado) {
@@ -53,17 +46,18 @@ public class Dados {
         listaCid = new ArrayList();
 
         try {
-            //conecta no banco
-            Connection c = DriverManager.getConnection("jdbc:sqlite:LPexercicio1.db");
-            Statement stm = c.createStatement();
+            String sql = "SELECT * FROM estado";
+            Conexao conexao = new Conexao();
+            ResultSet rs = conexao.executarConsulta(sql);
+
 
             //executa sql
             String sql = "SELECT * FROM cidade WHERE estado_id = ";
             sql += String.valueOf(idEstado);
 
-            //roda o sql
-            PreparedStatement pstm = c.prepareStatement(sql);
-            ResultSet rs = pstm.executeQuery();
+//            //roda o sql
+//            PreparedStatement pstm = c.prepareStatement(sql);
+//            ResultSet rs = pstm.executeQuery();
 
             while (rs.next()) {
                 Cidade cid = new Cidade();
@@ -71,7 +65,7 @@ public class Dados {
                 cid.setNome(rs.getString("nome"));
                 listaCid.add(cid);
             }
-            c.close();
+            //c.close();
 
         } catch (SQLException ex) {
             Logger.getLogger(Dados.class.getName()).log(Level.SEVERE, null, ex);
