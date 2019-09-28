@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.*;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,25 +29,16 @@ public class cidadeEstado extends javax.swing.JFrame {
      */
     public cidadeEstado() {
         initComponents();
-
+        
         cbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));
-        try {
-
-            Connection c = DriverManager.getConnection("jdbc:sqlite:LPexercicio1.db");
-            Statement stm = c.createStatement();
-
-            //Lendo registros
-            String sql = "SELECT * FROM estado";
-            PreparedStatement pstm = c.prepareStatement(sql);
-            ResultSet rs = pstm.executeQuery();
-            while (rs.next()) {
-                cbEstado.addItem(rs.getString("nome"));
-            }
-            c.close();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(cidadeEstado.class.getName()).log(Level.SEVERE, null, ex);
+        
+        Dados dados = new Dados();
+       
+        List<Estado> listaEstados = dados.getEstados();
+        for (int i = 0; i < listaEstados.size(); i++) {
+            cbEstado.addItem(listaEstados.get(i).getNome());
         }
+        
     }
 
     /**
