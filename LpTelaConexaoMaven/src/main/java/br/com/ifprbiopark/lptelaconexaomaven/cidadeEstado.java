@@ -39,6 +39,7 @@ public class cidadeEstado extends javax.swing.JFrame {
             cbEstado.addItem(listaEstados.get(i).getNome());
         }
         
+        
     }
 
     /**
@@ -117,26 +118,12 @@ public class cidadeEstado extends javax.swing.JFrame {
     private void cbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEstadoActionPerformed
         
         cbCidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));
-        try {
-            //conecta no banco
-            Connection c = DriverManager.getConnection("jdbc:sqlite:LPexercicio1.db");
-            Statement stm = c.createStatement();
-
-            //executa sql
-            String sql = "SELECT * FROM cidade WHERE estado_id = ";
-            sql += String.valueOf(cbEstado.getSelectedIndex());
-
-            //roda o sql
-            PreparedStatement pstm = c.prepareStatement(sql);
-            ResultSet rs = pstm.executeQuery();
-
-            while (rs.next()) {
-                cbCidade.addItem(rs.getString("nome"));
-            }
-            c.close();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(cidadeEstado.class.getName()).log(Level.SEVERE, null, ex);
+        
+        Dados dados = new Dados();
+        
+        List<Cidade> listaCidades = dados.getCidades(cbEstado.getSelectedIndex());
+        for (int i = 0; i < listaCidades.size(); i++) {
+            cbCidade.addItem(listaCidades.get(i).getNome());
         }
     }//GEN-LAST:event_cbEstadoActionPerformed
 
