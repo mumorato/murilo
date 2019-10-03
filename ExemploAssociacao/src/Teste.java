@@ -1,4 +1,3 @@
-import jdk.internal.vm.PostVMInitHook;
 
 public class Teste {
     public static void main(String[] args) {

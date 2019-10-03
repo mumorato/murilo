@@ -1,4 +1,4 @@
-
+package br.com.ifprbiopark.sistfinanceiro;
 public class ProgramaTeste {
   
     public static void main(String[] args) {

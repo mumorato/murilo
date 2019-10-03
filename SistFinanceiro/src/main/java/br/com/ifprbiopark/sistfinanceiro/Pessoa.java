@@ -1,4 +1,4 @@
-
+package br.com.ifprbiopark.sistfinanceiro;
 public class Pessoa {
     private int id;
     private String nome;

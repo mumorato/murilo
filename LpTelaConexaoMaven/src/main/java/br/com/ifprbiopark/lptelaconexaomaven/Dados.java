@@ -46,13 +46,13 @@ public class Dados {
         listaCid = new ArrayList();
 
         try {
-            String sql = "SELECT * FROM estado";
+            String sql = "SELECT * FROM cidade";
             Conexao conexao = new Conexao();
             ResultSet rs = conexao.executarConsulta(sql);
 
 
             //executa sql
-            String sql = "SELECT * FROM cidade WHERE estado_id = ";
+            sql = "SELECT * FROM cidade WHERE cidade_id = ";
             sql += String.valueOf(idEstado);
 
 //            //roda o sql

@@ -1,4 +1,4 @@
-
+package br.com.ifprbiopark.sistfinanceiro;
 public class SqlCodes {
  /*
     // sql codes para criar tabelas

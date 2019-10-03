@@ -1,4 +1,4 @@
-
+package br.com.ifprbiopark.sistfinanceiro;
 public class Cidade {
     private int id;
     private String nome;
