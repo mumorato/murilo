@@ -18,11 +18,10 @@ public class Dados {
 
         List<Estado> lista;
         lista = new ArrayList();
-
-        try {
-
+        Conexao conexao = Conexao.getInstance();
+        try {                                                                     //trycath: tenta
             String sql = "SELECT * FROM estado";
-            Conexao conexao = Conexao.getInstance();
+
             ResultSet rs = conexao.executarConsulta(sql);
 
             while (rs.next()) {
@@ -34,9 +33,12 @@ public class Dados {
                 lista.add(e);
             }
 
-        } catch (SQLException ex) {
+        } catch (SQLException ex) {                                               //se der erro executa catch
             Logger.getLogger(Dados.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {                                                                //por fim executa (sempre)
+            conexao.close();
         }
+
         return lista;
     }
 

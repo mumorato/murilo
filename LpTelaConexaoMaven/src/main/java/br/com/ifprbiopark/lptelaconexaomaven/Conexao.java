@@ -11,19 +11,19 @@ import java.util.logging.Logger;
 
 public class Conexao {
 
-    private static Conexao instanciaConexao;
+    Connection c;
+    
+    private static Conexao instanciaConexao; // instancia para implementa SingleTon
 
     public ResultSet executarConsulta(String sql) {
 
         try {
 
-            Connection c = DriverManager.getConnection("jdbc:sqlite:LPexercicio1.db");
+            c = DriverManager.getConnection("jdbc:sqlite:LPexercicio1.db");
             Statement stm = c.createStatement();
 
             PreparedStatement pstm = c.prepareStatement(sql);
             ResultSet rs = pstm.executeQuery();
-
-            //  c.close();
             return rs;
 
         } catch (SQLException ex) {
@@ -35,16 +35,23 @@ public class Conexao {
     }
 
     private Conexao() { //fazendo método construtor (método com mesmo nome da classe)
-        
-        
+
     }
-    public static Conexao getInstance(){
-        if (instanciaConexao == null){
+
+    public static Conexao getInstance() { // metodo implementas singleTon
+        if (instanciaConexao == null) {
             instanciaConexao = new Conexao();
         }
-        
+
         return instanciaConexao;
     }
-    
+
+    public void close() {
+        try {
+            c.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 }
