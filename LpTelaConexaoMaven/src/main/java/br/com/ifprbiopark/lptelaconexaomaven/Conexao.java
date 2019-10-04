@@ -1,4 +1,3 @@
-
 package br.com.ifprbiopark.lptelaconexaomaven;
 
 import java.sql.Connection;
@@ -10,31 +9,42 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class Conexao {
- public ResultSet executarConsulta (String sql){
-     
-     try {
+
+    private static Conexao instanciaConexao;
+
+    public ResultSet executarConsulta(String sql) {
+
+        try {
 
             Connection c = DriverManager.getConnection("jdbc:sqlite:LPexercicio1.db");
             Statement stm = c.createStatement();
 
             PreparedStatement pstm = c.prepareStatement(sql);
             ResultSet rs = pstm.executeQuery();
-            
-          //  c.close();
+
+            //  c.close();
             return rs;
 
         } catch (SQLException ex) {
             Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
         }
-     
-     
-     
-     return null;
-     
- }
-         
-         
-         
+
+        return null;
+
+    }
+
+    private Conexao() { //fazendo método construtor (método com mesmo nome da classe)
+        
+        
+    }
+    public static Conexao getInstance(){
+        if (instanciaConexao == null){
+            instanciaConexao = new Conexao();
+        }
+        
+        return instanciaConexao;
+    }
+    
+
 }

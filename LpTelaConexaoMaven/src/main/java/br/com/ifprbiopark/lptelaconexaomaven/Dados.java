@@ -22,7 +22,7 @@ public class Dados {
         try {
 
             String sql = "SELECT * FROM estado";
-            Conexao conexao = new Conexao();
+            Conexao conexao = Conexao.getInstance();
             ResultSet rs = conexao.executarConsulta(sql);
 
             while (rs.next()) {
@@ -46,19 +46,15 @@ public class Dados {
         listaCid = new ArrayList();
 
         try {
-            String sql = "SELECT * FROM cidade";
-            Conexao conexao = new Conexao();
+            String sql = "SELECT * FROM cidade WHERE estado_id = ";
+            sql += String.valueOf(idEstado);
+            Conexao conexao = Conexao.getInstance();
             ResultSet rs = conexao.executarConsulta(sql);
 
-
             //executa sql
-            sql = "SELECT * FROM cidade WHERE cidade_id = ";
-            sql += String.valueOf(idEstado);
-
 //            //roda o sql
 //            PreparedStatement pstm = c.prepareStatement(sql);
 //            ResultSet rs = pstm.executeQuery();
-
             while (rs.next()) {
                 Cidade cid = new Cidade();
                 cid.setId(rs.getInt("id"));
