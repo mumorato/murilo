@@ -1,4 +1,4 @@
-package br.com.ifprbiopark.lptelaconexaomaven;
+package dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

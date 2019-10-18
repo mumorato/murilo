@@ -1,12 +1,15 @@
 
-package br.com.ifprbiopark.lptelaconexaomaven;
+package model;
 
-    
-public class Cidade {
+
+public class Estado {
     
     private int id;
     private String nome;
+    private String sigla;
 
+    
+    
     
     
     
@@ -25,6 +28,16 @@ public class Cidade {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    public String getSigla() {
+        return sigla;
+    }
+
+    public void setSigla(String sigla) {
+        this.sigla = sigla;
+    }
     
+    
+  
     
 }

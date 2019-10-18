@@ -1,5 +1,8 @@
 package br.com.ifprbiopark.sistfinanceiro;
 
+import model.Estado;
+import model.Cidade;
+
 public class ProgramaTeste {
 
     public static void main(String[] args) {

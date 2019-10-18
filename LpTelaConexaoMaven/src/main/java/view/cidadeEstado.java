@@ -3,8 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.ifprbiopark.lptelaconexaomaven;
+package view;
 
+import control.CidadeEstadoController;
+import dao.Dados;
+import model.Estado;
+import model.Cidade;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -32,9 +36,10 @@ public class cidadeEstado extends javax.swing.JFrame {
         
         cbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));
         
-        Dados dados = new Dados();
-       
-        List<Estado> listaEstados = dados.getEstados();
+        //Dados dados = new Dados();
+        CidadeEstadoController controlador = new CidadeEstadoController();
+        
+        List<Estado> listaEstados = controlador.getEstados();
         for (int i = 0; i < listaEstados.size(); i++) {
             cbEstado.addItem(listaEstados.get(i).getNome());
         }
@@ -60,7 +65,7 @@ public class cidadeEstado extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         cbCidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbCidade.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cidade"));
+        cbCidade.setBorder(javax.swing.BorderFactory.createTitledBorder("Cidade"));
         cbCidade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbCidadeActionPerformed(evt);
@@ -119,9 +124,11 @@ public class cidadeEstado extends javax.swing.JFrame {
         
         cbCidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));
         
-        Dados dados = new Dados();
         
-        List<Cidade> listaCidades = dados.getCidades(cbEstado.getSelectedIndex());
+        //Dados dados = new Dados();
+        CidadeEstadoController controlador = new CidadeEstadoController();
+        
+        List<Cidade> listaCidades = controlador.getCidades(cbEstado.getSelectedIndex());
         for (int i = 0; i < listaCidades.size(); i++) {
             cbCidade.addItem(listaCidades.get(i).getNome());
         }
@@ -131,45 +138,7 @@ public class cidadeEstado extends javax.swing.JFrame {
 
     }//GEN-LAST:event_cbCidadeActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(cidadeEstado.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(cidadeEstado.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(cidadeEstado.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(cidadeEstado.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new cidadeEstado().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbCidade;

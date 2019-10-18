@@ -1,16 +1,20 @@
-package br.com.ifprbiopark.sistfinanceiro;
-public class Cidade {
+package model;
+public class Estado {
+ 
     private int id;
     private String nome;
+    private String sigla;
+    
 
-    private Estado estado;
 
 
 
 
     
+
 // GETTERS E SETTERS---------------
-    
+
+
     /**
      * @return int return the id
      */
@@ -40,17 +44,17 @@ public class Cidade {
     }
 
     /**
-     * @return Estado return the estado
+     * @return String return the sigla
      */
-    public Estado getEstado() {
-        return estado;
+    public String getSigla() {
+        return sigla;
     }
 
     /**
-     * @param estado the estado to set
+     * @param sigla the sigla to set
      */
-    public void setEstado(Estado estado) {
-        this.estado = estado;
+    public void setSigla(String sigla) {
+        this.sigla = sigla;
     }
 
 }

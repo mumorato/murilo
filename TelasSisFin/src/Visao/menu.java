@@ -18,102 +18,129 @@ public class menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel3 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        pnlFundo = new javax.swing.JPanel();
+        pnlInicio = new javax.swing.JPanel();
+        lbIcon1Select = new javax.swing.JLabel();
+        pnlMenuLateral = new javax.swing.JPanel();
+        pnlAreaUtilBG = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1150, 700));
         setResizable(false);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                jLabel2MouseMoved(evt);
-            }
-        });
-        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel2MouseClicked(evt);
-            }
+        pnlFundo.setPreferredSize(new java.awt.Dimension(1150, 700));
+        pnlFundo.setLayout(new java.awt.CardLayout());
+
+        pnlInicio.setPreferredSize(new java.awt.Dimension(900, 700));
+
+        lbIcon1Select.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lbIcon1Select.setPreferredSize(new java.awt.Dimension(211, 243));
+        lbIcon1Select.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel2MouseEntered(evt);
+                lbIcon1SelectMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel2MouseExited(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jLabel2MouseReleased(evt);
+                lbIcon1SelectMouseExited(evt);
             }
         });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Desktop 1150x700.jpg"))); // NOI18N
+        pnlMenuLateral.setBackground(new java.awt.Color(255, 255, 255));
+        pnlMenuLateral.setPreferredSize(new java.awt.Dimension(1150, 700));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(332, 332, 332)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(648, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+        pnlAreaUtilBG.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/IconsBGDir.jpg"))); // NOI18N
+
+        javax.swing.GroupLayout pnlAreaUtilBGLayout = new javax.swing.GroupLayout(pnlAreaUtilBG);
+        pnlAreaUtilBG.setLayout(pnlAreaUtilBGLayout);
+        pnlAreaUtilBGLayout.setHorizontalGroup(
+            pnlAreaUtilBGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAreaUtilBGLayout.createSequentialGroup()
+                .addContainerGap(112, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(109, 109, 109))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(188, 188, 188)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(332, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+        pnlAreaUtilBGLayout.setVerticalGroup(
+            pnlAreaUtilBGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAreaUtilBGLayout.createSequentialGroup()
+                .addContainerGap(103, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(101, 101, 101))
         );
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 0, -1));
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/menuLateral.jpg"))); // NOI18N
+
+        javax.swing.GroupLayout pnlMenuLateralLayout = new javax.swing.GroupLayout(pnlMenuLateral);
+        pnlMenuLateral.setLayout(pnlMenuLateralLayout);
+        pnlMenuLateralLayout.setHorizontalGroup(
+            pnlMenuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMenuLateralLayout.createSequentialGroup()
+                .addComponent(jLabel4)
+                .addGap(0, 893, Short.MAX_VALUE))
+            .addGroup(pnlMenuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMenuLateralLayout.createSequentialGroup()
+                    .addGap(0, 256, Short.MAX_VALUE)
+                    .addComponent(pnlAreaUtilBG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+        pnlMenuLateralLayout.setVerticalGroup(
+            pnlMenuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMenuLateralLayout.createSequentialGroup()
+                .addComponent(jLabel4)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(pnlMenuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlMenuLateralLayout.createSequentialGroup()
+                    .addComponent(pnlAreaUtilBG, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
+
+        javax.swing.GroupLayout pnlInicioLayout = new javax.swing.GroupLayout(pnlInicio);
+        pnlInicio.setLayout(pnlInicioLayout);
+        pnlInicioLayout.setHorizontalGroup(
+            pnlInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlInicioLayout.createSequentialGroup()
+                .addGap(378, 378, 378)
+                .addComponent(lbIcon1Select, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(561, Short.MAX_VALUE))
+            .addGroup(pnlInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(pnlMenuLateral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnlInicioLayout.setVerticalGroup(
+            pnlInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlInicioLayout.createSequentialGroup()
+                .addGap(101, 101, 101)
+                .addComponent(lbIcon1Select, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(356, Short.MAX_VALUE))
+            .addGroup(pnlInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(pnlMenuLateral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pnlFundo.add(pnlInicio, "card3");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnlFundo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnlFundo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel2MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseMoved
-//        System.out.println("passou");        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jLabel2MouseMoved
+    private void lbIcon1SelectMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbIcon1SelectMouseEntered
+        lbIcon1Select.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon1Select.png"))); // NOI18N
+        lbIcon1Select.setPreferredSize(new java.awt.Dimension(211, 243));        // TODO add your handling code here:
+    }//GEN-LAST:event_lbIcon1SelectMouseEntered
 
-    private void jLabel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseEntered
-        // TODO add your handling code here:
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Visao/btIcon1MO.png")));
-    }//GEN-LAST:event_jLabel2MouseEntered
-
-    private void jLabel2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseExited
-        // TODO add your handling code here:
-         jLabel2.setIcon(null);
-    }//GEN-LAST:event_jLabel2MouseExited
-
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-      
-       
-       
-    }//GEN-LAST:event_jLabel2MouseClicked
-
-    private void jLabel2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseReleased
-        // TODO add your handling code here:
-          jPanel3.removeAll();
-        jPanel3.repaint();
-        jPanel3.revalidate();
-        System.out.println("FOI");
-//        jPanel3.add(jPanel2);
-//        jPanel3.repaint();
-//        jPanel3.revalidate();
-    }//GEN-LAST:event_jLabel2MouseReleased
+    private void lbIcon1SelectMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbIcon1SelectMouseExited
+    lbIcon1Select.setIcon(null); // NOI18N
+        lbIcon1Select.setPreferredSize(new java.awt.Dimension(211, 243));     // TODO add your handling code here:
+    }//GEN-LAST:event_lbIcon1SelectMouseExited
 
     /**
      * @param args the command line arguments
@@ -152,7 +179,11 @@ public class menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel lbIcon1Select;
+    private javax.swing.JPanel pnlAreaUtilBG;
+    private javax.swing.JPanel pnlFundo;
+    private javax.swing.JPanel pnlInicio;
+    private javax.swing.JPanel pnlMenuLateral;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,5 +1,7 @@
-package br.com.ifprbiopark.lptelaconexaomaven;
+package dao;
 
+import model.Estado;
+import model.Cidade;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
