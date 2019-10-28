@@ -9,7 +9,7 @@ public class Titulo {
    private Date dataVencimento;
    private int valor;
    private int pendente;
-   private int registroAtivo;
+   private boolean registroAtivo;
 //objetos
    private TipoTitulo tipoTitulo;
    private Pessoa pessoa;
@@ -71,11 +71,11 @@ public class Titulo {
         this.pendente = pendente;
     }
 
-    public int getRegistroAtivo() {
+    public boolean getRegistroAtivo() {
         return registroAtivo;
     }
 
-    public void setRegistroAtivo(int registroAtivo) {
+    public void setRegistroAtivo(boolean registroAtivo) {
         this.registroAtivo = registroAtivo;
     }
 

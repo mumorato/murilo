@@ -27,7 +27,7 @@ public class Dados {
             ResultSet rs = conexao.executarConsulta(sql);
 
             while (rs.next()) {
-//                cbEstado.addItem(rs.getString("nome"));
+//              cbEstado.addItem(rs.getString("nome"));
                 Estado e = new Estado();
                 e.setId(rs.getInt("id"));
                 e.setNome(rs.getString("nome"));
@@ -37,7 +37,7 @@ public class Dados {
 
         } catch (SQLException ex) {                                               //se der erro executa catch
             Logger.getLogger(Dados.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {                                                                //por fim executa (sempre)
+        } finally {                                                               //por fim executa (sempre)
             conexao.close();
         }
 
@@ -55,8 +55,8 @@ public class Dados {
             Conexao conexao = Conexao.getInstance();
             ResultSet rs = conexao.executarConsulta(sql);
 
-            //executa sql
-//            //roda o sql
+//            executa sql
+//            roda o sql
 //            PreparedStatement pstm = c.prepareStatement(sql);
 //            ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
@@ -65,7 +65,7 @@ public class Dados {
                 cid.setNome(rs.getString("nome"));
                 listaCid.add(cid);
             }
-            //c.close();
+//            c.close();
 
         } catch (SQLException ex) {
             Logger.getLogger(Dados.class.getName()).log(Level.SEVERE, null, ex);

@@ -13,7 +13,7 @@ public class Pessoa {
     private int enderecoNum;
     private int cliente;
     private int fornecedor;
-    private int registroAtivo;
+    private boolean registroAtivo;
 
     private Cidade cidade;
 
@@ -163,14 +163,14 @@ public class Pessoa {
     /**
      * @return int return the registroAtivo
      */
-    public int getRegistroAtivo() {
+    public boolean getRegistroAtivo() {
         return registroAtivo;
     }
 
     /**
      * @param registroAtivo the registroAtivo to set
      */
-    public void setRegistroAtivo(int registroAtivo) {
+    public void setRegistroAtivo(boolean registroAtivo) {
         this.registroAtivo = registroAtivo;
     }
 

@@ -3,7 +3,7 @@ public class Categoria {
 
  private int id;
  private String nome;
- private int registroAtivo;
+ private boolean registroAtivo;
 
  
  
@@ -24,11 +24,11 @@ public class Categoria {
         this.nome = nome;
     }
 
-    public int getRegistroAtivo() {
+    public boolean getRegistroAtivo() {
         return registroAtivo;
     }
 
-    public void setRegistroAtivo(int registroAtivo) {
+    public void setRegistroAtivo(boolean registroAtivo) {
         this.registroAtivo = registroAtivo;
     }
     
