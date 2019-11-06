@@ -1,17 +1,29 @@
 package Visao;
 
 import java.awt.Color;
+import java.awt.Toolkit;
 import javax.swing.JFrame;
 
 public class menu extends javax.swing.JFrame {
 
-    TelaCategorias cadastroCategorias;
+    TelaTitulos cadastroTitulos;
 
     public menu() {
         initComponents();
-//      setBackground(new Color(0,0,0,0));
-        cadastroCategorias = null;
+        cadastroTitulos = null;
 
+    }
+
+    private void telasPraFrente() {
+
+        if (cadastroTitulos != null) {
+            if (cadastroTitulos.estaFechada()) {
+                cadastroTitulos = null;
+            } else {
+                cadastroTitulos.setVisible(true);
+                Toolkit.getDefaultToolkit().beep();
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -25,6 +37,12 @@ public class menu extends javax.swing.JFrame {
         lbIcon3Select = new javax.swing.JLabel();
         lbIcon4Select = new javax.swing.JLabel();
         lbIcon5Select = new javax.swing.JLabel();
+        menuPaineisSelect = new javax.swing.JLabel();
+        menuLancamentosSelect1 = new javax.swing.JLabel();
+        menuAgendamentosSelect = new javax.swing.JLabel();
+        menuCadastroSelect = new javax.swing.JLabel();
+        menuCategoriaSelect = new javax.swing.JLabel();
+        menuTitulosSelect1 = new javax.swing.JLabel();
         pnlMenuLateral = new javax.swing.JPanel();
         pnlAreaUtilBG = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -45,6 +63,11 @@ public class menu extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                formMousePressed(evt);
+            }
+        });
 
         pnlFundo.setPreferredSize(new java.awt.Dimension(1150, 700));
         pnlFundo.setLayout(new java.awt.CardLayout());
@@ -109,6 +132,66 @@ public class menu extends javax.swing.JFrame {
             }
         });
 
+        menuPaineisSelect.setPreferredSize(new java.awt.Dimension(242, 44));
+        menuPaineisSelect.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                menuPaineisSelectMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                menuPaineisSelectMouseExited(evt);
+            }
+        });
+
+        menuLancamentosSelect1.setPreferredSize(new java.awt.Dimension(242, 44));
+        menuLancamentosSelect1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                menuLancamentosSelect1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                menuLancamentosSelect1MouseExited(evt);
+            }
+        });
+
+        menuAgendamentosSelect.setPreferredSize(new java.awt.Dimension(242, 44));
+        menuAgendamentosSelect.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                menuAgendamentosSelectMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                menuAgendamentosSelectMouseExited(evt);
+            }
+        });
+
+        menuCadastroSelect.setPreferredSize(new java.awt.Dimension(242, 44));
+        menuCadastroSelect.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                menuCadastroSelectMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                menuCadastroSelectMouseExited(evt);
+            }
+        });
+
+        menuCategoriaSelect.setPreferredSize(new java.awt.Dimension(242, 44));
+        menuCategoriaSelect.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                menuCategoriaSelectMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                menuCategoriaSelectMouseExited(evt);
+            }
+        });
+
+        menuTitulosSelect1.setPreferredSize(new java.awt.Dimension(242, 44));
+        menuTitulosSelect1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                menuTitulosSelect1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                menuTitulosSelect1MouseExited(evt);
+            }
+        });
+
         pnlMenuLateral.setBackground(new java.awt.Color(255, 255, 255));
         pnlMenuLateral.setPreferredSize(new java.awt.Dimension(1150, 700));
 
@@ -141,7 +224,7 @@ public class menu extends javax.swing.JFrame {
             pnlMenuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMenuLateralLayout.createSequentialGroup()
                 .addComponent(jLabel4)
-                .addGap(0, 784, Short.MAX_VALUE))
+                .addGap(0, 893, Short.MAX_VALUE))
             .addGroup(pnlMenuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMenuLateralLayout.createSequentialGroup()
                     .addGap(0, 253, Short.MAX_VALUE)
@@ -163,17 +246,25 @@ public class menu extends javax.swing.JFrame {
         pnlInicioLayout.setHorizontalGroup(
             pnlInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlInicioLayout.createSequentialGroup()
-                .addGap(378, 378, 378)
-                .addGroup(pnlInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lbIcon1Select, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbIcon4Select, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addGroup(pnlInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(menuCadastroSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(menuPaineisSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(menuLancamentosSelect1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(menuAgendamentosSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(menuCategoriaSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(menuTitulosSelect1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
+                .addGroup(pnlInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbIcon4Select, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbIcon1Select, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addGroup(pnlInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lbIcon2Select, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbIcon5Select, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lbIcon3Select, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(115, Short.MAX_VALUE))
             .addGroup(pnlInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(pnlMenuLateral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -183,23 +274,37 @@ public class menu extends javax.swing.JFrame {
                 .addGap(101, 101, 101)
                 .addGroup(pnlInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlInicioLayout.createSequentialGroup()
-                        .addComponent(lbIcon1Select, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(110, 110, 110)
+                        .addComponent(menuPaineisSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbIcon4Select, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(menuLancamentosSelect1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(menuAgendamentosSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(menuCadastroSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(menuCategoriaSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(menuTitulosSelect1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlInicioLayout.createSequentialGroup()
                         .addGroup(pnlInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbIcon2Select, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbIcon3Select, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbIcon5Select, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lbIcon5Select, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlInicioLayout.createSequentialGroup()
+                        .addComponent(lbIcon1Select, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbIcon4Select, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(107, Short.MAX_VALUE))
             .addGroup(pnlInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(pnlMenuLateral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(pnlMenuLateral, javax.swing.GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE))
         );
 
         pnlFundo.add(pnlInicio, "card3");
 
         pnlFrame.setBackground(new java.awt.Color(255, 255, 255));
+        pnlFrame.setPreferredSize(new java.awt.Dimension(1150, 704));
 
         pnlMenuLateral1.setBackground(new java.awt.Color(255, 255, 255));
         pnlMenuLateral1.setPreferredSize(new java.awt.Dimension(1150, 700));
@@ -274,10 +379,11 @@ public class menu extends javax.swing.JFrame {
                     .addComponent(tfSacado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfCedente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(pnlAreaUtilBG1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
-                    .addComponent(tfValor)
+                .addGroup(pnlAreaUtilBG1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(cbParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbCondicao, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(pnlAreaUtilBG1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tfValor)
+                        .addComponent(cbCondicao, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addGap(22, 22, 22)
                 .addGroup(pnlAreaUtilBG1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -389,17 +495,86 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_lbIcon5SelectMouseExited
 
     private void lbIcon1SelectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbIcon1SelectMouseClicked
-        pnlFundo.removeAll();
-        pnlFundo.repaint();
-        pnlFundo.revalidate();
-        pnlFundo.add(pnlFrame);
-        pnlFundo.repaint();
-        pnlFundo.revalidate();        // TODO add your handling code here:
+//        pnlFundo.removeAll();
+//        pnlFundo.repaint();
+//        pnlFundo.revalidate();
+//        pnlFundo.add(pnlFrame);
+//        pnlFundo.repaint();
+//        pnlFundo.revalidate();   
+        if (cadastroTitulos == null) {            // condiçao de janela já aberta    
+            TelaTitulos frame = new TelaTitulos();
+            cadastroTitulos = frame;
+        }
+         cadastroTitulos.setVisible(true);
     }//GEN-LAST:event_lbIcon1SelectMouseClicked
 
     private void cbParcelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbParcelasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbParcelasActionPerformed
+
+    private void menuPaineisSelectMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuPaineisSelectMouseEntered
+        menuPaineisSelect.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btPaineisSelect.png"))); // NOI18N
+        menuPaineisSelect.setPreferredSize(new java.awt.Dimension(242, 44));        // TODO add your handling code here:
+    }//GEN-LAST:event_menuPaineisSelectMouseEntered
+
+    private void menuPaineisSelectMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuPaineisSelectMouseExited
+        menuPaineisSelect.setIcon(null); // NOI18N
+        menuPaineisSelect.setPreferredSize(new java.awt.Dimension(242, 44));        // TODO add your handling code here:
+    }//GEN-LAST:event_menuPaineisSelectMouseExited
+
+    private void menuLancamentosSelect1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuLancamentosSelect1MouseEntered
+        menuLancamentosSelect1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btLancamentosSelect.png"))); // NOI18N
+        menuLancamentosSelect1.setPreferredSize(new java.awt.Dimension(242, 44));       // TODO add your handling code here:
+    }//GEN-LAST:event_menuLancamentosSelect1MouseEntered
+
+    private void menuLancamentosSelect1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuLancamentosSelect1MouseExited
+        menuLancamentosSelect1.setIcon(null); // NOI18N
+        menuLancamentosSelect1.setPreferredSize(new java.awt.Dimension(242, 44));        // TODO add your handling code here:
+    }//GEN-LAST:event_menuLancamentosSelect1MouseExited
+
+    private void menuAgendamentosSelectMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAgendamentosSelectMouseEntered
+        menuAgendamentosSelect.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btAgendamentosSelect.png"))); // NOI18N
+        menuAgendamentosSelect.setPreferredSize(new java.awt.Dimension(242, 44));        // TODO add your handling code here:
+    }//GEN-LAST:event_menuAgendamentosSelectMouseEntered
+
+    private void menuAgendamentosSelectMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAgendamentosSelectMouseExited
+        menuAgendamentosSelect.setIcon(null); // NOI18N
+        menuAgendamentosSelect.setPreferredSize(new java.awt.Dimension(242, 44));        // TODO add your handling code here:
+    }//GEN-LAST:event_menuAgendamentosSelectMouseExited
+
+    private void menuCadastroSelectMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuCadastroSelectMouseEntered
+        menuCadastroSelect.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btCadastrosSelect.png"))); // NOI18N
+        menuCadastroSelect.setPreferredSize(new java.awt.Dimension(242, 44));        // TODO add your handling code here:
+    }//GEN-LAST:event_menuCadastroSelectMouseEntered
+
+    private void menuCadastroSelectMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuCadastroSelectMouseExited
+        menuCadastroSelect.setIcon(null); // NOI18N
+        menuCadastroSelect.setPreferredSize(new java.awt.Dimension(242, 44));        // TODO add your handling code here:
+    }//GEN-LAST:event_menuCadastroSelectMouseExited
+
+    private void menuCategoriaSelectMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuCategoriaSelectMouseEntered
+        menuCategoriaSelect.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btCategoriasSelect.png"))); // NOI18N
+        menuCategoriaSelect.setPreferredSize(new java.awt.Dimension(242, 44));        // TODO add your handling code here:
+    }//GEN-LAST:event_menuCategoriaSelectMouseEntered
+
+    private void menuCategoriaSelectMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuCategoriaSelectMouseExited
+        menuCategoriaSelect.setIcon(null); // NOI18N
+        menuCategoriaSelect.setPreferredSize(new java.awt.Dimension(242, 44));        // TODO add your handling code here:
+    }//GEN-LAST:event_menuCategoriaSelectMouseExited
+
+    private void menuTitulosSelect1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuTitulosSelect1MouseEntered
+        menuTitulosSelect1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btTitulosSelect.png"))); // NOI18N
+        menuTitulosSelect1.setPreferredSize(new java.awt.Dimension(242, 44));        // TODO add your handling code here:
+    }//GEN-LAST:event_menuTitulosSelect1MouseEntered
+
+    private void menuTitulosSelect1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuTitulosSelect1MouseExited
+        menuTitulosSelect1.setIcon(null); // NOI18N
+        menuTitulosSelect1.setPreferredSize(new java.awt.Dimension(242, 44));       // TODO add your handling code here:
+    }//GEN-LAST:event_menuTitulosSelect1MouseExited
+
+    private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
+    telasPraFrente();        // TODO add your handling code here:
+    }//GEN-LAST:event_formMousePressed
 
     /**
      * @param args the command line arguments
@@ -448,6 +623,12 @@ public class menu extends javax.swing.JFrame {
     private javax.swing.JLabel lbIcon3Select;
     private javax.swing.JLabel lbIcon4Select;
     private javax.swing.JLabel lbIcon5Select;
+    private javax.swing.JLabel menuAgendamentosSelect;
+    private javax.swing.JLabel menuCadastroSelect;
+    private javax.swing.JLabel menuCategoriaSelect;
+    private javax.swing.JLabel menuLancamentosSelect1;
+    private javax.swing.JLabel menuPaineisSelect;
+    private javax.swing.JLabel menuTitulosSelect1;
     private javax.swing.JPanel pnlAreaUtilBG;
     private javax.swing.JPanel pnlAreaUtilBG1;
     private javax.swing.JPanel pnlFrame;
