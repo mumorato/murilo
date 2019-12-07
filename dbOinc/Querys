@@ -1,0 +1,70 @@
+    
+    CREATE TABLE IF NOT EXISTS dbOinc.ESTADO (
+        idEstado INTEGER PRIMARY KEY,
+        nomeEstado TEXT,
+        siglaEstado TEXT
+    );
+    PRAGMA foreign_keys=1;
+
+    CREATE TABLE IF NOT EXISTS dbOinc.CIDADE (
+        idCidade INTEGER PRIMARY KEY,
+        nomeCidade TEXT,
+        estadoId INT,
+            FOREIGN KEY (estadoId)
+            REFERENCES ESTADO(idEstado)
+    );
+
+    CREATE TABLE IF NOT EXISTS dbOinc.PESSOA (
+        idPessoa INTEGER PRIMARY KEY,
+        nomePessoa TEXT,
+        tipoPessoa TEXT,
+        cpfCnpj TEXT,
+        telefone TEXT,
+        endereco TEXT,
+        bairro TEXT,
+        cliente NUMERIC,
+        fornecedor NUMERIC,
+        registroAtivo NUMERIC,
+        cidadeId INTEGER,
+            FOREIGN KEY (cidadeId)
+            REFERENCES CIDADE(idCidade)
+    );
+
+    CREATE TABLE IF NOT EXISTS dbOinc.TIPOTITULO (
+        idTipoTitulo INTEGER PRIMARY KEY,
+        nomeTipoTitulo TEXT
+    );
+
+    CREATE TABLE IF NOT EXISTS dbOinc.CATEGORIA (
+        idCategoria INTEGER PRIMARY KEY,
+        nomeCategoria TEXT
+    );
+    
+    CREATE TABLE IF NOT EXISTS dbOinc.SUBCATEGORIA (
+        idSubcategoria INTEGER PRIMARY KEY,
+        nomeSubcategoria VARCHAR(50),
+        categoriaId INT,
+            FOREIGN KEY (categoriaId)
+            REFERENCES CATEGORIA(idCategoria)
+    );
+    CREATE TABLE IF NOT EXISTS dbOinc.TITULO (
+        idTitulo INTEGER PRIMARY KEY,
+        numeroTitulo INTEGER,
+        numeroParcela INTEGER,
+        dataCadastro TIMESTAMP,
+        dataVencimento DATE,
+        valorTitulo NUMERIC,
+        pendente NUMERIC,
+        registroAtivo NUMERIC,    
+        tipoTituloId INTEGER,
+        categoriaId INTEGER,
+        pessoaId INTEGER,
+            FOREIGN KEY (tipotituloId,categoriaId,pessoaId)
+            REFERENCES TIPOTITULO(idTipoTitulo,idCategoria,idPessoa)
+    );
+    
+INSERT INTO CATEGORIA (nomeCategoria) VALUES("Custos fixos");
+SELECT * FROM CATEGORIA;
+INSERT INTO SUBCATEGORIA (nomeSubcategoria, categoriaId) VALUES("Conta de energia", 1);
+SELECT * FROM SUBCATEGORIA;
+INSERT INTO PESSOA (nomePessoa, tipoPessoa, cpfCnpj, telefone, endereco, bairro, cliente, fornecedor, registroAtivo, cidadeId) VALUES("Conta de energia", 1);

@@ -35,10 +35,7 @@ public class cidadeEstado extends javax.swing.JFrame {
         initComponents();
         
         cbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));
-        
-        //Dados dados = new Dados();
         CidadeEstadoController controlador = new CidadeEstadoController();
-        
         List<Estado> listaEstados = controlador.getEstados();
         for (int i = 0; i < listaEstados.size(); i++) {
             cbEstado.addItem(listaEstados.get(i).getNome());

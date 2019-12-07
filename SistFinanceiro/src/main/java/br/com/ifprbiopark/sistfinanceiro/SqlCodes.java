@@ -1,16 +1,17 @@
 package br.com.ifprbiopark.sistfinanceiro;
+
 public class SqlCodes {
- /*
+    /*
     // sql codes para criar tabelas
     CREATE TABLE IF NOT EXISTS ESTADO (
-        id INT PRIMARY KEY AUTO_INCREMENT,
-        nome VARCHAR(50),
-        sigla VARCHAR(2)
+        idEstado INT PRIMARY KEY AUTO_INCREMENT,
+        nomeEstado VARCHAR(50),
+        siglaEstado VARCHAR(2)
     );
 
     CREATE TABLE IF NOT EXISTS CIDADE (
-        id INT PRIMARY KEY AUTO_INCREMENT,
-        nome VARCHAR(50),
+        idCidade INT PRIMARY KEY AUTO_INCREMENT,
+        nomeCidade VARCHAR(50),
         estadoId INT
         CONSTRAINT (cidadeEstadofk)
             FOREIGN KEY (estadoId)
@@ -18,44 +19,49 @@ public class SqlCodes {
     );
     
     CREATE TABLE IF NOT EXISTS PESSOA (
-        id INT PRIMARY KEY AUTO_INCREMENT,
-        nome VARCHAR(80) NOT NULL,
+        idPessoa INT PRIMARY KEY AUTO_INCREMENT,
+        nomePessoa VARCHAR(80) NOT NULL,
         tipoPessoa VARCHAR(1),
         cpfCnpj VARCHAR(14),
         telefone VARCHAR(20),
         endereco VARCHAR(80),
-        enderecoNum INT,
         bairro VARCHAR(50),
         cidadeId INT,
         cliente TINYINT,
         fornecedor TINYINT,
         registroAtivo TINYINT,
-        column_3 data_type DEFAULT 0,
         CONSTRAINT (pessoaCidadefk)
             FOREIGN KEY (cidadeId)
             REFERENCES CIDADE(id)
     );
 
     CREATE TABLE IF NOT EXISTS TIPOTITULO (
-        id INT PRIMARY KEY AUTO_INCREMENT,
-        nome VARCHAR(50)
+        idTipoTitulo INT PRIMARY KEY AUTO_INCREMENT,
+        nomeTipoTitulo VARCHAR(50)
     );
 
     CREATE TABLE IF NOT EXISTS CATEGORIA (
-        id INT PRIMARY KEY AUTO_INCREMENT,
-        nome VARCHAR(50),
-        registroAtivo TINYINT
+        idCategoria INT PRIMARY KEY AUTO_INCREMENT,
+        nomeCategoria VARCHAR(50)
+    );
+    CREATE TABLE IF NOT EXISTS SUBCATEGORIA (
+        idSubcategoria INT PRIMARY KEY AUTO_INCREMENT,
+        categoriaId INT,
+        nomeSubcategoria VARCHAR(50),
+        CONSTRAINT (categoriaSubcategoriafk)
+            FOREIGN KEY (categoriaId)
+            REFERENCES CATEGORIA(id)
     );
     CREATE TABLE IF NOT EXISTS TITULO (
-        id INT PRIMARY KEY AUTO_INCREMENT,
+        idTitulo INT PRIMARY KEY AUTO_INCREMENT,
         numeroTitulo INT,
         numeroParcela INT,
         tipoTituloId INT,
         pessoaId INT,
         categoriaId INT,
-        dHCadastro TIMESTAMP,
+        dataCadastro TIMESTAMP,
         dataVencimento DATE,
-        valor DECIMAL(9,2),
+        valorTitulo DECIMAL(9,2),
         pendente TINYINT,
         registroAtivo TINYINT,    
         CONSTRAINT (tituloTipoTitulofk)
@@ -71,5 +77,5 @@ public class SqlCodes {
 
 
 
-*/
+     */
 }

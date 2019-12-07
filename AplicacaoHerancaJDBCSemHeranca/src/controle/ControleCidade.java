@@ -1,13 +1,15 @@
 package controle;
 
 import dao.CidadeDao;
+import dao.Dao;
+import dao.DaoFactory;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import modelo.Cidade;
 
 public class ControleCidade {
 
-    CidadeDao dao = new CidadeDao();
+    Dao dao = DaoFactory.getDAO(new Cidade());
 
     public void salvar(Cidade cidade) throws SQLException {
         if (cidade.getId() > 0) {

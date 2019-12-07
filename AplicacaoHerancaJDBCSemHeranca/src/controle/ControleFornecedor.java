@@ -1,5 +1,7 @@
 package controle;
 
+import dao.Dao;
+import dao.DaoFactory;
 import dao.FornecedorDao;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -7,8 +9,8 @@ import modelo.Fornecedor;
 
 public class ControleFornecedor {
 
-    FornecedorDao dao = new FornecedorDao();
-
+        Dao dao = DaoFactory.getDAO(new Fornecedor());
+        
     public void salvar(Fornecedor fornecedor) throws SQLException {
         if (fornecedor.getId() > 0) {
             dao.alterar(fornecedor);

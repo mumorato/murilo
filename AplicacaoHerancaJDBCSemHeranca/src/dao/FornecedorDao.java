@@ -7,49 +7,45 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import modelo.Fornecedor;
 
-public class FornecedorDao {
+public class FornecedorDao extends Dao <Fornecedor> {
 
+    @Override
     public void inserir(Fornecedor fornecedor) throws SQLException {
-        Connection conexaoBD = Conexao.getConexao();
         String SQL = "insert into fornecedor(nome, cnpj, endereco, numero, bairro) values (?, ?, ?, ?, ?)";
-        PreparedStatement comando = conexaoBD.prepareStatement(SQL);
-        comando.setString(1, fornecedor.getNome());
-        comando.setString(2, fornecedor.getCnpj());
-        comando.setString(3, fornecedor.getEndereco());
-        comando.setInt(4, fornecedor.getNumero());
-        comando.setString(5, fornecedor.getBairro());
-        comando.executeUpdate();
+        executarConsultaDML(SQL,
+                fornecedor.getNome(),
+                fornecedor.getCnpj(),
+                fornecedor.getEndereco(),
+                fornecedor.getNumero(),
+                fornecedor.getBairro()
+        );
     }
 
+    @Override
     public void excluir(Fornecedor fornecedor) throws SQLException {
-        Connection conexaoBD = Conexao.getConexao();
         String SQL = "delete from fornecedor where id = ?";
-        PreparedStatement comando = conexaoBD.prepareStatement(SQL);
-        comando.setInt(1, fornecedor.getId());
-        comando.executeUpdate();
+        executarConsultaDML(SQL, fornecedor.getId());
     }
 
+    @Override
     public void alterar(Fornecedor fornecedor) throws SQLException {
-        Connection conexaoBD = Conexao.getConexao();
         String SQL = "update fornecedor set nome = ?, cnpj = ?, endereco = ?, numero = ?, bairro = ? where id = ?";
-        PreparedStatement comando = conexaoBD.prepareStatement(SQL);
-        comando.setString(1, fornecedor.getNome());
-        comando.setString(2, fornecedor.getCnpj());
-        comando.setString(3, fornecedor.getEndereco());
-        comando.setInt(4, fornecedor.getNumero());
-        comando.setString(5, fornecedor.getBairro());
-        comando.setInt(6, fornecedor.getId());
-        comando.executeUpdate();
+        executarConsultaDML(SQL,
+                fornecedor.getNome(),
+                fornecedor.getCnpj(),
+                fornecedor.getEndereco(),
+                fornecedor.getNumero(),
+                fornecedor.getBairro(),
+                fornecedor.getId()
+        );
     }
 
     public ArrayList<Fornecedor> pesquisar(String filtro) throws SQLException {
         ArrayList<Fornecedor> retorno = new ArrayList<>();
 
-        Connection conexaoBD = Conexao.getConexao();
         String SQL = "select * from fornecedor where lower(nome) like ?";
-        PreparedStatement comando = conexaoBD.prepareStatement(SQL);
-        comando.setString(1, "%" + filtro.trim().toLowerCase() + "%");
-        ResultSet resultadoConsulta = comando.executeQuery();
+        ResultSet resultadoConsulta = executarConsultaSQL(
+                SQL, "%" + filtro.trim().toLowerCase() + "%");
         while (resultadoConsulta.next()) {
             Fornecedor fornecedor = new Fornecedor();
             fornecedor.setId(resultadoConsulta.getInt("id"));
