@@ -1,4 +1,4 @@
-package Visao;
+package visao;
 
 import java.awt.Color;
 import java.awt.Toolkit;
@@ -6,21 +6,63 @@ import javax.swing.JFrame;
 
 public class menu extends javax.swing.JFrame {
 
-    TelaTitulos cadastroTitulos;
+    CadastroPessoa cadastroPessoa;
+    CadastroTitulo cadastroTitulos;
+    CadastroCategoria cadastroCategoria;
+    CadastroReceita cadastroReceita;
+    Lancamentos lancamentos;
 
     public menu() {
         initComponents();
+        cadastroPessoa = null;
         cadastroTitulos = null;
-
+        cadastroCategoria = null;
+        cadastroReceita = null;
+        lancamentos = null;
     }
 
     private void telasPraFrente() {
-
+        //tela cadastroTitulo
         if (cadastroTitulos != null) {
             if (cadastroTitulos.estaFechada()) {
                 cadastroTitulos = null;
             } else {
                 cadastroTitulos.setVisible(true);
+                Toolkit.getDefaultToolkit().beep();
+            }
+        }
+        //tela cadastroCategoria
+        if (cadastroCategoria != null) {
+            if (cadastroCategoria.estaFechada()) {
+                cadastroCategoria = null;
+            } else {
+                cadastroCategoria.setVisible(true);
+                Toolkit.getDefaultToolkit().beep();
+            }
+        }
+        //tela cadastroReceita
+        if (cadastroReceita != null) {
+            if (cadastroReceita.estaFechada()) {
+                cadastroReceita = null;
+            } else {
+                cadastroReceita.setVisible(true);
+                Toolkit.getDefaultToolkit().beep();
+            }
+        }
+        //tela Lancamentos
+        if (lancamentos != null) {
+            if (lancamentos.estaFechada()) {
+                lancamentos = null;
+            } else {
+                lancamentos.setVisible(true);
+                Toolkit.getDefaultToolkit().beep();
+            }
+        }
+        if (cadastroPessoa != null) {
+            if (cadastroPessoa.estaFechada()) {
+                cadastroPessoa = null;
+            } else {
+                cadastroPessoa.setVisible(true);
                 Toolkit.getDefaultToolkit().beep();
             }
         }
@@ -91,6 +133,9 @@ public class menu extends javax.swing.JFrame {
         lbIcon2Select.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lbIcon2Select.setPreferredSize(new java.awt.Dimension(211, 243));
         lbIcon2Select.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbIcon2SelectMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lbIcon2SelectMouseEntered(evt);
             }
@@ -132,6 +177,7 @@ public class menu extends javax.swing.JFrame {
             }
         });
 
+        menuPaineisSelect.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menuPaineisSelect.setPreferredSize(new java.awt.Dimension(242, 44));
         menuPaineisSelect.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -142,8 +188,12 @@ public class menu extends javax.swing.JFrame {
             }
         });
 
+        menuLancamentosSelect1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menuLancamentosSelect1.setPreferredSize(new java.awt.Dimension(242, 44));
         menuLancamentosSelect1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuLancamentosSelect1MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 menuLancamentosSelect1MouseEntered(evt);
             }
@@ -152,6 +202,7 @@ public class menu extends javax.swing.JFrame {
             }
         });
 
+        menuAgendamentosSelect.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menuAgendamentosSelect.setPreferredSize(new java.awt.Dimension(242, 44));
         menuAgendamentosSelect.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -162,8 +213,12 @@ public class menu extends javax.swing.JFrame {
             }
         });
 
+        menuCadastroSelect.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menuCadastroSelect.setPreferredSize(new java.awt.Dimension(242, 44));
         menuCadastroSelect.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuCadastroSelectMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 menuCadastroSelectMouseEntered(evt);
             }
@@ -172,8 +227,12 @@ public class menu extends javax.swing.JFrame {
             }
         });
 
+        menuCategoriaSelect.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menuCategoriaSelect.setPreferredSize(new java.awt.Dimension(242, 44));
         menuCategoriaSelect.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuCategoriaSelectMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 menuCategoriaSelectMouseEntered(evt);
             }
@@ -182,6 +241,7 @@ public class menu extends javax.swing.JFrame {
             }
         });
 
+        menuTitulosSelect1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menuTitulosSelect1.setPreferredSize(new java.awt.Dimension(242, 44));
         menuTitulosSelect1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -224,7 +284,7 @@ public class menu extends javax.swing.JFrame {
             pnlMenuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMenuLateralLayout.createSequentialGroup()
                 .addComponent(jLabel4)
-                .addGap(0, 893, Short.MAX_VALUE))
+                .addGap(0, 894, Short.MAX_VALUE))
             .addGroup(pnlMenuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMenuLateralLayout.createSequentialGroup()
                     .addGap(0, 253, Short.MAX_VALUE)
@@ -296,7 +356,7 @@ public class menu extends javax.swing.JFrame {
                         .addComponent(lbIcon1Select, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lbIcon4Select, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(107, Short.MAX_VALUE))
+                .addContainerGap(108, Short.MAX_VALUE))
             .addGroup(pnlInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(pnlMenuLateral, javax.swing.GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE))
         );
@@ -502,10 +562,10 @@ public class menu extends javax.swing.JFrame {
 //        pnlFundo.repaint();
 //        pnlFundo.revalidate();   
         if (cadastroTitulos == null) {            // condiçao de janela já aberta    
-            TelaTitulos frame = new TelaTitulos();
+            CadastroTitulo frame = new CadastroTitulo();
             cadastroTitulos = frame;
         }
-         cadastroTitulos.setVisible(true);
+        cadastroTitulos.setVisible(true);
     }//GEN-LAST:event_lbIcon1SelectMouseClicked
 
     private void cbParcelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbParcelasActionPerformed
@@ -573,8 +633,40 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_menuTitulosSelect1MouseExited
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
-    telasPraFrente();        // TODO add your handling code here:
+        telasPraFrente();        // TODO add your handling code here:
     }//GEN-LAST:event_formMousePressed
+
+    private void menuCategoriaSelectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuCategoriaSelectMouseClicked
+        if (cadastroCategoria == null) {            // condiçao de janela já aberta    
+            CadastroCategoria janelaCad = new CadastroCategoria();
+            cadastroCategoria = janelaCad;
+        }
+        cadastroCategoria.setVisible(true);
+    }//GEN-LAST:event_menuCategoriaSelectMouseClicked
+
+    private void lbIcon2SelectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbIcon2SelectMouseClicked
+        if (cadastroReceita == null) {            // condiçao de janela já aberta    
+            CadastroReceita frame2 = new CadastroReceita();
+            cadastroReceita = frame2;
+        }
+        cadastroReceita.setVisible(true);
+    }//GEN-LAST:event_lbIcon2SelectMouseClicked
+
+    private void menuLancamentosSelect1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuLancamentosSelect1MouseClicked
+        if (lancamentos == null) {            // condiçao de janela já aberta    
+            Lancamentos frame3 = new Lancamentos();
+            lancamentos = frame3;
+        }
+        lancamentos.setVisible(true);
+    }//GEN-LAST:event_menuLancamentosSelect1MouseClicked
+
+    private void menuCadastroSelectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuCadastroSelectMouseClicked
+        if (cadastroPessoa == null) {            // condiçao de janela já aberta    
+            CadastroPessoa frame4 = new CadastroPessoa();
+            cadastroPessoa = frame4;
+        }
+        cadastroPessoa.setVisible(true);
+    }//GEN-LAST:event_menuCadastroSelectMouseClicked
 
     /**
      * @param args the command line arguments
