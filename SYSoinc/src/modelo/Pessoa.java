@@ -9,10 +9,17 @@ public class Pessoa {
     private String telefone;
     private String endereco;
     private String bairro;
-    private int cliente;
-    private int fornecedor;
-    private int registroAtivo;
     private int cidadeId;
+    
+    private String nomeCidade;
+
+    public String getNomeCidade() {
+        return nomeCidade;
+    }
+
+    public void setNomeCidade(String nomeCidade) {
+        this.nomeCidade = nomeCidade;
+    }
 
     public int getIdPessoa() {
         return idPessoa;
@@ -70,30 +77,6 @@ public class Pessoa {
         this.bairro = bairro;
     }
 
-    public int getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(int cliente) {
-        this.cliente = cliente;
-    }
-
-    public int getFornecedor() {
-        return fornecedor;
-    }
-
-    public void setFornecedor(int fornecedor) {
-        this.fornecedor = fornecedor;
-    }
-
-    public int getRegistroAtivo() {
-        return registroAtivo;
-    }
-
-    public void setRegistroAtivo(int registroAtivo) {
-        this.registroAtivo = registroAtivo;
-    }
-
     public int getCidadeId() {
         return cidadeId;
     }
@@ -101,10 +84,6 @@ public class Pessoa {
     public void setCidadeId(int cidadeId) {
         this.cidadeId = cidadeId;
     }
-    
-    
-    
-    
     
     
     

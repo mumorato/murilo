@@ -6,6 +6,7 @@
 package dao;
 
 import modelo.Categoria;
+import modelo.Pessoa;
 import modelo.Subcategoria;
 
 /**
@@ -22,7 +23,14 @@ public class DaoFactory {
         if (obj instanceof Subcategoria) {
             return new SubcategoriaDao();
         }
+        
+        if (obj instanceof Pessoa) {
+            return new PessoaDao();
+        }
+        
+        
         //se criar novas instancias, incluir aqui o return do DAO
         return null;
     }
+
 }

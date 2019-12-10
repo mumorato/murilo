@@ -26,9 +26,11 @@ import modelo.Pessoa;
 public class PessoasView extends javax.swing.JPanel {
 
     ArrayList<Pessoa> resultadoPesquisa;
+    List<Cidade> listaCidades;
 
     public PessoasView() {
         initComponents();
+        atualizarPesquisa();
 
 //combo box de cidadeEstado
         cbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));
@@ -53,13 +55,14 @@ public class PessoasView extends javax.swing.JPanel {
         }
         for (Pessoa pessoa : this.resultadoPesquisa) {
             model.addRow(new Object[]{
+                pessoa.getIdPessoa(),
                 pessoa.getNomePessoa(),
+                pessoa.getTipoPessoa(),
                 pessoa.getCpfCnpj(),
+                pessoa.getNomeCidade(),
                 pessoa.getEndereco(),
                 pessoa.getBairro(),
-                pessoa.getTelefone(),
-                pessoa.getCidadeId()
-
+                pessoa.getTelefone()
             });
         }
     }
@@ -83,10 +86,10 @@ public class PessoasView extends javax.swing.JPanel {
         cxFornecedor = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPessoa = new javax.swing.JTable();
-        btSalvar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         tfPesquisa = new javax.swing.JTextField();
         btPesquisa = new javax.swing.JButton();
+        btSave = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(1280, 630));
 
@@ -100,7 +103,7 @@ public class PessoasView extends javax.swing.JPanel {
 
         tfCpfCnpj.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "CPF/CNPJ (apenas números)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nexa Light", 1, 12))); // NOI18N
 
-        cbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbEstado.setSelectedIndex(-1);
         cbEstado.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Estado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nexa Light", 1, 12))); // NOI18N
         cbEstado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,7 +111,7 @@ public class PessoasView extends javax.swing.JPanel {
             }
         });
 
-        cbCidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbCidade.setSelectedIndex(-1);
         cbCidade.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cidade", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nexa Light", 1, 12))); // NOI18N
         cbCidade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,6 +138,7 @@ public class PessoasView extends javax.swing.JPanel {
         grupoTipo.add(cxCliente);
         cxCliente.setSelected(true);
         cxCliente.setText("Cliente");
+        cxCliente.setActionCommand("Cliente");
         cxCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cxClienteActionPerformed(evt);
@@ -143,30 +147,45 @@ public class PessoasView extends javax.swing.JPanel {
 
         grupoTipo.add(cxFornecedor);
         cxFornecedor.setText("Fornecedor");
+        cxFornecedor.setActionCommand("Fornecedor");
 
         tblPessoa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Nome", "Tipo", "Documento", "Cidade", "Endereço", "Bairro", "Telefone"
             }
-        ));
-        jScrollPane1.setViewportView(tblPessoa);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true, true, true, true, true
+            };
 
-        btSalvar.setText("Salvar");
-        btSalvar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btSalvarActionPerformed(evt);
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
+        jScrollPane1.setViewportView(tblPessoa);
+        if (tblPessoa.getColumnModel().getColumnCount() > 0) {
+            tblPessoa.getColumnModel().getColumn(0).setResizable(false);
+            tblPessoa.getColumnModel().getColumn(0).setPreferredWidth(10);
+        }
 
         jButton1.setText("Apagar");
 
         btPesquisa.setText("Pesquisar");
+        btPesquisa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btPesquisaActionPerformed(evt);
+            }
+        });
+
+        btSave.setText("Salvar");
+        btSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSaveActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -186,26 +205,24 @@ public class PessoasView extends javax.swing.JPanel {
                                         .addComponent(cbCidade, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addComponent(tfNome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
                                     .addComponent(tfEndereco, javax.swing.GroupLayout.Alignment.TRAILING))
-                                .addGap(28, 28, 28)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
+                                        .addGap(34, 34, 34)
                                         .addComponent(tfTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(cxFornecedor)
-                                                .addComponent(cxCliente))
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(tfCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(37, 37, 37))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(tfBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(12, 12, 12))))))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addGap(28, 28, 28)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(cxFornecedor)
+                                                    .addComponent(cxCliente))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(tfCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(tfBairro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                         .addGap(160, 160, 160))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(tfPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -230,12 +247,16 @@ public class PessoasView extends javax.swing.JPanel {
                     .addComponent(tfEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 58, Short.MAX_VALUE)
-                    .addComponent(cbCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tfTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 58, Short.MAX_VALUE)
+                        .addComponent(cbCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
@@ -252,7 +273,7 @@ public class PessoasView extends javax.swing.JPanel {
         jLayeredPane1Layout.setHorizontalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
-                .addContainerGap(123, Short.MAX_VALUE)
+                .addContainerGap(121, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(96, 96, 96))
             .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -312,56 +333,61 @@ public class PessoasView extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfTelefoneActionPerformed
 
-    private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
+    private void cbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEstadoActionPerformed
+ 
+        try {
+            cbCidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));
+            ControleCidadeEstado controlador = new ControleCidadeEstado();
+            listaCidades = controlador.getCidades(cbEstado.getSelectedIndex());
+            for (int i = 0; i < listaCidades.size(); i++) {
+                cbCidade.addItem(listaCidades.get(i).getNomeCidade());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PessoasView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cbEstadoActionPerformed
 
+    private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
+        int vlCidade = cbCidade.getSelectedIndex();
+        
         Pessoa pessoa = new Pessoa();
         pessoa.setNomePessoa(tfNome.getText());
         pessoa.setCpfCnpj(tfCpfCnpj.getText());                                           //falta máscara do documento
         pessoa.setEndereco(tfEndereco.getText());
         pessoa.setBairro(tfBairro.getText());
         pessoa.setTelefone(tfTelefone.getText());
-        pessoa.setCidadeId(cbCidade.getSelectedIndex());
+        pessoa.setCidadeId(listaCidades.get(vlCidade-1).getIdCidade());
         pessoa.setTipoPessoa(grupoTipo.getSelection().getActionCommand());
 
 //salvando
         ControlePessoa controle = new ControlePessoa();
         try {
             controle.salvar(pessoa);
-//setando o campos em branco 
+//setando o campos em branco novamente
             tfNome.setText("");
             tfCpfCnpj.setText("");
             tfEndereco.setText("");
             tfBairro.setText("");
             tfTelefone.setText("");
             tfNome.setText("");
+            cbCidade.setSelectedIndex(-1);
+            grupoTipo.clearSelection();
+
         } catch (SQLException ex) {
             Logger.getLogger(PessoasView.class.getName()).log(Level.SEVERE, null, ex);
         }
         JOptionPane.showMessageDialog(this, "Cadastro realizado!", "Concluído", JOptionPane.INFORMATION_MESSAGE);
         atualizarPesquisa();
+    }//GEN-LAST:event_btSaveActionPerformed
 
-    }//GEN-LAST:event_btSalvarActionPerformed
-
-    private void cbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEstadoActionPerformed
-        try {
-            cbCidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));
-
-            ControleCidadeEstado controlador = new ControleCidadeEstado();
-
-            List<Cidade> listaCidades = controlador.getCidades(cbEstado.getSelectedIndex());
-            for (int i = 0; i < listaCidades.size(); i++) {
-                cbCidade.addItem(listaCidades.get(i).getNomeCidade());
-            }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(PessoasView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_cbEstadoActionPerformed
+    private void btPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisaActionPerformed
+        atualizarPesquisa();
+    }//GEN-LAST:event_btPesquisaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btPesquisa;
-    private javax.swing.JButton btSalvar;
+    private javax.swing.JButton btSave;
     private javax.swing.JComboBox<String> cbCidade;
     private javax.swing.JComboBox<String> cbEstado;
     private javax.swing.JRadioButton cxCliente;
