@@ -23,6 +23,7 @@ public class InicialView extends javax.swing.JFrame {
         lbLancamentos = new javax.swing.JLabel();
         lbCategorias = new javax.swing.JLabel();
         lbPessoas = new javax.swing.JLabel();
+        lbAdd = new javax.swing.JLabel();
         bgMenuSup = new javax.swing.JLabel();
         pnlInferior = new javax.swing.JPanel();
 
@@ -65,7 +66,7 @@ public class InicialView extends javax.swing.JFrame {
         });
 
         lbLancamentos.setFont(new java.awt.Font("Nexa Light", 0, 14)); // NOI18N
-        lbLancamentos.setText("Lançamentos");
+        lbLancamentos.setText("Consulta Titulos");
         lbLancamentos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lbLancamentos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -109,22 +110,40 @@ public class InicialView extends javax.swing.JFrame {
             }
         });
 
+        lbAdd.setFont(new java.awt.Font("Nexa Light", 0, 14)); // NOI18N
+        lbAdd.setText("Add Receita/Despesa");
+        lbAdd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lbAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbAddMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lbAddMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lbAddMouseExited(evt);
+            }
+        });
+
         jLayeredPane1.setLayer(lbInicio, javax.swing.JLayeredPane.PALETTE_LAYER);
         jLayeredPane1.setLayer(lbQuem, javax.swing.JLayeredPane.PALETTE_LAYER);
         jLayeredPane1.setLayer(lbLancamentos, javax.swing.JLayeredPane.PALETTE_LAYER);
         jLayeredPane1.setLayer(lbCategorias, javax.swing.JLayeredPane.PALETTE_LAYER);
         jLayeredPane1.setLayer(lbPessoas, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.setLayer(lbAdd, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
         jLayeredPane1Layout.setHorizontalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
-                .addContainerGap(195, Short.MAX_VALUE)
+                .addGap(107, 107, 107)
                 .addComponent(lbInicio)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
+                .addGap(64, 64, 64)
                 .addComponent(lbLancamentos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addComponent(lbAdd)
+                .addGap(51, 51, 51)
                 .addComponent(lbCategorias)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
                 .addComponent(lbPessoas)
@@ -141,7 +160,8 @@ public class InicialView extends javax.swing.JFrame {
                     .addComponent(lbLancamentos)
                     .addComponent(lbInicio)
                     .addComponent(lbQuem)
-                    .addComponent(lbPessoas))
+                    .addComponent(lbPessoas)
+                    .addComponent(lbAdd))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
@@ -216,7 +236,11 @@ public class InicialView extends javax.swing.JFrame {
     }//GEN-LAST:event_lbLancamentosMouseExited
 
     private void lbLancamentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbLancamentosMouseClicked
-        // TODO add your handling code here:
+        pnlInferior.removeAll();
+        pnlInferior.setLayout(new BorderLayout());
+        TitulosView view = new TitulosView();
+        pnlInferior.add(view);
+        pack();
     }//GEN-LAST:event_lbLancamentosMouseClicked
 
     private void lbCategoriasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbCategoriasMouseEntered
@@ -263,6 +287,22 @@ public class InicialView extends javax.swing.JFrame {
         lbPessoas.setFont(new java.awt.Font("Nexa Light", 0, 14));                               // EVENTO RESPONSIVO DO ITEM DO MENU
     }//GEN-LAST:event_lbPessoasMouseExited
 
+    private void lbAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbAddMouseClicked
+        pnlInferior.removeAll();
+        pnlInferior.setLayout(new BorderLayout());
+        AddTitulo view = new AddTitulo();
+        pnlInferior.add(view);
+        pack();
+    }//GEN-LAST:event_lbAddMouseClicked
+
+    private void lbAddMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbAddMouseEntered
+        lbAdd.setFont(new java.awt.Font("Nexa Bold", 0, 14));
+    }//GEN-LAST:event_lbAddMouseEntered
+
+    private void lbAddMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbAddMouseExited
+        lbAdd.setFont(new java.awt.Font("Nexa Light", 0, 14));
+    }//GEN-LAST:event_lbAddMouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -301,6 +341,7 @@ public class InicialView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bgMenuSup;
     private javax.swing.JLayeredPane jLayeredPane1;
+    private javax.swing.JLabel lbAdd;
     private javax.swing.JLabel lbCategorias;
     private javax.swing.JLabel lbInicio;
     private javax.swing.JLabel lbLancamentos;

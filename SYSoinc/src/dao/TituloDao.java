@@ -1,0 +1,89 @@
+package dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import modelo.Titulo;
+
+public class TituloDao extends Dao<Titulo> {
+
+    @Override
+    public void inserir(Titulo titulo) throws SQLException {
+        String SQL = "insert into TITULO(idTitulo, dataCadastro, dataVencimento, valorTitulo,"
+                + "numeroParcela, pendente, tipoTitulo, categoriaId, subCategoriaId, pessoaId, nomeTitulo)"
+                + " values (?,?,?,?,?,?,?,?,?,?,?)";
+        executarConsultaDML(SQL,
+                titulo.getIdTitulo(),
+                titulo.getDataCadastro(),
+                titulo.getDataVencimento(),
+                titulo.getValorTitulo(),
+                titulo.getNumeroParcela(),
+                titulo.getPendente(),
+                titulo.getTipoTitulo(),
+                titulo.getCategoriaId(),
+                titulo.getSubCategoriaId(),
+                titulo.getPessoaId(),
+                titulo.getNomeTitulo()
+        );
+    }
+
+    @Override
+    public void excluir(Titulo titulo) throws SQLException {
+        String SQL = "delete from TITULO where idTitulo = ?";
+        executarConsultaDML(SQL, titulo.getIdTitulo());
+    }
+
+    @Override
+    public void alterar(Titulo titulo) throws SQLException {
+        String SQL = "update TITULO set dataCadastro = ?, dataVencimento = ?, valorTitulo = ?,"
+                + " numeroParcela = ? , pendente = ?, tipoTitulo = ?, categoriaId = ? , subCategoriaId = ?,"
+                + " pessoaId = ?, nomeTitulo = ? where idTitulo = ?";
+        executarConsultaDML(SQL,
+                titulo.getDataCadastro(),
+                titulo.getDataVencimento(),
+                titulo.getValorTitulo(),
+                titulo.getNumeroParcela(),
+                titulo.getPendente(),
+                titulo.getTipoTitulo(),
+                titulo.getCategoriaId(),
+                titulo.getSubCategoriaId(),
+                titulo.getPessoaId(),
+                titulo.getNomeTitulo(),
+                titulo.getIdTitulo()
+        );
+    }
+
+    public ArrayList<Titulo> pesquisar(String filtro) throws SQLException {
+        ArrayList<Titulo> retorno = new ArrayList<>();
+
+        String SQL = "select * from TITULO "
+                + "inner join TIPOTITULO on TITULO.tipoTituloId = TIPOTITULO.idTipoTitulo, "
+                + "inner join CATEGORIA on TITULO.categoriaId = CATEGORIA.idCategoria, "
+                + "inner join SUBCATEGORIA on TITULO.subcategoriaId = SUBCATEGORIA.idSubcategoria, "
+                + "inner join PESSOA on TITULO.pessoaId = PESSOA.idPessoa "
+                + "where lower(nomeTitulo) like ?";
+        ResultSet resultadoConsulta = executarConsultaSQL(
+                SQL, "%" + filtro.trim().toLowerCase() + "%");
+        while (resultadoConsulta.next()) {
+            Titulo titulo = new Titulo();
+
+            titulo.setDataCadastro(resultadoConsulta.getString("dataCadastro"));
+            titulo.setDataVencimento(resultadoConsulta.getString("dataVencimento"));
+            titulo.setValorTitulo(resultadoConsulta.getDouble("valorTitulo"));
+            titulo.setNumeroParcela(resultadoConsulta.getInt("numeroParcela"));
+            titulo.setPendente(resultadoConsulta.getInt("pendente"));
+            titulo.setTipoTitulo(resultadoConsulta.getInt("tipoTitulo"));
+            titulo.setCategoriaId(resultadoConsulta.getInt("categoriaId"));
+            titulo.setSubCategoriaId(resultadoConsulta.getInt("subcategoriaId"));
+            titulo.setPessoaId(resultadoConsulta.getInt("pessoaId"));
+            titulo.setNomeTitulo(resultadoConsulta.getString("nomeTitulo"));
+            titulo.setIdTitulo(resultadoConsulta.getInt("idTitulo"));
+            //falta adicionar campos de herança
+            retorno.add(titulo);
+        }
+
+        return retorno;
+    }
+}
