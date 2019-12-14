@@ -118,6 +118,8 @@ public class CategoriaView extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(1280, 630));
+        setMinimumSize(new java.awt.Dimension(1280, 630));
+        setPreferredSize(new java.awt.Dimension(1280, 630));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         bgImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/bgDesfocado.jpg"))); // NOI18N

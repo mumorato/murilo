@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import modelo.Titulo;
 
 public class TituloDao extends Dao<Titulo> {
@@ -16,7 +17,7 @@ public class TituloDao extends Dao<Titulo> {
                 + " values (?,?,?,?,?,?,?,?,?,?,?)";
         executarConsultaDML(SQL,
                 titulo.getIdTitulo(),
-                titulo.getDataCadastro(),
+                titulo.getDataRealizacao(),
                 titulo.getDataVencimento(),
                 titulo.getValorTitulo(),
                 titulo.getNumeroParcela(),
@@ -41,7 +42,7 @@ public class TituloDao extends Dao<Titulo> {
                 + " numeroParcela = ? , pendente = ?, tipoTitulo = ?, categoriaId = ? , subCategoriaId = ?,"
                 + " pessoaId = ?, nomeTitulo = ? where idTitulo = ?";
         executarConsultaDML(SQL,
-                titulo.getDataCadastro(),
+                titulo.getDataRealizacao(),
                 titulo.getDataVencimento(),
                 titulo.getValorTitulo(),
                 titulo.getNumeroParcela(),
@@ -69,7 +70,7 @@ public class TituloDao extends Dao<Titulo> {
         while (resultadoConsulta.next()) {
             Titulo titulo = new Titulo();
 
-            titulo.setDataCadastro(resultadoConsulta.getString("dataCadastro"));
+            titulo.setDataRealizacao(resultadoConsulta.getString("dataCadastro"));
             titulo.setDataVencimento(resultadoConsulta.getString("dataVencimento"));
             titulo.setValorTitulo(resultadoConsulta.getDouble("valorTitulo"));
             titulo.setNumeroParcela(resultadoConsulta.getInt("numeroParcela"));
@@ -86,4 +87,5 @@ public class TituloDao extends Dao<Titulo> {
 
         return retorno;
     }
+
 }

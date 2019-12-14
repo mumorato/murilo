@@ -5,17 +5,63 @@
  */
 package visao;
 
+import controle.ControleCategoria;
+import controle.ControleSubcategoria;
+import controle.ControleTitulo;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import modelo.Categoria;
+import modelo.Subcategoria;
+import modelo.Titulo;
+
 /**
  *
  * @author macbook
  */
 public class AddTitulo extends javax.swing.JPanel {
 
-    /**
-     * Creates new form AddTitulo
-     */
+    List<Categoria> listaCategoria;
+    List<Subcategoria> listaSubcategoria;
+    ArrayList<Titulo> resultadoPesquisa;
+
     public AddTitulo() {
         initComponents();
+
+        //Combobox de categoria
+        cbCategorias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));
+        ControleCategoria controlador = new ControleCategoria();
+        List<Categoria> listaCategoria = controlador.getCategoria();
+        for (int i = 0; i < listaCategoria.size(); i++) {
+            cbCategorias.addItem(listaCategoria.get(i).getNomeCategoria());
+        }
+
+    }
+
+    //--------------MÉTODOS-------------------
+    private void atualizarPesquisa() {
+        ControleTitulo controle = new ControleTitulo();
+        DefaultTableModel model = (DefaultTableModel) tblEditTitulo.getModel();
+        model.setNumRows(0);
+
+        try {
+            this.resultadoPesquisa = controle.pesquisar(tfPesquisa.getText().trim());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Falha na Pesquisa!", "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+        for (Titulo titulo : this.resultadoPesquisa) {
+            model.addRow(new Object[]{
+                titulo.getNomeTitulo(),
+                titulo.getValorTitulo(),
+                titulo.getPendente(),
+                titulo.getPessoaId()
+            });
+        }
     }
 
     /**
@@ -27,12 +73,12 @@ public class AddTitulo extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
+        grupoTipo = new javax.swing.ButtonGroup();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         tfTitulo = new javax.swing.JTextField();
         jRadioButton2 = new javax.swing.JRadioButton();
         jRadioButton1 = new javax.swing.JRadioButton();
-        cbCategoria = new javax.swing.JComboBox<>();
+        cbCategorias = new javax.swing.JComboBox<>();
         cbSubcategoria = new javax.swing.JComboBox<>();
         pnlInf = new javax.swing.JPanel();
         tfCedente = new javax.swing.JTextField();
@@ -53,15 +99,18 @@ public class AddTitulo extends javax.swing.JPanel {
 
         tfTitulo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Título ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nexa Light", 1, 12))); // NOI18N
 
+        jRadioButton2.setSelected(true);
         jRadioButton2.setText("Despesa");
+        jRadioButton2.setActionCommand("0");
 
         jRadioButton1.setText("Receita");
+        jRadioButton1.setActionCommand("1");
 
-        cbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbCategoria.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Categoria", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nexa Light", 1, 12))); // NOI18N
-        cbCategoria.addActionListener(new java.awt.event.ActionListener() {
+        cbCategorias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbCategorias.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Categoria", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nexa Light", 1, 12))); // NOI18N
+        cbCategorias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbCategoriaActionPerformed(evt);
+                cbCategoriasActionPerformed(evt);
             }
         });
 
@@ -106,6 +155,11 @@ public class AddTitulo extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tblEditTitulo);
 
         btSalvar.setText("Salvar");
+        btSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSalvarActionPerformed(evt);
+            }
+        });
 
         btPesquisa.setText("Pesquisa");
 
@@ -167,7 +221,7 @@ public class AddTitulo extends javax.swing.JPanel {
         jLayeredPane1.setLayer(tfTitulo, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jRadioButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jRadioButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(cbCategoria, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(cbCategorias, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(cbSubcategoria, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(pnlInf, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -186,7 +240,7 @@ public class AddTitulo extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(jRadioButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
-                        .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbCategorias, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(cbSubcategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(tfTitulo, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -206,7 +260,7 @@ public class AddTitulo extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbCategorias, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jRadioButton1)
                         .addComponent(jRadioButton2))
                     .addComponent(cbSubcategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -225,18 +279,62 @@ public class AddTitulo extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbParcelasActionPerformed
 
-    private void cbCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCategoriaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbCategoriaActionPerformed
+    private void cbCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCategoriasActionPerformed
+        cbSubcategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));
+        ControleSubcategoria controlador = new ControleSubcategoria();
+        try {
+            listaSubcategoria = controlador.getSubcategoria(cbCategorias.getSelectedIndex());
+        } catch (SQLException ex) {
+            Logger.getLogger(AddTitulo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for (int i = 0; i < listaSubcategoria.size(); i++) {
+            cbSubcategoria.addItem(listaSubcategoria.get(i).getNomeSubcategoria());
+        }
+    }//GEN-LAST:event_cbCategoriasActionPerformed
+
+    private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
+        Titulo titulo = new Titulo();
+        titulo.setNomeTitulo(tfTitulo.getText());
+        titulo.setCedente(tfCedente.getText());                                              //falta máscara do documento
+        titulo.setValorTitulo(Double.parseDouble(tfValor.getText()));
+        titulo.setDataRealizacao(tfRealizacao.getText());
+        titulo.setDataVencimento(tfVencimento.getText());
+        titulo.setTipoTitulo(Integer.parseInt(grupoTipo.getSelection().getActionCommand()));                  //precisa verificar Int ou String
+        //combobox, salvando posição selecionada da lista e recuperando objeto:
+        int iCat = cbCategorias.getSelectedIndex();
+        int iSubcat = cbSubcategoria.getSelectedIndex();
+        titulo.setCategoriaId(listaCategoria.get(iCat - 1).getIdCategoria());
+        titulo.setCategoriaId(listaSubcategoria.get(iSubcat - 1).getIdSubcategoria());
+
+        //salvando
+        ControleTitulo controle = new ControleTitulo();
+
+        try {
+            controle.salvar(titulo);
+            //setando o campos em branco novamente
+            tfTitulo.setText("");
+            tfCedente.setText("");
+            tfValor.setText("");
+            tfRealizacao.setText("");
+            tfVencimento.setText("");
+            cbCategorias.setSelectedIndex(-1);
+            cbSubcategoria.setSelectedIndex(-1);
+            grupoTipo.clearSelection();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AddTitulo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        atualizarPesquisa();
+    }//GEN-LAST:event_btSalvarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btPesquisa;
     private javax.swing.JButton btSalvar;
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JComboBox<String> cbCategoria;
+    private javax.swing.JComboBox<String> cbCategorias;
     private javax.swing.JComboBox<String> cbParcelas;
     private javax.swing.JComboBox<String> cbSubcategoria;
+    private javax.swing.ButtonGroup grupoTipo;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

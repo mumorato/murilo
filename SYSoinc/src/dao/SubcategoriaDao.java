@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import modelo.Subcategoria;
 
 public class SubcategoriaDao extends Dao <Subcategoria> {
@@ -55,5 +56,24 @@ public class SubcategoriaDao extends Dao <Subcategoria> {
         }
 
         return retornoPesquisa;
+    }
+        public List<Subcategoria> getSubcategoria(int categoriaId) throws SQLException {
+
+        List<Subcategoria> listaSub;
+        listaSub = new ArrayList();
+
+        String sql = "SELECT * FROM SUBCATEGORIA WHERE categoriaId = ";
+        sql += String.valueOf(categoriaId);
+        ResultSet rs = executarConsultaSQL(sql);
+
+        while (rs.next()) {
+            Subcategoria subcategoria = new Subcategoria();
+            subcategoria.setIdSubcategoria(rs.getInt("idSubcategoria"));
+            subcategoria.setNomeSubcategoria(rs.getString("nomeSubcategoria"));
+
+            listaSub.add(subcategoria);
+        }
+
+        return listaSub;
     }
 }

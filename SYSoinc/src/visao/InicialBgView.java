@@ -32,6 +32,7 @@ public class InicialBgView extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         bgPaginaInicial = new javax.swing.JLabel();
 
+        setPreferredSize(new java.awt.Dimension(1280, 630));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Nexa Light", 0, 14)); // NOI18N

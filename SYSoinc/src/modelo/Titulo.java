@@ -5,7 +5,7 @@ public class Titulo {
     private int idTitulo;
     private String nomeTitulo;
     private int tipoTitulo;
-    private String dataCadastro;
+    private String dataRealizacao;
     private String dataVencimento;
     private Double valorTitulo;
     private int numeroParcela;
@@ -13,9 +13,27 @@ public class Titulo {
     private int pessoaId;
     private int categoriaId;
     private int subCategoriaId;
-
+    private String cedente;
+    
     // precisa corrigir o banco. Alterar tipagem das colunas.
     //para parcela, fazer um IF e dividir vlTotal/qtdParcelas, depois laço FOR[qtdParcelas]
+
+    public String getDataRealizacao() {
+        return dataRealizacao;
+    }
+
+    public void setDataRealizacao(String dataRealizacao) {
+        this.dataRealizacao = dataRealizacao;
+    }
+
+    public String getCedente() {
+        return cedente;
+    }
+
+    public void setCedente(String cedente) {
+        this.cedente = cedente;
+    }
+    
     /**
      * @return int return the idTitulo
      */
@@ -28,20 +46,6 @@ public class Titulo {
      */
     public void setIdTitulo(int idTitulo) {
         this.idTitulo = idTitulo;
-    }
-
-    /**
-     * @return String return the dataCadastro
-     */
-    public String getDataCadastro() {
-        return dataCadastro;
-    }
-
-    /**
-     * @param dataCadastro the dataCadastro to set
-     */
-    public void setDataCadastro(String dataCadastro) {
-        this.dataCadastro = dataCadastro;
     }
 
     /**

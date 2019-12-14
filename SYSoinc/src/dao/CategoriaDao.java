@@ -5,9 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import modelo.Categoria;
+import modelo.Subcategoria;
 
-public class CategoriaDao extends Dao <Categoria> {
+public class CategoriaDao extends Dao<Categoria> {
 
     @Override
     public void inserir(Categoria categoria) throws SQLException {
@@ -23,7 +25,7 @@ public class CategoriaDao extends Dao <Categoria> {
         String SQL = "delete from CATEGORIA where idCategoria = ?";
         executarConsultaDML(SQL, categoria.getIdCategoria());
     }
-    
+
     @Override
     public void alterar(Categoria categoria) throws SQLException {
         String SQL = "update CATEGORIA set nomeCategoria = ?, tipoCategoria = ? where idCategoria = ?";
@@ -49,5 +51,24 @@ public class CategoriaDao extends Dao <Categoria> {
         }
 
         return retorno;
+    }
+
+    public List<Categoria> getCategoria() throws SQLException {
+
+        List<Categoria> lista;
+        lista = new ArrayList();
+
+        String sql = "SELECT * FROM CATEGORIA";
+        ResultSet rs = executarConsultaSQL(sql);
+
+        while (rs.next()) {
+            Categoria categoria = new Categoria();
+            categoria.setIdCategoria(rs.getInt("idCategoria"));
+            categoria.setNomeCategoria(rs.getString("nomeCategoria"));
+            categoria.setTipoCategoria(rs.getString("tipoCategoria"));
+            lista.add(categoria);
+        }
+
+        return lista;
     }
 }

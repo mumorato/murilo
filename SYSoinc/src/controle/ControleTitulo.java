@@ -2,9 +2,11 @@ package controle;
 
 import dao.Dao;
 import dao.DaoFactory;
+import dao.TituloDao;
 import modelo.Titulo;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -29,5 +31,6 @@ public class ControleTitulo {
     public ArrayList<Titulo> pesquisar(String filtro) throws SQLException {
         return dao.pesquisar(filtro);
     }
+
 
 }
