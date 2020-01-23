@@ -6,13 +6,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import modelo.Pessoa;
 import modelo.Titulo;
 
 public class TituloDao extends Dao<Titulo> {
 
     @Override
     public void inserir(Titulo titulo) throws SQLException {
-        String SQL = "insert into TITULO (dataCadastro, dataVencimento, valorTitulo, numeroParcela, pendente, tipoTituloId, categoriaId, subCategoriaId, pessoaId, nomeTitulo) values (?,?,?,?,?,?,?,?,?,?);";
+        String SQL = "insert into TITULO (dataCadastro, dataVencimento, valorTitulo, numeroParcela, pendente, tipoTituloId, categoriaId, subCategoriaId, pessoaId, nomeTitulo, cedente) values (?,?,?,?,?,?,?,?,?,?,?);";
         executarConsultaDML(SQL,
                 //titulo.getIdTitulo(),
                 titulo.getDataRealizacao(),
@@ -23,8 +24,9 @@ public class TituloDao extends Dao<Titulo> {
                 titulo.getTipoTitulo(),
                 titulo.getCategoriaId(),
                 titulo.getSubCategoriaId(),
-                titulo.getPessoaId(),
-                titulo.getNomeTitulo()
+                titulo.getPessoa().getIdPessoa(),
+                titulo.getNomeTitulo(),
+                titulo.getCedente()
         );
     }
 
@@ -38,7 +40,7 @@ public class TituloDao extends Dao<Titulo> {
     public void alterar(Titulo titulo) throws SQLException {
         String SQL = "update TITULO set dataCadastro = ?, dataVencimento = ?, valorTitulo = ?,"
                 + " numeroParcela = ? , pendente = ?, tipoTituloId = ?, categoriaId = ? , subCategoriaId = ?,"
-                + " pessoaId = ?, nomeTitulo = ? where idTitulo = ?";
+                + " pessoaId = ?, nomeTitulo = ?, cedente = ? where idTitulo = ?";
         executarConsultaDML(SQL,
                 titulo.getDataRealizacao(),
                 titulo.getDataVencimento(),
@@ -48,8 +50,9 @@ public class TituloDao extends Dao<Titulo> {
                 titulo.getTipoTitulo(),
                 titulo.getCategoriaId(),
                 titulo.getSubCategoriaId(),
-                titulo.getPessoaId(),
+                titulo.getPessoa().getIdPessoa(),
                 titulo.getNomeTitulo(),
+                titulo.getCedente(),
                 titulo.getIdTitulo()
         );
     }
@@ -58,7 +61,8 @@ public class TituloDao extends Dao<Titulo> {
         ArrayList<Titulo> retorno = new ArrayList<>();
 
         String SQL = "SELECT dataCadastro, dataVencimento, valorTitulo, numeroParcela, "
-                + "pendente, tipoTituloId, categoriaId, subcategoriaId, pessoaId, nomeTitulo, idTitulo FROM TITULO "
+                + "pendente, tipoTituloId, categoriaId, subcategoriaId, pessoaId, nomeTitulo, idTitulo, cedente, nomePessoa"
+                + " FROM TITULO "
                 + "﻿inner join TIPOTITULO on tipoTituloId = TIPOTITULO.idTipoTitulo "
                 + "inner join CATEGORIA on categoriaId = CATEGORIA.idCategoria "
                 + "inner join SUBCATEGORIA on subcategoriaId = SUBCATEGORIA.idSubcategoria "
@@ -77,9 +81,19 @@ public class TituloDao extends Dao<Titulo> {
             titulo.setTipoTitulo(resultadoConsulta.getInt("tipoTituloId"));
             titulo.setCategoriaId(resultadoConsulta.getInt("categoriaId"));
             titulo.setSubCategoriaId(resultadoConsulta.getInt("subcategoriaId"));
-            titulo.setPessoaId(resultadoConsulta.getInt("pessoaId"));
+
+
+            Pessoa pess = new Pessoa();
+            pess.setIdPessoa(resultadoConsulta.getInt("pessoaId"));
+            titulo.setPessoa(pess);
+            pess.setNomePessoa(resultadoConsulta.getString("nomePessoa"));
+            titulo.setPessoa(pess);
+
+            
             titulo.setNomeTitulo(resultadoConsulta.getString("nomeTitulo"));
             titulo.setIdTitulo(resultadoConsulta.getInt("idTitulo"));
+            titulo.setCedente(resultadoConsulta.getString("cedente"));
+
             //falta adicionar campos de herança
             retorno.add(titulo);
         }

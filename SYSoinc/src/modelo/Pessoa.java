@@ -10,8 +10,10 @@ public class Pessoa {
     private String endereco;
     private String bairro;
     private int cidadeId;
-    
+
     private String nomeCidade;
+
+    
 
     public String getNomeCidade() {
         return nomeCidade;
@@ -84,7 +86,5 @@ public class Pessoa {
     public void setCidadeId(int cidadeId) {
         this.cidadeId = cidadeId;
     }
-    
-    
-    
+
 }

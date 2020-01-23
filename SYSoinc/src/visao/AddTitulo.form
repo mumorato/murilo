@@ -178,20 +178,6 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="cbCedente" min="-2" pref="270" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="tfCedente" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="tfValor" min="-2" pref="170" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="cbParcelas" min="-2" pref="133" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="tfVencimento" min="-2" pref="156" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="tfRealizacao" max="32767" attributes="0"/>
-                          </Group>
                           <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="tfPesquisa" min="-2" pref="150" max="-2" attributes="0"/>
@@ -199,6 +185,25 @@
                               <Component id="btPesquisa" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="btSalvar" min="-2" pref="125" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="tfValor" min="-2" pref="182" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="tfParcela" min="-2" pref="82" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="cbCedente" min="-2" pref="270" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="tfCedente" max="32767" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="tfVencimento" max="32767" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="tfRealizacao" min="-2" pref="191" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -213,13 +218,11 @@
                           <Component id="cbCedente" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="tfValor" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="tfRealizacao" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="tfVencimento" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="cbParcelas" alignment="1" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="tfValor" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="tfRealizacao" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="tfVencimento" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="tfParcela" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="167" max="-2" attributes="0"/>
@@ -239,12 +242,15 @@
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                    <TitledBorder title="Pagador/Benefici&#xe1;rio">
+                    <TitledBorder title="Cedente/Sacado">
                       <Font PropertyName="font" name="Nexa Light" size="12" style="1"/>
                     </TitledBorder>
                   </Border>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfCedenteActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="tfValor">
               <Properties>
@@ -256,31 +262,6 @@
                   </Border>
                 </Property>
               </Properties>
-            </Component>
-            <Component class="javax.swing.JComboBox" name="cbParcelas">
-              <Properties>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="Item 1"/>
-                    <StringItem index="1" value="Item 2"/>
-                    <StringItem index="2" value="Item 3"/>
-                    <StringItem index="3" value="Item 4"/>
-                  </StringArray>
-                </Property>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                    <TitledBorder title="Parcelas">
-                      <Font PropertyName="font" name="Nexa Light" size="12" style="1"/>
-                    </TitledBorder>
-                  </Border>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbParcelasActionPerformed"/>
-              </Events>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-              </AuxValues>
             </Component>
             <Component class="javax.swing.JFormattedTextField" name="tfRealizacao">
               <Properties>
@@ -308,7 +289,7 @@
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                    <TitledBorder title="Cedente/Sacado">
+                    <TitledBorder title="Pagador/Benefici&#xe1;rio">
                       <Font PropertyName="font" name="Nexa Light" size="12" style="1"/>
                     </TitledBorder>
                   </Border>
@@ -349,8 +330,8 @@
                         <Column editable="false" title="Vencimento" type="java.lang.Object"/>
                         <Column editable="false" title="Realizado" type="java.lang.Object"/>
                         <Column editable="false" title="Situa&#xe7;&#xe3;o" type="java.lang.Object"/>
-                        <Column editable="false" title="Cedente" type="java.lang.Object"/>
                         <Column editable="false" title="Beneficiario" type="java.lang.Object"/>
+                        <Column editable="false" title="Cedente" type="java.lang.Object"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -418,6 +399,18 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="tfPesquisa">
+            </Component>
+            <Component class="javax.swing.JTextField" name="tfParcela">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="1"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                    <TitledBorder title="Parcelas">
+                      <Font PropertyName="font" name="Nexa Light" size="12" style="1"/>
+                    </TitledBorder>
+                  </Border>
+                </Property>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>

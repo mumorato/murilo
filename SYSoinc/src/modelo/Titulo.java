@@ -1,6 +1,6 @@
 package modelo;
 
-public class Titulo {
+public class Titulo{
 
     private int idTitulo;
     private String nomeTitulo;
@@ -10,10 +10,13 @@ public class Titulo {
     private Double valorTitulo;
     private int numeroParcela;
     private int pendente;
-    private int pessoaId;
+    private Pessoa pessoa;
     private int categoriaId;
     private int subCategoriaId;
     private String cedente;
+    
+    
+    
     
     // precisa corrigir o banco. Alterar tipagem das colunas.
     //para parcela, fazer um IF e dividir vlTotal/qtdParcelas, depois laço FOR[qtdParcelas]
@@ -146,19 +149,6 @@ public class Titulo {
         this.subCategoriaId = subCategoriaId;
     }
 
-    /**
-     * @return int return the pessoaId
-     */
-    public int getPessoaId() {
-        return pessoaId;
-    }
-
-    /**
-     * @param pessoaId the pessoaId to set
-     */
-    public void setPessoaId(int pessoaId) {
-        this.pessoaId = pessoaId;
-    }
 
     /**
      * @return String return the nomeTitulo
@@ -173,5 +163,14 @@ public class Titulo {
     public void setNomeTitulo(String nomeTitulo) {
         this.nomeTitulo = nomeTitulo;
     }
+
+    public Pessoa getPessoa() {
+        return pessoa;
+    }
+
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
+    }
+    
 
 }

@@ -51,7 +51,7 @@ public class TitulosView extends javax.swing.JPanel {
                 titulo.getTipoTitulo(),
                 titulo.getCategoriaId(),
                 titulo.getSubCategoriaId(),
-                titulo.getPessoaId()
+                //titulo.getPessoaId()
             });
         }
     }

@@ -59,7 +59,7 @@ public class PessoaDao extends Dao<Pessoa> {
                 SQL, "%" + filtro.trim().toLowerCase() + "%");
         while (resultadoConsulta.next()) {
             Pessoa pessoa = new Pessoa();
-            
+
             pessoa.setIdPessoa(resultadoConsulta.getInt("idPessoa"));
             pessoa.setNomePessoa(resultadoConsulta.getString("nomePessoa"));
             pessoa.setTipoPessoa(resultadoConsulta.getString("tipoPessoa"));
@@ -74,8 +74,8 @@ public class PessoaDao extends Dao<Pessoa> {
 
         return retorno;
     }
-    
-        public List<Pessoa> getPessoa() throws SQLException {
+
+    public List<Pessoa> getPessoa() throws SQLException {
 
         List<Pessoa> lista;
         lista = new ArrayList();
@@ -98,5 +98,28 @@ public class PessoaDao extends Dao<Pessoa> {
 
         return lista;
     }
+
+
     
+//        public Pessoa consultaPessoa(int idPessoa) throws SQLException {
+//
+//        List<Pessoa> listaPes;
+//        listaPes = new ArrayList();
+//
+//           String sql = "SELECT * FROM PESSOA WHERE idPessoa = ";
+//            sql += String.valueOf(idPessoa);
+//            ResultSet resultadoConsulta = executarConsultaSQL(sql);
+//            
+//            while (resultadoConsulta.next()) {
+//                Pessoa pessoa = new Pessoa();
+//                pessoa.setIdPessoa(resultadoConsulta.getInt("idPessoa"));
+//                pessoa.setNomePessoa(resultadoConsulta.getString("nomePessoa"));
+//                
+//                listaPes.add(pessoa);
+//            }
+//
+//        return (Pessoa) listaPes;
+//        }
+    
+
 }
