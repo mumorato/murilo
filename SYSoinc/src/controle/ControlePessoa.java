@@ -7,8 +7,12 @@ package controle;
 
 import dao.Dao;
 import dao.DaoFactory;
+import dao.PessoaDao;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import modelo.Pessoa;
 
 /**
@@ -18,6 +22,7 @@ import modelo.Pessoa;
 public class ControlePessoa {
 
     Dao dao = DaoFactory.getDAO(new Pessoa());
+    List<Pessoa> listaPessoa;
 
     public void salvar(Pessoa pessoa) throws SQLException {
         if (pessoa.getIdPessoa() > 0) {
@@ -35,4 +40,15 @@ public class ControlePessoa {
         return dao.pesquisar(filtro);
     }
 
+    public List<Pessoa> getPessoa() {
+
+        PessoaDao dados = new PessoaDao();
+        try {
+            listaPessoa = dados.getPessoa();
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(ControlePessoa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
+        return listaPessoa;
+    }
 }

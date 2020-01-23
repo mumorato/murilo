@@ -6,6 +6,7 @@
 package visao;
 
 import controle.ControleCategoria;
+import controle.ControlePessoa;
 import controle.ControleSubcategoria;
 import controle.ControleTitulo;
 import java.sql.SQLException;
@@ -16,6 +17,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Categoria;
+import modelo.Pessoa;
 import modelo.Subcategoria;
 import modelo.Titulo;
 
@@ -27,17 +29,27 @@ public class AddTitulo extends javax.swing.JPanel {
 
     List<Categoria> listaCategoria;
     List<Subcategoria> listaSubcategoria;
+    List<Pessoa> listaPessoa;
     ArrayList<Titulo> resultadoPesquisa;
 
     public AddTitulo() {
         initComponents();
+        atualizarPesquisa();
 
         //Combobox de categoria
         cbCategorias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));
         ControleCategoria controlador = new ControleCategoria();
-        List<Categoria> listaCategoria = controlador.getCategoria();
+        listaCategoria = controlador.getCategoria();
         for (int i = 0; i < listaCategoria.size(); i++) {
             cbCategorias.addItem(listaCategoria.get(i).getNomeCategoria());
+        }
+
+        //Combobox de pessoas
+        cbCedente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));
+        ControlePessoa controladorPessoa = new ControlePessoa();
+        listaPessoa = controladorPessoa.getPessoa();
+        for (int i = 0; i < listaPessoa.size(); i++) {
+            cbCedente.addItem(listaPessoa.get(i).getNomePessoa());
         }
 
     }
@@ -50,8 +62,7 @@ public class AddTitulo extends javax.swing.JPanel {
 
         try {
             this.resultadoPesquisa = controle.pesquisar(tfPesquisa.getText().trim());
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Falha na Pesquisa!", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
         for (Titulo titulo : this.resultadoPesquisa) {
@@ -61,7 +72,7 @@ public class AddTitulo extends javax.swing.JPanel {
                 titulo.getPendente(),
                 titulo.getPessoaId()
             });
-        }
+        };
     }
 
     /**
@@ -85,7 +96,7 @@ public class AddTitulo extends javax.swing.JPanel {
         tfValor = new javax.swing.JTextField();
         cbParcelas = new javax.swing.JComboBox<>();
         tfRealizacao = new javax.swing.JFormattedTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbCedente = new javax.swing.JComboBox<>();
         tfVencimento = new javax.swing.JFormattedTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblEditTitulo = new javax.swing.JTable();
@@ -99,10 +110,12 @@ public class AddTitulo extends javax.swing.JPanel {
 
         tfTitulo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Título ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nexa Light", 1, 12))); // NOI18N
 
+        grupoTipo.add(jRadioButton2);
         jRadioButton2.setSelected(true);
         jRadioButton2.setText("Despesa");
         jRadioButton2.setActionCommand("0");
 
+        grupoTipo.add(jRadioButton1);
         jRadioButton1.setText("Receita");
         jRadioButton1.setActionCommand("1");
 
@@ -135,24 +148,40 @@ public class AddTitulo extends javax.swing.JPanel {
         tfRealizacao.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Realização em caixa", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nexa Light", 1, 12))); // NOI18N
         tfRealizacao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cedente/Sacado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nexa Light", 1, 12))); // NOI18N
+        cbCedente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbCedente.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cedente/Sacado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nexa Light", 1, 12))); // NOI18N
 
         tfVencimento.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Vencimento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nexa Light", 1, 12))); // NOI18N
         tfVencimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
 
         tblEditTitulo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Nome", "Valor", "Parcela", "Vencimento", "Realizado", "Situação", "Cedente", "Beneficiario"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblEditTitulo);
+        if (tblEditTitulo.getColumnModel().getColumnCount() > 0) {
+            tblEditTitulo.getColumnModel().getColumn(1).setMinWidth(60);
+            tblEditTitulo.getColumnModel().getColumn(1).setMaxWidth(61);
+            tblEditTitulo.getColumnModel().getColumn(2).setMinWidth(60);
+            tblEditTitulo.getColumnModel().getColumn(2).setMaxWidth(61);
+            tblEditTitulo.getColumnModel().getColumn(5).setMinWidth(60);
+            tblEditTitulo.getColumnModel().getColumn(5).setMaxWidth(61);
+        }
 
         btSalvar.setText("Salvar");
         btSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -171,7 +200,7 @@ public class AddTitulo extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(pnlInfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlInfLayout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbCedente, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(tfCedente))
                     .addGroup(pnlInfLayout.createSequentialGroup()
@@ -196,7 +225,7 @@ public class AddTitulo extends javax.swing.JPanel {
             .addGroup(pnlInfLayout.createSequentialGroup()
                 .addGroup(pnlInfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfCedente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbCedente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlInfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlInfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -302,10 +331,11 @@ public class AddTitulo extends javax.swing.JPanel {
         titulo.setTipoTitulo(Integer.parseInt(grupoTipo.getSelection().getActionCommand()));                  //precisa verificar Int ou String
         //combobox, salvando posição selecionada da lista e recuperando objeto:
         int iCat = cbCategorias.getSelectedIndex();
+        int iPess = cbCedente.getSelectedIndex();
         int iSubcat = cbSubcategoria.getSelectedIndex();
         titulo.setCategoriaId(listaCategoria.get(iCat - 1).getIdCategoria());
-        titulo.setCategoriaId(listaSubcategoria.get(iSubcat - 1).getIdSubcategoria());
-
+        titulo.setSubCategoriaId(listaSubcategoria.get(iSubcat - 1).getIdSubcategoria());
+        titulo.setPessoaId(listaPessoa.get(iPess-1).getIdPessoa());
         //salvando
         ControleTitulo controle = new ControleTitulo();
 
@@ -332,10 +362,10 @@ public class AddTitulo extends javax.swing.JPanel {
     private javax.swing.JButton btPesquisa;
     private javax.swing.JButton btSalvar;
     private javax.swing.JComboBox<String> cbCategorias;
+    private javax.swing.JComboBox<String> cbCedente;
     private javax.swing.JComboBox<String> cbParcelas;
     private javax.swing.JComboBox<String> cbSubcategoria;
     private javax.swing.ButtonGroup grupoTipo;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLayeredPane jLayeredPane1;

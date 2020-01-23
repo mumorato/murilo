@@ -12,7 +12,7 @@ public class SubcategoriaDao extends Dao <Subcategoria> {
 
     @Override
     public void inserir(Subcategoria subcategoria) throws SQLException {
-        String SQL = "insert into SUBCATEGORIA(nomeSubcategoria, categoriaId) values (?, ?)";
+        String SQL = "insert into SUBCATEGORIA(nomeSubcategoria, categoriaIdSub) values (?, ?)";
         executarConsultaDML(SQL,
                 subcategoria.getNomeSubcategoria(),
                 subcategoria.getCategoriaId()
@@ -27,7 +27,7 @@ public class SubcategoriaDao extends Dao <Subcategoria> {
     
     @Override
     public void alterar(Subcategoria subcategoria) throws SQLException {
-        String SQL = "update SUBCATEGORIA set nomeSubcategoria = ?, categoriaId = ? where idSubcategoria = ?";
+        String SQL = "update SUBCATEGORIA set nomeSubcategoria = ?, categoriaIdSub = ? where idSubcategoria = ?";
         executarConsultaDML(SQL,
                 subcategoria.getNomeSubcategoria(),
                 subcategoria.getCategoriaId(),
@@ -48,7 +48,7 @@ public class SubcategoriaDao extends Dao <Subcategoria> {
             Subcategoria subcategoria = new Subcategoria();
             subcategoria.setIdSubcategoria(resultadoConsulta.getInt("idSubcategoria"));
             subcategoria.setNomeSubcategoria(resultadoConsulta.getString("nomeSubcategoria"));
-            subcategoria.setCategoriaId(resultadoConsulta.getInt("categoriaId"));           
+            subcategoria.setCategoriaId(resultadoConsulta.getInt("categoriaIdSub"));           
             subcategoria.setNomeCategoriaSubcategoria(resultadoConsulta.getString("nomeCategoria"));
             subcategoria.setNomeTipoSubcategoria(resultadoConsulta.getString("tipoCategoria"));
             
@@ -62,7 +62,7 @@ public class SubcategoriaDao extends Dao <Subcategoria> {
         List<Subcategoria> listaSub;
         listaSub = new ArrayList();
 
-        String sql = "SELECT * FROM SUBCATEGORIA WHERE categoriaId = ";
+        String sql = "SELECT * FROM SUBCATEGORIA WHERE categoriaIdSub = ";
         sql += String.valueOf(categoriaId);
         ResultSet rs = executarConsultaSQL(sql);
 

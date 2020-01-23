@@ -12,11 +12,9 @@ public class TituloDao extends Dao<Titulo> {
 
     @Override
     public void inserir(Titulo titulo) throws SQLException {
-        String SQL = "insert into TITULO(idTitulo, dataCadastro, dataVencimento, valorTitulo,"
-                + "numeroParcela, pendente, tipoTitulo, categoriaId, subCategoriaId, pessoaId, nomeTitulo)"
-                + " values (?,?,?,?,?,?,?,?,?,?,?)";
+        String SQL = "insert into TITULO (dataCadastro, dataVencimento, valorTitulo, numeroParcela, pendente, tipoTituloId, categoriaId, subCategoriaId, pessoaId, nomeTitulo) values (?,?,?,?,?,?,?,?,?,?);";
         executarConsultaDML(SQL,
-                titulo.getIdTitulo(),
+                //titulo.getIdTitulo(),
                 titulo.getDataRealizacao(),
                 titulo.getDataVencimento(),
                 titulo.getValorTitulo(),
@@ -39,7 +37,7 @@ public class TituloDao extends Dao<Titulo> {
     @Override
     public void alterar(Titulo titulo) throws SQLException {
         String SQL = "update TITULO set dataCadastro = ?, dataVencimento = ?, valorTitulo = ?,"
-                + " numeroParcela = ? , pendente = ?, tipoTitulo = ?, categoriaId = ? , subCategoriaId = ?,"
+                + " numeroParcela = ? , pendente = ?, tipoTituloId = ?, categoriaId = ? , subCategoriaId = ?,"
                 + " pessoaId = ?, nomeTitulo = ? where idTitulo = ?";
         executarConsultaDML(SQL,
                 titulo.getDataRealizacao(),
@@ -59,11 +57,12 @@ public class TituloDao extends Dao<Titulo> {
     public ArrayList<Titulo> pesquisar(String filtro) throws SQLException {
         ArrayList<Titulo> retorno = new ArrayList<>();
 
-        String SQL = "select * from TITULO "
-                + "inner join TIPOTITULO on TITULO.tipoTituloId = TIPOTITULO.idTipoTitulo, "
-                + "inner join CATEGORIA on TITULO.categoriaId = CATEGORIA.idCategoria, "
-                + "inner join SUBCATEGORIA on TITULO.subcategoriaId = SUBCATEGORIA.idSubcategoria, "
-                + "inner join PESSOA on TITULO.pessoaId = PESSOA.idPessoa "
+        String SQL = "SELECT dataCadastro, dataVencimento, valorTitulo, numeroParcela, "
+                + "pendente, tipoTituloId, categoriaId, subcategoriaId, pessoaId, nomeTitulo, idTitulo FROM TITULO "
+                + "﻿inner join TIPOTITULO on tipoTituloId = TIPOTITULO.idTipoTitulo "
+                + "inner join CATEGORIA on categoriaId = CATEGORIA.idCategoria "
+                + "inner join SUBCATEGORIA on subcategoriaId = SUBCATEGORIA.idSubcategoria "
+                + "inner join PESSOA on pessoaId = PESSOA.idPessoa "
                 + "where lower(nomeTitulo) like ?";
         ResultSet resultadoConsulta = executarConsultaSQL(
                 SQL, "%" + filtro.trim().toLowerCase() + "%");
@@ -75,7 +74,7 @@ public class TituloDao extends Dao<Titulo> {
             titulo.setValorTitulo(resultadoConsulta.getDouble("valorTitulo"));
             titulo.setNumeroParcela(resultadoConsulta.getInt("numeroParcela"));
             titulo.setPendente(resultadoConsulta.getInt("pendente"));
-            titulo.setTipoTitulo(resultadoConsulta.getInt("tipoTitulo"));
+            titulo.setTipoTitulo(resultadoConsulta.getInt("tipoTituloId"));
             titulo.setCategoriaId(resultadoConsulta.getInt("categoriaId"));
             titulo.setSubCategoriaId(resultadoConsulta.getInt("subcategoriaId"));
             titulo.setPessoaId(resultadoConsulta.getInt("pessoaId"));

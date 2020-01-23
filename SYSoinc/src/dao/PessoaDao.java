@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import modelo.Pessoa;
 
 public class PessoaDao extends Dao<Pessoa> {
@@ -73,4 +74,29 @@ public class PessoaDao extends Dao<Pessoa> {
 
         return retorno;
     }
+    
+        public List<Pessoa> getPessoa() throws SQLException {
+
+        List<Pessoa> lista;
+        lista = new ArrayList();
+
+        String sql = "SELECT * FROM PESSOA";
+        ResultSet rs = executarConsultaSQL(sql);
+
+        while (rs.next()) {
+            Pessoa pessoa = new Pessoa();
+            pessoa.setIdPessoa(rs.getInt("idPessoa"));
+            pessoa.setNomePessoa(rs.getString("nomePessoa"));
+            pessoa.setTipoPessoa(rs.getString("tipoPessoa"));
+            pessoa.setCpfCnpj(rs.getString("cpfCnpj"));
+            pessoa.setTelefone(rs.getString("telefone"));
+            pessoa.setEndereco(rs.getString("endereco"));
+            pessoa.setBairro(rs.getString("bairro"));
+            pessoa.setCidadeId(rs.getInt("cidadeId"));
+            lista.add(pessoa);
+        }
+
+        return lista;
+    }
+    
 }
