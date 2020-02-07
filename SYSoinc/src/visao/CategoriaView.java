@@ -19,8 +19,10 @@ import modelo.Subcategoria;
  * @author macbook
  */
 public class CategoriaView extends javax.swing.JPanel {
+
     ArrayList<Categoria> resultadoPesquisaCategoria;
     ArrayList<Subcategoria> resultadoPesquisaSub;
+
     /**
      * Creates new form CategoriaView
      */
@@ -29,12 +31,9 @@ public class CategoriaView extends javax.swing.JPanel {
         atualizarPesquisaCategoria();
         atualizarPesquisaSubcategoria();
     }
-    
-    
-    
+
     // --------------------MÉTODOS ------------------------
-    
-        private void atualizarPesquisaCategoria() {
+    private void atualizarPesquisaCategoria() {
         ControleCategoria controle = new ControleCategoria();
         DefaultTableModel model = (DefaultTableModel) tblCategoria.getModel();
         model.setNumRows(0);
@@ -80,8 +79,6 @@ public class CategoriaView extends javax.swing.JPanel {
             });
         }
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -412,15 +409,20 @@ public class CategoriaView extends javax.swing.JPanel {
 
     private void btInserirCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btInserirCatActionPerformed
         Categoria categoria = new Categoria();
-
         categoria.setNomeCategoria(tfCategoria.getText());
         categoria.setTipoCategoria(buttonGroup1.getSelection().getActionCommand());
+        
+        Subcategoria subcategoria = new Subcategoria();
+        subcategoria.setNomeSubcategoria(" ");
+
         ControleCategoria controle = new ControleCategoria();
         try {
             controle.salvar(categoria);
             JOptionPane.showMessageDialog(this, "Categoria salva!", "Concluído", JOptionPane.INFORMATION_MESSAGE);
             atualizarPesquisaCategoria();
             tfCategoria.setText("");//setando o campo em branco
+            
+            
         } catch (Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "Erro ao salvar o novo item.", "ERRO", JOptionPane.ERROR_MESSAGE);

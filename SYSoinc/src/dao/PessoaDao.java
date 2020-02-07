@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import modelo.Cidade;
 import modelo.Pessoa;
 
 public class PessoaDao extends Dao<Pessoa> {
@@ -25,7 +26,7 @@ public class PessoaDao extends Dao<Pessoa> {
                 pessoa.getTelefone(),
                 pessoa.getEndereco(),
                 pessoa.getBairro(),
-                pessoa.getCidadeId()
+                pessoa.getCidade().getIdCidade()
         );
     }
 
@@ -46,7 +47,7 @@ public class PessoaDao extends Dao<Pessoa> {
                 pessoa.getTelefone(),
                 pessoa.getEndereco(),
                 pessoa.getBairro(),
-                pessoa.getCidadeId(),
+                pessoa.getCidade().getIdCidade(),
                 pessoa.getIdPessoa()
         );
     }
@@ -67,8 +68,14 @@ public class PessoaDao extends Dao<Pessoa> {
             pessoa.setTelefone(resultadoConsulta.getString("telefone"));
             pessoa.setEndereco(resultadoConsulta.getString("endereco"));
             pessoa.setBairro(resultadoConsulta.getString("bairro"));
-            pessoa.setCidadeId(resultadoConsulta.getInt("cidadeId"));
-            pessoa.setNomeCidade(resultadoConsulta.getString("nomeCidade"));
+            
+            Cidade cidade = new Cidade();
+            cidade.setIdCidade(resultadoConsulta.getInt("idCidade"));
+            pessoa.setCidade(cidade);
+            cidade.setNomeCidade(resultadoConsulta.getString("nomeCidade"));
+            
+//            pessoa.setCidadeId(resultadoConsulta.getInt("cidadeId"));
+//            pessoa.setNomeCidade(resultadoConsulta.getString("nomeCidade"));
             retorno.add(pessoa);
         }
 
@@ -92,34 +99,21 @@ public class PessoaDao extends Dao<Pessoa> {
             pessoa.setTelefone(rs.getString("telefone"));
             pessoa.setEndereco(rs.getString("endereco"));
             pessoa.setBairro(rs.getString("bairro"));
-            pessoa.setCidadeId(rs.getInt("cidadeId"));
+            
+            Cidade cidade = new Cidade();
+            cidade.setIdCidade(rs.getInt("cidadeId"));
+            pessoa.setCidade(cidade);
             lista.add(pessoa);
         }
 
         return lista;
     }
 
+    @Override
+    public Pessoa consulta(int filtro) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
-    
-//        public Pessoa consultaPessoa(int idPessoa) throws SQLException {
-//
-//        List<Pessoa> listaPes;
-//        listaPes = new ArrayList();
-//
-//           String sql = "SELECT * FROM PESSOA WHERE idPessoa = ";
-//            sql += String.valueOf(idPessoa);
-//            ResultSet resultadoConsulta = executarConsultaSQL(sql);
-//            
-//            while (resultadoConsulta.next()) {
-//                Pessoa pessoa = new Pessoa();
-//                pessoa.setIdPessoa(resultadoConsulta.getInt("idPessoa"));
-//                pessoa.setNomePessoa(resultadoConsulta.getString("nomePessoa"));
-//                
-//                listaPes.add(pessoa);
-//            }
-//
-//        return (Pessoa) listaPes;
-//        }
     
 
 }

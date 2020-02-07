@@ -80,7 +80,12 @@ public class CidadeEstadoDao extends Dao <Estado> {
     public ArrayList<Estado> pesquisar(String filtro) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+    @Override
+    public Estado consulta(int filtro) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     
     
     

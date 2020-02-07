@@ -19,8 +19,8 @@ public abstract class Dao<TipoDado> {
     public abstract void inserir(TipoDado objeto) throws SQLException;
     public abstract void alterar(TipoDado objeto) throws SQLException;
     public abstract void excluir(TipoDado objeto) throws SQLException;
-    public abstract ArrayList<TipoDado> pesquisar(String filtro) throws SQLException;
-    
+    public abstract ArrayList<TipoDado> pesquisar(String filtro) throws SQLException;    
+    public abstract TipoDado consulta(int filtro) throws SQLException;    
 
     //metodo generico prepara consulta
     private PreparedStatement prepararConsulta(String SQL, Object... parametros) throws SQLException {

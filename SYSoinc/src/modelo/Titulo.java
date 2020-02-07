@@ -1,25 +1,48 @@
 package modelo;
 
-public class Titulo{
+public class Titulo {
 
     private int idTitulo;
     private String nomeTitulo;
-    private int tipoTitulo;
     private String dataRealizacao;
     private String dataVencimento;
     private Double valorTitulo;
     private int numeroParcela;
-    private int pendente;
-    private Pessoa pessoa;
-    private int categoriaId;
-    private int subCategoriaId;
+    private String pendente;
     private String cedente;
+
+    private Pessoa pessoa;
+    private Categoria categoria;
+    private Subcategoria subCategoria;
+    private TipoTitulo tipoTitulo;
     
-    
-    
-    
-    // precisa corrigir o banco. Alterar tipagem das colunas.
+
     //para parcela, fazer um IF e dividir vlTotal/qtdParcelas, depois laço FOR[qtdParcelas]
+    
+    
+    public TipoTitulo getTipoTitulo() {
+        return tipoTitulo;
+    }
+
+    public void setTipoTitulo(TipoTitulo tipoTitulo) {
+        this.tipoTitulo = tipoTitulo;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public Subcategoria getSubCategoria() {
+        return subCategoria;
+    }
+
+    public void setSubCategoria(Subcategoria subCategoria) {
+        this.subCategoria = subCategoria;
+    }
 
     public String getDataRealizacao() {
         return dataRealizacao;
@@ -36,7 +59,7 @@ public class Titulo{
     public void setCedente(String cedente) {
         this.cedente = cedente;
     }
-    
+
     /**
      * @return int return the idTitulo
      */
@@ -94,63 +117,6 @@ public class Titulo{
     }
 
     /**
-     * @return int return the pendente
-     */
-    public int getPendente() {
-        return pendente;
-    }
-
-    /**
-     * @param pendente the pendente to set
-     */
-    public void setPendente(int pendente) {
-        this.pendente = pendente;
-    }
-
-    /**
-     * @return int return the tipoTitulo
-     */
-    public int getTipoTitulo() {
-        return tipoTitulo;
-    }
-
-    /**
-     * @param tipoTitulo the tipoTitulo to set
-     */
-    public void setTipoTitulo(int tipoTitulo) {
-        this.tipoTitulo = tipoTitulo;
-    }
-
-    /**
-     * @return int return the categoriaId
-     */
-    public int getCategoriaId() {
-        return categoriaId;
-    }
-
-    /**
-     * @param categoriaId the categoriaId to set
-     */
-    public void setCategoriaId(int categoriaId) {
-        this.categoriaId = categoriaId;
-    }
-
-    /**
-     * @return int return the subCategoriaId
-     */
-    public int getSubCategoriaId() {
-        return subCategoriaId;
-    }
-
-    /**
-     * @param subCategoriaId the subCategoriaId to set
-     */
-    public void setSubCategoriaId(int subCategoriaId) {
-        this.subCategoriaId = subCategoriaId;
-    }
-
-
-    /**
      * @return String return the nomeTitulo
      */
     public String getNomeTitulo() {
@@ -170,6 +136,15 @@ public class Titulo{
 
     public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
+    }
+    
+    
+    public String getPendente() {
+        return pendente;
+    }
+
+    public void setPendente(String pendente) {
+        this.pendente = pendente;
     }
     
 

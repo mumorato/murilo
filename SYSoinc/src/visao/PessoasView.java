@@ -11,6 +11,7 @@ import controle.ControlePessoa;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -31,6 +32,7 @@ public class PessoasView extends javax.swing.JPanel {
     public PessoasView() {
         initComponents();
         atualizarPesquisa();
+        Cidade cid = new Cidade();
 
 //combo box de cidadeEstado
         cbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));
@@ -59,7 +61,8 @@ public class PessoasView extends javax.swing.JPanel {
                 pessoa.getNomePessoa(),
                 pessoa.getTipoPessoa(),
                 pessoa.getCpfCnpj(),
-                pessoa.getNomeCidade(),
+                //pessoa.getNomeCidade(),
+                pessoa.getCidade().getNomeCidade(),
                 pessoa.getEndereco(),
                 pessoa.getBairro(),
                 pessoa.getTelefone()
@@ -343,7 +346,7 @@ public class PessoasView extends javax.swing.JPanel {
     }//GEN-LAST:event_tfTelefoneActionPerformed
 
     private void cbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEstadoActionPerformed
- 
+
         try {
             cbCidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));
             ControleCidadeEstado controlador = new ControleCidadeEstado();
@@ -357,15 +360,19 @@ public class PessoasView extends javax.swing.JPanel {
     }//GEN-LAST:event_cbEstadoActionPerformed
 
     private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
-        int vlCidade = cbCidade.getSelectedIndex();
-        
+
         Pessoa pessoa = new Pessoa();
         pessoa.setNomePessoa(tfNome.getText());
         pessoa.setCpfCnpj(tfCpfCnpj.getText());                                           //falta máscara do documento
         pessoa.setEndereco(tfEndereco.getText());
         pessoa.setBairro(tfBairro.getText());
         pessoa.setTelefone(tfTelefone.getText());
-        pessoa.setCidadeId(listaCidades.get(vlCidade-1).getIdCidade());
+        
+        Cidade selec = new Cidade();
+        selec.setIdCidade(listaCidades.get(cbCidade.getSelectedIndex() - 1).getIdCidade());
+        selec.setNomeCidade(listaCidades.get(cbCidade.getSelectedIndex() - 1).getNomeCidade());
+        pessoa.setCidade(selec);
+
         pessoa.setTipoPessoa(grupoTipo.getSelection().getActionCommand());
 
 //salvando

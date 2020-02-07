@@ -76,4 +76,11 @@ public class SubcategoriaDao extends Dao <Subcategoria> {
 
         return listaSub;
     }
+
+    @Override
+    public Subcategoria consulta(int filtro) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
 }

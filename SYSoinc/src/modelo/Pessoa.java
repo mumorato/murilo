@@ -9,18 +9,15 @@ public class Pessoa {
     private String telefone;
     private String endereco;
     private String bairro;
-    private int cidadeId;
-
-    private String nomeCidade;
-
+    private Cidade cidade;
     
 
-    public String getNomeCidade() {
-        return nomeCidade;
+    public Cidade getCidade() {
+        return cidade;
     }
 
-    public void setNomeCidade(String nomeCidade) {
-        this.nomeCidade = nomeCidade;
+    public void setCidade(Cidade cidade) {
+        this.cidade = cidade;
     }
 
     public int getIdPessoa() {
@@ -77,14 +74,6 @@ public class Pessoa {
 
     public void setBairro(String bairro) {
         this.bairro = bairro;
-    }
-
-    public int getCidadeId() {
-        return cidadeId;
-    }
-
-    public void setCidadeId(int cidadeId) {
-        this.cidadeId = cidadeId;
     }
 
 }

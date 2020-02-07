@@ -20,12 +20,13 @@ import modelo.Titulo;
 public class TitulosView extends javax.swing.JPanel {
 
     ArrayList<Titulo> resultadoPesquisa;
-
+    Titulo tableTitulo = new Titulo();
     /**
      * Creates new form TitulosView
      */
     public TitulosView() {
         initComponents();
+        atualizarPesquisa();
     }
 
     //--------------MÉTODOS-------------------
@@ -44,17 +45,56 @@ public class TitulosView extends javax.swing.JPanel {
             model.addRow(new Object[]{
                 titulo.getIdTitulo(),
                 titulo.getNomeTitulo(),
-                titulo.getDataVencimento(),
                 titulo.getValorTitulo(),
+                titulo.getCategoria().getNomeCategoria(),
+                titulo.getSubCategoria().getNomeSubcategoria(),
+                titulo.getTipoTitulo().getNomeTipoTitulo(),
                 titulo.getNumeroParcela(),
+                titulo.getDataVencimento(),
+                titulo.getDataRealizacao(),
                 titulo.getPendente(),
-                titulo.getTipoTitulo(),
-                titulo.getCategoriaId(),
-                titulo.getSubCategoriaId(),
-                //titulo.getPessoaId()
-            });
+                titulo.getPessoa().getNomePessoa(),
+                titulo.getCedente(),});
         }
     }
+
+    private void filtro() {
+        ControleTitulo controle = new ControleTitulo();
+        DefaultTableModel model = (DefaultTableModel) tblTitulo.getModel();
+        model.setNumRows(0);
+
+        try {
+            this.resultadoPesquisa = controle.pesquisarFiltro(Integer.toString(cbFiltro.getSelectedIndex()));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Falha na Pesquisa!", "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+        for (Titulo titulo : this.resultadoPesquisa) {
+            model.addRow(new Object[]{
+                titulo.getIdTitulo(),
+                titulo.getNomeTitulo(),
+                titulo.getValorTitulo(),
+                titulo.getCategoria().getNomeCategoria(),
+                titulo.getSubCategoria().getNomeSubcategoria(),
+                titulo.getTipoTitulo().getNomeTipoTitulo(),
+                titulo.getNumeroParcela(),
+                titulo.getDataVencimento(),
+                titulo.getDataRealizacao(),
+                titulo.getPendente(),
+                titulo.getPessoa().getNomePessoa(),
+                titulo.getCedente(),});
+        }
+    }
+    
+        private void definirId() {
+        if (tblTitulo.getSelectedRow() != -1) {
+            int id = (int) tblTitulo.getValueAt(tblTitulo.getSelectedRow(), 0);
+            UpdateView tela = new UpdateView();
+            tela.setId(id);
+            tela.setVisible(true);
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -78,19 +118,60 @@ public class TitulosView extends javax.swing.JPanel {
 
         tblTitulo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Nome", "Valor", "Categoria", "Subcategoria", "Tipo", "Parcela", "Vencimento", "Realizado", "Situação", "Responsável", "Cedente"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblTitulo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblTituloMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblTitulo);
+        if (tblTitulo.getColumnModel().getColumnCount() > 0) {
+            tblTitulo.getColumnModel().getColumn(0).setMinWidth(30);
+            tblTitulo.getColumnModel().getColumn(0).setPreferredWidth(30);
+            tblTitulo.getColumnModel().getColumn(0).setMaxWidth(30);
+            tblTitulo.getColumnModel().getColumn(1).setMinWidth(250);
+            tblTitulo.getColumnModel().getColumn(1).setPreferredWidth(250);
+            tblTitulo.getColumnModel().getColumn(1).setMaxWidth(250);
+            tblTitulo.getColumnModel().getColumn(2).setMinWidth(80);
+            tblTitulo.getColumnModel().getColumn(2).setPreferredWidth(80);
+            tblTitulo.getColumnModel().getColumn(2).setMaxWidth(80);
+            tblTitulo.getColumnModel().getColumn(5).setMinWidth(70);
+            tblTitulo.getColumnModel().getColumn(5).setPreferredWidth(70);
+            tblTitulo.getColumnModel().getColumn(5).setMaxWidth(70);
+            tblTitulo.getColumnModel().getColumn(6).setMinWidth(60);
+            tblTitulo.getColumnModel().getColumn(6).setPreferredWidth(60);
+            tblTitulo.getColumnModel().getColumn(6).setMaxWidth(60);
+            tblTitulo.getColumnModel().getColumn(9).setMinWidth(70);
+            tblTitulo.getColumnModel().getColumn(9).setPreferredWidth(70);
+            tblTitulo.getColumnModel().getColumn(9).setMaxWidth(70);
+        }
 
-        cbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Despesa", "Receita", "Todos" }));
+        cbFiltro.setSelectedIndex(-1);
+        cbFiltro.setBorder(javax.swing.BorderFactory.createTitledBorder("Filtro por Tipo"));
+        cbFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbFiltroActionPerformed(evt);
+            }
+        });
 
+        tfPesquisa.setBorder(javax.swing.BorderFactory.createTitledBorder("Filtro por Nome"));
         tfPesquisa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfPesquisaActionPerformed(evt);
@@ -98,6 +179,11 @@ public class TitulosView extends javax.swing.JPanel {
         });
 
         btPesquisa.setText("Pesquisa");
+        btPesquisa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btPesquisaActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Nexa Light", 0, 24)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -135,11 +221,11 @@ public class TitulosView extends javax.swing.JPanel {
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
                 .addGap(29, 29, 29)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btPesquisa))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -155,6 +241,25 @@ public class TitulosView extends javax.swing.JPanel {
     private void tfPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfPesquisaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfPesquisaActionPerformed
+
+    private void cbFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFiltroActionPerformed
+        if (cbFiltro.getSelectedIndex() <= 1) {
+            filtro();
+        } else {
+            atualizarPesquisa();
+        };
+    }//GEN-LAST:event_cbFiltroActionPerformed
+
+    private void btPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisaActionPerformed
+        atualizarPesquisa();
+    }//GEN-LAST:event_btPesquisaActionPerformed
+
+    private void tblTituloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTituloMouseClicked
+        if (evt.getClickCount() == 2 && !evt.isConsumed()) {
+            evt.consume();
+            definirId();
+        }      
+    }//GEN-LAST:event_tblTituloMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

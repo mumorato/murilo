@@ -71,4 +71,11 @@ public class CategoriaDao extends Dao<Categoria> {
 
         return lista;
     }
+
+    @Override
+    public Categoria consulta(int filtro) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
 }

@@ -9,34 +9,35 @@ import controle.ControleCategoria;
 import controle.ControlePessoa;
 import controle.ControleSubcategoria;
 import controle.ControleTitulo;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import modelo.Categoria;
 import modelo.Pessoa;
 import modelo.Subcategoria;
-import modelo.Titulo;
 import modelo.TipoTitulo;
+import modelo.Titulo;
 
 /**
  *
  * @author macbook
  */
-public class AddTitulo extends javax.swing.JPanel {
+public class UpdateView extends javax.swing.JFrame {
 
     List<Categoria> listaCategoria;
     List<Subcategoria> listaSubcategoria;
     List<Pessoa> listaPessoa;
     ArrayList<Titulo> resultadoPesquisa;
 
-    public AddTitulo() {
+
+    /**
+     * Creates new form UpdateView
+     */
+    public UpdateView() {
         initComponents();
-        atualizarPesquisa();
-        //Pessoa pes = new Pessoa();
 
         //Combobox de categoria
         cbCategorias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));
@@ -53,33 +54,64 @@ public class AddTitulo extends javax.swing.JPanel {
         for (int i = 0; i < listaPessoa.size(); i++) {
             cbCedente.addItem(listaPessoa.get(i).getNomePessoa());
         }
-
+        
+        
+        
     }
-
-    //--------------MÉTODOS-------------------
-    private void atualizarPesquisa() {
-        ControleTitulo controle = new ControleTitulo();
-        DefaultTableModel model = (DefaultTableModel) tblEditTitulo.getModel();
-        model.setNumRows(0);
+       public void setId(int id) {
+        txtId.setText(String.valueOf(id));
+        consultar();
+    }
+       private void consultar() {
 
         try {
-            this.resultadoPesquisa = controle.pesquisar(tfPesquisa.getText().trim());
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Falha na Pesquisa!", "ERRO", JOptionPane.ERROR_MESSAGE);
-        }
-        for (Titulo titulo : this.resultadoPesquisa) {
-            model.addRow(new Object[]{
-                titulo.getNomeTitulo(),
-                titulo.getValorTitulo(),
-                titulo.getNumeroParcela(),
-                titulo.getDataVencimento(),
-                titulo.getDataRealizacao(),
-                titulo.getPendente(),
-                titulo.getPessoa().getNomePessoa(),
-                titulo.getCedente(),});
-        };
-    }
+            Titulo tituloUp = new Titulo();
+            ControleTitulo controle = new ControleTitulo();
+            tituloUp = controle.consulta(Integer.parseInt(txtId.getText()));
 
+            tfTitulo.setText(tituloUp.getNomeTitulo());
+            tfCedente.setText(tituloUp.getCedente());
+            tfValor.setText(Double.toString(tituloUp.getValorTitulo()));
+            tfParcela.setText(Double.toString(tituloUp.getNumeroParcela()));
+            tfVencimento.setText(tituloUp.getDataVencimento());
+            tfRealizacao.setText(tituloUp.getDataRealizacao());
+            
+            
+            if (tituloUp.getTipoTitulo().getIdTipoTitulo() == 0){
+               // grupoTipo.setSelected(jRadioButton, true);
+                jRadioButton2.setSelected(true);
+            }
+            else {
+                jRadioButton1.setSelected(true);
+            }
+            
+            cbCedente.setSelectedItem(tituloUp.getPessoa().getNomePessoa());
+            cbCategorias.setSelectedItem(tituloUp.getCategoria().getNomeCategoria());
+            cbSubcategoria.setSelectedItem(tituloUp.getSubCategoria().getNomeSubcategoria());
+            
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(UpdateView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+            }
+//                titulo.get
+//                txtNome.setText(p.getNome());
+//                txtEndereco.setText(p.getEndereco());
+//
+//                if (p.getTipoFiscal().equals("0")) {
+//                    cmbTipoDoc.setSelectedIndex(0);
+//                } else if (p.getTipoFiscal().equals("1")) {
+//                    cmbTipoDoc.setSelectedIndex(1);
+//                }
+//
+//                txtDoc.setText(p.getDocumento());
+//
+//                txtTelefone.setText(p.getTelefone());
+//
+//                cmbTipo.setSelectedItem(p.getTipoPessoa());
+//            
+//        
+//       
+        
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -90,6 +122,7 @@ public class AddTitulo extends javax.swing.JPanel {
     private void initComponents() {
 
         grupoTipo = new javax.swing.ButtonGroup();
+        jPanel1 = new javax.swing.JPanel();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         tfTitulo = new javax.swing.JTextField();
         jRadioButton2 = new javax.swing.JRadioButton();
@@ -102,16 +135,20 @@ public class AddTitulo extends javax.swing.JPanel {
         tfRealizacao = new javax.swing.JFormattedTextField();
         cbCedente = new javax.swing.JComboBox<>();
         tfVencimento = new javax.swing.JFormattedTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblEditTitulo = new javax.swing.JTable();
         btSalvar = new javax.swing.JButton();
-        btPesquisa = new javax.swing.JButton();
-        tfPesquisa = new javax.swing.JTextField();
         tfParcela = new javax.swing.JTextField();
+        btCancelar = new javax.swing.JButton();
+        txtId = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
 
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setAlwaysOnTop(true);
+        setUndecorated(true);
+        setResizable(false);
+        setSize(new java.awt.Dimension(768, 350));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tfTitulo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Título ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nexa Light", 1, 12))); // NOI18N
 
@@ -119,6 +156,11 @@ public class AddTitulo extends javax.swing.JPanel {
         jRadioButton2.setSelected(true);
         jRadioButton2.setText("Despesa");
         jRadioButton2.setActionCommand("0");
+        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton2ActionPerformed(evt);
+            }
+        });
 
         grupoTipo.add(jRadioButton1);
         jRadioButton1.setText("Receita");
@@ -156,46 +198,22 @@ public class AddTitulo extends javax.swing.JPanel {
         tfVencimento.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Vencimento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nexa Light", 1, 12))); // NOI18N
         tfVencimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
 
-        tblEditTitulo.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "Nome", "Valor", "Parcela", "Vencimento", "Realizado", "Situação", "Beneficiario", "Cedente"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(tblEditTitulo);
-        if (tblEditTitulo.getColumnModel().getColumnCount() > 0) {
-            tblEditTitulo.getColumnModel().getColumn(1).setMinWidth(60);
-            tblEditTitulo.getColumnModel().getColumn(1).setMaxWidth(61);
-            tblEditTitulo.getColumnModel().getColumn(2).setMinWidth(60);
-            tblEditTitulo.getColumnModel().getColumn(2).setMaxWidth(61);
-            tblEditTitulo.getColumnModel().getColumn(5).setMinWidth(60);
-            tblEditTitulo.getColumnModel().getColumn(5).setMaxWidth(61);
-        }
-
-        btSalvar.setText("Salvar");
+        btSalvar.setText("Atualizar");
         btSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSalvarActionPerformed(evt);
             }
         });
 
-        btPesquisa.setText("Pesquisa");
-
         tfParcela.setText("1");
         tfParcela.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Parcelas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nexa Light", 1, 12))); // NOI18N
+
+        btCancelar.setText("Cancelar");
+        btCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlInfLayout = new javax.swing.GroupLayout(pnlInf);
         pnlInf.setLayout(pnlInfLayout);
@@ -204,12 +222,12 @@ public class AddTitulo extends javax.swing.JPanel {
             .addGroup(pnlInfLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlInfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInfLayout.createSequentialGroup()
-                        .addComponent(tfPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btPesquisa)
+                        .addGap(73, 73, 73)
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlInfLayout.createSequentialGroup()
                         .addGroup(pnlInfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,7 +240,7 @@ public class AddTitulo extends javax.swing.JPanel {
                         .addGroup(pnlInfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tfCedente)
                             .addGroup(pnlInfLayout.createSequentialGroup()
-                                .addComponent(tfVencimento)
+                                .addComponent(tfVencimento, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
                                 .addComponent(tfRealizacao, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
@@ -239,19 +257,18 @@ public class AddTitulo extends javax.swing.JPanel {
                     .addComponent(tfRealizacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfParcela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(pnlInfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btSalvar)
-                    .addComponent(btPesquisa)
-                    .addComponent(tfPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnlInfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtId, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlInfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btSalvar)
+                        .addComponent(btCancelar)))
                 .addContainerGap())
         );
 
         jLabel2.setFont(new java.awt.Font("Nexa Light", 0, 24)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("CADASTRAR NOVO TÍTULO");
+        jLabel2.setText("EDITAR TÍTULO");
 
         jLayeredPane1.setLayer(tfTitulo, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jRadioButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -266,31 +283,33 @@ public class AddTitulo extends javax.swing.JPanel {
         jLayeredPane1Layout.setHorizontalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                .addGap(281, 281, 281)
+                .addGap(25, 25, 25)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlInf, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jRadioButton2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jRadioButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
-                        .addComponent(cbCategorias, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(cbSubcategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(tfTitulo, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(280, 280, 280))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(481, 481, 481))
+                        .addGap(274, 274, 274)
+                        .addComponent(jLabel2)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                        .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pnlInf, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addComponent(jRadioButton2)
+                                .addGap(18, 18, 18)
+                                .addComponent(jRadioButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                                .addComponent(cbCategorias, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(cbSubcategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tfTitulo, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(26, 26, 26))))
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                .addGap(57, 57, 57)
+                .addContainerGap()
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(tfTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -301,36 +320,59 @@ public class AddTitulo extends javax.swing.JPanel {
                     .addComponent(cbSubcategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnlInf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 630));
+        jPanel1.add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, 350));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/bgDesfocado.jpg"))); // NOI18N
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 770, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 350, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCategoriasActionPerformed
-       
+
         //filtrando combobox Subcategoria a partir do índice categoria
         cbSubcategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));
         ControleSubcategoria controlador = new ControleSubcategoria();
+
+
         try {
             listaSubcategoria = controlador.getSubcategoria(cbCategorias.getSelectedIndex());
         } catch (SQLException ex) {
-            Logger.getLogger(AddTitulo.class.getName()).log(Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+
         for (int i = 0; i < listaSubcategoria.size(); i++) {
             cbSubcategoria.addItem(listaSubcategoria.get(i).getNomeSubcategoria());
         }
     }//GEN-LAST:event_cbCategoriasActionPerformed
+
+    private void tfCedenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCedenteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfCedenteActionPerformed
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
         Titulo titulo = new Titulo();
         int iCat = cbCategorias.getSelectedIndex();
         int iPess = cbCedente.getSelectedIndex();
         int iSubcat = cbSubcategoria.getSelectedIndex();
-        if (iSubcat >= 1) {                                                                  //verifica se a subcategoria foi selecionada
+        if (iSubcat >= 1) {                                                                  
+            //verifica se a subcategoria foi selecionada
             titulo.setNomeTitulo(tfTitulo.getText());
             titulo.setCedente(tfCedente.getText());                                          //falta máscara do documento
             titulo.setValorTitulo(Double.parseDouble(tfValor.getText()));
@@ -339,7 +381,7 @@ public class AddTitulo extends javax.swing.JPanel {
             TipoTitulo tipo = new TipoTitulo();
             tipo.setIdTipoTitulo(Integer.parseInt(grupoTipo.getSelection().getActionCommand()));
             titulo.setTipoTitulo(tipo);
-         
+
             //combobox categoria/subcategora, salvando posição selecionada da lista e recuperando objeto:
             Categoria categoria = new Categoria();
             categoria.setIdCategoria(listaCategoria.get(iCat - 1).getIdCategoria());
@@ -347,7 +389,7 @@ public class AddTitulo extends javax.swing.JPanel {
             Subcategoria subcategoria = new Subcategoria();
             subcategoria.setIdSubcategoria(listaSubcategoria.get(iSubcat - 1).getIdSubcategoria());
             titulo.setSubCategoria(subcategoria);
-            
+
             //combobox pessoa, salvando posição selecionada da lista e recuperando objeto:
             Pessoa pess = new Pessoa();
             pess.setIdPessoa(listaPessoa.get(iPess - 1).getIdPessoa());
@@ -358,54 +400,90 @@ public class AddTitulo extends javax.swing.JPanel {
 
             //salvando titulo
             ControleTitulo controle = new ControleTitulo();
-
+            
             try {
-                controle.salvar(titulo);
-                //setando o campos em branco novamente
-                tfTitulo.setText("");
-                tfCedente.setText("");
-                tfValor.setText("");
-                tfRealizacao.setText("");
-                tfVencimento.setText("");
-                cbCategorias.setSelectedIndex(-1);
-                cbSubcategoria.setSelectedIndex(-1);
-                grupoTipo.clearSelection();
-
+            controle.salvar(titulo);
+            //setando o campos em branco novamente
+            tfTitulo.setText("");
+            tfCedente.setText("");
+            tfValor.setText("");
+            tfRealizacao.setText("");
+            tfVencimento.setText("");
+            cbCategorias.setSelectedIndex(-1);
+            cbSubcategoria.setSelectedIndex(-1);
+            grupoTipo.clearSelection();
             } catch (SQLException ex) {
-                Logger.getLogger(AddTitulo.class.getName()).log(Level.SEVERE, null, ex);
+                java.util.logging.Logger.getLogger(UpdateView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
             }
+
+
         } else {
             JOptionPane.showMessageDialog(this, "Subcategoria é um campo obrigatório!", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
-        atualizarPesquisa();
     }//GEN-LAST:event_btSalvarActionPerformed
 
-    private void tfCedenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCedenteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfCedenteActionPerformed
+    private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
+           this.dispose();
+    }//GEN-LAST:event_btCancelarActionPerformed
 
+    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton2ActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(UpdateView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(UpdateView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(UpdateView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(UpdateView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new UpdateView().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btPesquisa;
+    private javax.swing.JButton btCancelar;
     private javax.swing.JButton btSalvar;
     private javax.swing.JComboBox<String> cbCategorias;
     private javax.swing.JComboBox<String> cbCedente;
     private javax.swing.JComboBox<String> cbSubcategoria;
     private javax.swing.ButtonGroup grupoTipo;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLayeredPane jLayeredPane1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnlInf;
-    private javax.swing.JTable tblEditTitulo;
     private javax.swing.JTextField tfCedente;
     private javax.swing.JTextField tfParcela;
-    private javax.swing.JTextField tfPesquisa;
     private javax.swing.JFormattedTextField tfRealizacao;
     private javax.swing.JTextField tfTitulo;
     private javax.swing.JTextField tfValor;
     private javax.swing.JFormattedTextField tfVencimento;
+    private javax.swing.JTextField txtId;
     // End of variables declaration//GEN-END:variables
 }
