@@ -10,12 +10,17 @@ import controle.ControlePessoa;
 import controle.ControleSubcategoria;
 import controle.ControleTitulo;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 import modelo.Categoria;
 import modelo.Pessoa;
 import modelo.Subcategoria;
@@ -33,11 +38,13 @@ public class AddTitulo extends javax.swing.JPanel {
     List<Pessoa> listaPessoa;
     ArrayList<Titulo> resultadoPesquisa;
 
-    public AddTitulo() {
+
+    public AddTitulo() throws ParseException {
         initComponents();
         atualizarPesquisa();
-        //Pessoa pes = new Pessoa();
-
+        formatarCampos();
+        
+        
         //Combobox de categoria
         cbCategorias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));
         ControleCategoria controlador = new ControleCategoria();
@@ -78,6 +85,19 @@ public class AddTitulo extends javax.swing.JPanel {
                 titulo.getPessoa().getNomePessoa(),
                 titulo.getCedente(),});
         };
+    }
+    
+    private void formatarCampos(){
+        
+        try { 
+            MaskFormatter mascara = new MaskFormatter("##/##/####");
+            mascara.install(tfVencimento); 
+            MaskFormatter mascara2 = new MaskFormatter("##/##/####");
+            mascara2.install(tfRealizacao); 
+            
+        } catch (ParseException ex) {
+           JOptionPane.showMessageDialog(null, "Erro ao formatar campo de texto", "ERRO", JOptionPane.ERROR_MESSAGE);
+        }   
     }
 
     /**
@@ -148,13 +168,16 @@ public class AddTitulo extends javax.swing.JPanel {
         tfValor.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Valor (R$)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nexa Light", 1, 12))); // NOI18N
 
         tfRealizacao.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Realização em caixa", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nexa Light", 1, 12))); // NOI18N
-        tfRealizacao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
 
         cbCedente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbCedente.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pagador/Beneficiário", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nexa Light", 1, 12))); // NOI18N
 
         tfVencimento.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Vencimento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nexa Light", 1, 12))); // NOI18N
-        tfVencimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
+        tfVencimento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tfVencimentoMouseClicked(evt);
+            }
+        });
 
         tblEditTitulo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -311,7 +334,7 @@ public class AddTitulo extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCategoriasActionPerformed
-       
+
         //filtrando combobox Subcategoria a partir do índice categoria
         cbSubcategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));
         ControleSubcategoria controlador = new ControleSubcategoria();
@@ -330,16 +353,32 @@ public class AddTitulo extends javax.swing.JPanel {
         int iCat = cbCategorias.getSelectedIndex();
         int iPess = cbCedente.getSelectedIndex();
         int iSubcat = cbSubcategoria.getSelectedIndex();
+
         if (iSubcat >= 1) {                                                                  //verifica se a subcategoria foi selecionada
             titulo.setNomeTitulo(tfTitulo.getText());
             titulo.setCedente(tfCedente.getText());                                          //falta máscara do documento
             titulo.setValorTitulo(Double.parseDouble(tfValor.getText()));
-            titulo.setDataRealizacao(tfRealizacao.getText());
-            titulo.setDataVencimento(tfVencimento.getText());
+            
+            try {
+                //titulo.setDataRealizacao(tfRealizacao.getText());
+                Date temp = new SimpleDateFormat("dd/MM/yyyy").parse(tfRealizacao.getText());
+                titulo.setDataRealizacao(temp);
+            } catch (ParseException ex) {
+                Logger.getLogger(AddTitulo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            //titulo.setDataVencimento(tfVencimento.getText());
+            try {
+                Date temp = new SimpleDateFormat("dd/MM/yyyy").parse(tfVencimento.getText());
+                titulo.setDataVencimento(temp);
+            } catch (ParseException ex) {
+                Logger.getLogger(AddTitulo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
             TipoTitulo tipo = new TipoTitulo();
             tipo.setIdTipoTitulo(Integer.parseInt(grupoTipo.getSelection().getActionCommand()));
             titulo.setTipoTitulo(tipo);
-         
+
             //combobox categoria/subcategora, salvando posição selecionada da lista e recuperando objeto:
             Categoria categoria = new Categoria();
             categoria.setIdCategoria(listaCategoria.get(iCat - 1).getIdCategoria());
@@ -347,7 +386,7 @@ public class AddTitulo extends javax.swing.JPanel {
             Subcategoria subcategoria = new Subcategoria();
             subcategoria.setIdSubcategoria(listaSubcategoria.get(iSubcat - 1).getIdSubcategoria());
             titulo.setSubCategoria(subcategoria);
-            
+
             //combobox pessoa, salvando posição selecionada da lista e recuperando objeto:
             Pessoa pess = new Pessoa();
             pess.setIdPessoa(listaPessoa.get(iPess - 1).getIdPessoa());
@@ -383,6 +422,10 @@ public class AddTitulo extends javax.swing.JPanel {
     private void tfCedenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCedenteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfCedenteActionPerformed
+
+    private void tfVencimentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tfVencimentoMouseClicked
+
+    }//GEN-LAST:event_tfVencimentoMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

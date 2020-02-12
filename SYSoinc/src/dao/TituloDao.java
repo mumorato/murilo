@@ -4,8 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.Categoria;
 import modelo.Pessoa;
 import modelo.Subcategoria;
@@ -13,14 +18,17 @@ import modelo.TipoTitulo;
 import modelo.Titulo;
 
 public class TituloDao extends Dao<Titulo> {
+    
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    
 
     @Override
     public void inserir(Titulo titulo) throws SQLException {
         String SQL = "insert into TITULO (dataCadastro, dataVencimento, valorTitulo, numeroParcela, pendente, tipoTituloId, categoriaId, subCategoriaId, pessoaId, nomeTitulo, cedente) values (?,?,?,?,?,?,?,?,?,?,?);";
         executarConsultaDML(SQL,
                 //titulo.getIdTitulo(),
-                titulo.getDataRealizacao(),
-                titulo.getDataVencimento(),
+                sdf.format(titulo.getDataRealizacao()),
+                sdf.format(titulo.getDataVencimento()),
                 titulo.getValorTitulo(),
                 titulo.getNumeroParcela(),
                 titulo.getPendente(),
@@ -45,8 +53,8 @@ public class TituloDao extends Dao<Titulo> {
                 + " numeroParcela = ? , pendente = ?, tipoTituloId = ?, categoriaId = ? , subCategoriaId = ?,"
                 + " pessoaId = ?, nomeTitulo = ?, cedente = ? where idTitulo = ?";
         executarConsultaDML(SQL,
-                titulo.getDataRealizacao(),
-                titulo.getDataVencimento(),
+                sdf.format(titulo.getDataRealizacao()),
+                sdf.format(titulo.getDataVencimento()),
                 titulo.getValorTitulo(),
                 titulo.getNumeroParcela(),
                 titulo.getPendente(),
@@ -75,9 +83,19 @@ public class TituloDao extends Dao<Titulo> {
                 SQL, "%" + filtro.trim().toLowerCase() + "%");
         while (resultadoConsulta.next()) {
             Titulo titulo = new Titulo();
+            try {
+                Date temp = new SimpleDateFormat("dd/MM/yyyy").parse(resultadoConsulta.getString("dataCadastro"));
+                titulo.setDataRealizacao(temp);
+            } catch (ParseException ex) {
+                Logger.getLogger(TituloDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                Date temp = new SimpleDateFormat("dd/MM/yyyy").parse(resultadoConsulta.getString("dataVencimento"));
+                titulo.setDataVencimento(temp);
+            } catch (ParseException ex) {
+                Logger.getLogger(TituloDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
-            titulo.setDataRealizacao(resultadoConsulta.getString("dataCadastro"));
-            titulo.setDataVencimento(resultadoConsulta.getString("dataVencimento"));
             titulo.setValorTitulo(resultadoConsulta.getDouble("valorTitulo"));
             titulo.setNumeroParcela(resultadoConsulta.getInt("numeroParcela"));
             titulo.setPendente(resultadoConsulta.getString("pendente"));
@@ -129,8 +147,8 @@ public class TituloDao extends Dao<Titulo> {
         while (resultadoConsulta.next()) {
             Titulo titulo = new Titulo();
 
-            titulo.setDataRealizacao(resultadoConsulta.getString("dataCadastro"));
-            titulo.setDataVencimento(resultadoConsulta.getString("dataVencimento"));
+//            titulo.setDataRealizacao(resultadoConsulta.getString("dataCadastro"));
+//            titulo.setDataVencimento(resultadoConsulta.getString("dataVencimento"));
             titulo.setValorTitulo(resultadoConsulta.getDouble("valorTitulo"));
             titulo.setNumeroParcela(resultadoConsulta.getInt("numeroParcela"));
             titulo.setPendente(resultadoConsulta.getString("pendente"));
@@ -182,8 +200,8 @@ public class TituloDao extends Dao<Titulo> {
         while (resultadoConsulta.next()) {
             Titulo titulo = new Titulo();
 
-            titulo.setDataRealizacao(resultadoConsulta.getString("dataCadastro"));
-            titulo.setDataVencimento(resultadoConsulta.getString("dataVencimento"));
+//            titulo.setDataRealizacao(resultadoConsulta.getString("dataCadastro"));
+//            titulo.setDataVencimento(resultadoConsulta.getString("dataVencimento"));
             titulo.setValorTitulo(resultadoConsulta.getDouble("valorTitulo"));
             titulo.setNumeroParcela(resultadoConsulta.getInt("numeroParcela"));
             titulo.setPendente(resultadoConsulta.getString("pendente"));

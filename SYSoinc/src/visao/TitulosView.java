@@ -21,6 +21,7 @@ public class TitulosView extends javax.swing.JPanel {
 
     ArrayList<Titulo> resultadoPesquisa;
     Titulo tableTitulo = new Titulo();
+
     /**
      * Creates new form TitulosView
      */
@@ -85,8 +86,8 @@ public class TitulosView extends javax.swing.JPanel {
                 titulo.getCedente(),});
         }
     }
-    
-        private void definirId() {
+
+    private void definirId() {
         if (tblTitulo.getSelectedRow() != -1) {
             int id = (int) tblTitulo.getValueAt(tblTitulo.getSelectedRow(), 0);
             UpdateView tela = new UpdateView();
@@ -94,7 +95,6 @@ public class TitulosView extends javax.swing.JPanel {
             tela.setVisible(true);
         }
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -112,6 +112,7 @@ public class TitulosView extends javax.swing.JPanel {
         tfPesquisa = new javax.swing.JTextField();
         btPesquisa = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        btAtualizar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -189,20 +190,24 @@ public class TitulosView extends javax.swing.JPanel {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("CONSULTA DE TÍTULOS");
 
+        btAtualizar.setText("Atualizar");
+        btAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAtualizarActionPerformed(evt);
+            }
+        });
+
         jLayeredPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(cbFiltro, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(tfPesquisa, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(btPesquisa, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(btAtualizar, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
         jLayeredPane1Layout.setHorizontalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                .addGap(100, 100, 100)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1080, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(100, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,6 +221,12 @@ public class TitulosView extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(441, 441, 441))))
+            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                .addGap(100, 100, 100)
+                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btAtualizar)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1080, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -229,7 +240,9 @@ public class TitulosView extends javax.swing.JPanel {
                     .addComponent(btPesquisa))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btAtualizar)
+                .addGap(7, 7, 7))
         );
 
         add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 630));
@@ -258,11 +271,16 @@ public class TitulosView extends javax.swing.JPanel {
         if (evt.getClickCount() == 2 && !evt.isConsumed()) {
             evt.consume();
             definirId();
-        }      
+        }
     }//GEN-LAST:event_tblTituloMouseClicked
+
+    private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
+        atualizarPesquisa();
+    }//GEN-LAST:event_btAtualizarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btAtualizar;
     private javax.swing.JButton btPesquisa;
     private javax.swing.JComboBox<String> cbFiltro;
     private javax.swing.JLabel jLabel1;

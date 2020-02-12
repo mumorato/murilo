@@ -1,11 +1,13 @@
 package modelo;
 
+import java.util.Date;
+
 public class Titulo {
 
     private int idTitulo;
     private String nomeTitulo;
-    private String dataRealizacao;
-    private String dataVencimento;
+    private Date dataRealizacao;
+    private Date dataVencimento;
     private Double valorTitulo;
     private int numeroParcela;
     private String pendente;
@@ -44,14 +46,6 @@ public class Titulo {
         this.subCategoria = subCategoria;
     }
 
-    public String getDataRealizacao() {
-        return dataRealizacao;
-    }
-
-    public void setDataRealizacao(String dataRealizacao) {
-        this.dataRealizacao = dataRealizacao;
-    }
-
     public String getCedente() {
         return cedente;
     }
@@ -72,20 +66,6 @@ public class Titulo {
      */
     public void setIdTitulo(int idTitulo) {
         this.idTitulo = idTitulo;
-    }
-
-    /**
-     * @return String return the dataVencimento
-     */
-    public String getDataVencimento() {
-        return dataVencimento;
-    }
-
-    /**
-     * @param dataVencimento the dataVencimento to set
-     */
-    public void setDataVencimento(String dataVencimento) {
-        this.dataVencimento = dataVencimento;
     }
 
     /**
@@ -145,6 +125,22 @@ public class Titulo {
 
     public void setPendente(String pendente) {
         this.pendente = pendente;
+    }
+
+    public Date getDataRealizacao() {
+        return dataRealizacao;
+    }
+
+    public void setDataRealizacao(Date dataRealizacao) {
+        this.dataRealizacao = dataRealizacao;
+    }
+
+    public Date getDataVencimento() {
+        return dataVencimento;
+    }
+
+    public void setDataVencimento(Date dataVencimento) {
+        this.dataVencimento = dataVencimento;
     }
     
 
