@@ -12,9 +12,13 @@ import controle.ControleTitulo;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.text.MaskFormatter;
 import modelo.Categoria;
 import modelo.Pessoa;
 import modelo.Subcategoria;
@@ -31,12 +35,14 @@ public class UpdateView extends javax.swing.JFrame {
     List<Subcategoria> listaSubcategoria;
     List<Pessoa> listaPessoa;
     ArrayList<Titulo> resultadoPesquisa;
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     /**
      * Creates new form UpdateView
      */
     public UpdateView() {
         initComponents();
+        formatarCampos();
 
         //Combobox de categoria
         cbCategorias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));
@@ -72,8 +78,9 @@ public class UpdateView extends javax.swing.JFrame {
             tfCedente.setText(tituloUp.getCedente());
             tfValor.setText(Double.toString(tituloUp.getValorTitulo()));
             tfParcela.setText(Integer.toString(tituloUp.getNumeroParcela()));
-//            tfVencimento.setText(tituloUp.getDataVencimento());
-//            tfRealizacao.setText(tituloUp.getDataRealizacao());
+
+            tfVencimento.setText(tituloUp.getDataVencimento() != null ? sdf.format(tituloUp.getDataVencimento()) : null);
+            tfRealizacao.setText(tituloUp.getDataRealizacao() != null ? sdf.format(tituloUp.getDataRealizacao()) : null);
 
             if (tituloUp.getTipoTitulo().getIdTipoTitulo() == 0) {
                 // grupoTipo.setSelected(jRadioButton, true);
@@ -97,7 +104,19 @@ public class UpdateView extends javax.swing.JFrame {
         }
     }
 
-    
+    private void formatarCampos() {
+
+        try {
+            MaskFormatter mascara = new MaskFormatter("##/##/####");
+            mascara.install(tfVencimento);
+            MaskFormatter mascara2 = new MaskFormatter("##/##/####");
+            mascara2.install(tfRealizacao);
+
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao formatar campo de texto", "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -386,8 +405,26 @@ public class UpdateView extends javax.swing.JFrame {
             titulo.setNomeTitulo(tfTitulo.getText());
             titulo.setCedente(tfCedente.getText());                                          //falta máscara do documento
             titulo.setValorTitulo(Double.parseDouble(tfValor.getText()));
-//            titulo.setDataRealizacao(tfRealizacao.getText());
-//            titulo.setDataVencimento(tfVencimento.getText());
+
+            try {
+                if (!tfRealizacao.getText().trim().startsWith("/")) {
+                    Date temp = new SimpleDateFormat("dd/MM/yyyy").parse(tfRealizacao.getText());
+                    titulo.setDataRealizacao(temp);
+                }
+            } catch (ParseException ex) {
+                java.util.logging.Logger.getLogger(AddTitulo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
+
+            try {
+                if (tfVencimento.getText().length() >= 8) {
+                    Date temp = new SimpleDateFormat("dd/MM/yyyy").parse(tfVencimento.getText());
+                    titulo.setDataVencimento(temp);
+                };
+
+            } catch (ParseException ex) {
+                java.util.logging.Logger.getLogger(AddTitulo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
+
             TipoTitulo tipo = new TipoTitulo();
             tipo.setIdTipoTitulo(Integer.parseInt(grupoTipo.getSelection().getActionCommand()));
             titulo.setTipoTitulo(tipo);

@@ -32,7 +32,6 @@ public class PessoasView extends javax.swing.JPanel {
     public PessoasView() {
         initComponents();
         atualizarPesquisa();
-        Cidade cid = new Cidade();
 
 //combo box de cidadeEstado
         cbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));

@@ -185,6 +185,7 @@ public class CategoriaView extends javax.swing.JPanel {
         });
 
         buttonGroup1.add(rbReceita);
+        rbReceita.setSelected(true);
         rbReceita.setText("Receita");
         rbReceita.setActionCommand("Receita");
 

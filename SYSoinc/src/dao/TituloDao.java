@@ -18,17 +18,16 @@ import modelo.TipoTitulo;
 import modelo.Titulo;
 
 public class TituloDao extends Dao<Titulo> {
-    
+
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    
 
     @Override
     public void inserir(Titulo titulo) throws SQLException {
         String SQL = "insert into TITULO (dataCadastro, dataVencimento, valorTitulo, numeroParcela, pendente, tipoTituloId, categoriaId, subCategoriaId, pessoaId, nomeTitulo, cedente) values (?,?,?,?,?,?,?,?,?,?,?);";
         executarConsultaDML(SQL,
                 //titulo.getIdTitulo(),
-                sdf.format(titulo.getDataRealizacao()),
-                sdf.format(titulo.getDataVencimento()),
+                titulo.getDataRealizacao() != null ? sdf.format(titulo.getDataRealizacao()) : null,
+                titulo.getDataVencimento() != null ? sdf.format(titulo.getDataVencimento()) : null,
                 titulo.getValorTitulo(),
                 titulo.getNumeroParcela(),
                 titulo.getPendente(),
@@ -53,8 +52,8 @@ public class TituloDao extends Dao<Titulo> {
                 + " numeroParcela = ? , pendente = ?, tipoTituloId = ?, categoriaId = ? , subCategoriaId = ?,"
                 + " pessoaId = ?, nomeTitulo = ?, cedente = ? where idTitulo = ?";
         executarConsultaDML(SQL,
-                sdf.format(titulo.getDataRealizacao()),
-                sdf.format(titulo.getDataVencimento()),
+                titulo.getDataRealizacao() != null ? sdf.format(titulo.getDataRealizacao()) : null,
+                titulo.getDataVencimento() != null ? sdf.format(titulo.getDataVencimento()) : null,
                 titulo.getValorTitulo(),
                 titulo.getNumeroParcela(),
                 titulo.getPendente(),
@@ -82,50 +81,9 @@ public class TituloDao extends Dao<Titulo> {
         ResultSet resultadoConsulta = executarConsultaSQL(
                 SQL, "%" + filtro.trim().toLowerCase() + "%");
         while (resultadoConsulta.next()) {
-            Titulo titulo = new Titulo();
-            try {
-                Date temp = new SimpleDateFormat("dd/MM/yyyy").parse(resultadoConsulta.getString("dataCadastro"));
-                titulo.setDataRealizacao(temp);
-            } catch (ParseException ex) {
-                Logger.getLogger(TituloDao.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try {
-                Date temp = new SimpleDateFormat("dd/MM/yyyy").parse(resultadoConsulta.getString("dataVencimento"));
-                titulo.setDataVencimento(temp);
-            } catch (ParseException ex) {
-                Logger.getLogger(TituloDao.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            titulo.setValorTitulo(resultadoConsulta.getDouble("valorTitulo"));
-            titulo.setNumeroParcela(resultadoConsulta.getInt("numeroParcela"));
-            titulo.setPendente(resultadoConsulta.getString("pendente"));
-
-            TipoTitulo tipo = new TipoTitulo();
-            tipo.setIdTipoTitulo(resultadoConsulta.getInt("tipoTituloId"));
-            tipo.setNomeTipoTitulo(resultadoConsulta.getString("nomeTipoTitulo"));
-            titulo.setTipoTitulo(tipo);
-
-            Categoria categoria = new Categoria();
-            categoria.setIdCategoria(resultadoConsulta.getInt("categoriaId"));
-            categoria.setNomeCategoria(resultadoConsulta.getString("nomeCategoria"));
-            titulo.setCategoria(categoria);
-
-            Subcategoria subcategoria = new Subcategoria();
-            subcategoria.setIdSubcategoria(resultadoConsulta.getInt("subcategoriaId"));
-            subcategoria.setNomeSubcategoria(resultadoConsulta.getString("nomeSubcategoria"));
-            titulo.setSubCategoria(subcategoria);
-
-            Pessoa pess = new Pessoa();
-            pess.setIdPessoa(resultadoConsulta.getInt("pessoaId"));
-            titulo.setPessoa(pess);
-            pess.setNomePessoa(resultadoConsulta.getString("nomePessoa"));
-            titulo.setPessoa(pess);
-
-            titulo.setNomeTitulo(resultadoConsulta.getString("nomeTitulo"));
-            titulo.setIdTitulo(resultadoConsulta.getInt("idTitulo"));
-            titulo.setCedente(resultadoConsulta.getString("cedente"));
-
-            retorno.add(titulo);
+            
+            retorno.add(Load(resultadoConsulta));
+            
         }
 
         return retorno;
@@ -145,40 +103,8 @@ public class TituloDao extends Dao<Titulo> {
         ResultSet resultadoConsulta = executarConsultaSQL(
                 SQL, "%" + string.trim().toLowerCase() + "%");
         while (resultadoConsulta.next()) {
-            Titulo titulo = new Titulo();
 
-//            titulo.setDataRealizacao(resultadoConsulta.getString("dataCadastro"));
-//            titulo.setDataVencimento(resultadoConsulta.getString("dataVencimento"));
-            titulo.setValorTitulo(resultadoConsulta.getDouble("valorTitulo"));
-            titulo.setNumeroParcela(resultadoConsulta.getInt("numeroParcela"));
-            titulo.setPendente(resultadoConsulta.getString("pendente"));
-
-            TipoTitulo tipo = new TipoTitulo();
-            tipo.setIdTipoTitulo(resultadoConsulta.getInt("tipoTituloId"));
-            tipo.setNomeTipoTitulo(resultadoConsulta.getString("nomeTipoTitulo"));
-            titulo.setTipoTitulo(tipo);
-
-            Categoria categoria = new Categoria();
-            categoria.setIdCategoria(resultadoConsulta.getInt("categoriaId"));
-            categoria.setNomeCategoria(resultadoConsulta.getString("nomeCategoria"));
-            titulo.setCategoria(categoria);
-
-            Subcategoria subcategoria = new Subcategoria();
-            subcategoria.setIdSubcategoria(resultadoConsulta.getInt("subcategoriaId"));
-            subcategoria.setNomeSubcategoria(resultadoConsulta.getString("nomeSubcategoria"));
-            titulo.setSubCategoria(subcategoria);
-
-            Pessoa pess = new Pessoa();
-            pess.setIdPessoa(resultadoConsulta.getInt("pessoaId"));
-            titulo.setPessoa(pess);
-            pess.setNomePessoa(resultadoConsulta.getString("nomePessoa"));
-            titulo.setPessoa(pess);
-
-            titulo.setNomeTitulo(resultadoConsulta.getString("nomeTitulo"));
-            titulo.setIdTitulo(resultadoConsulta.getInt("idTitulo"));
-            titulo.setCedente(resultadoConsulta.getString("cedente"));
-
-            retorno.add(titulo);
+            retorno.add(Load(resultadoConsulta));
         }
 
         return retorno;
@@ -198,43 +124,63 @@ public class TituloDao extends Dao<Titulo> {
         ResultSet resultadoConsulta = executarConsultaSQL(
                 SQL, "%" + filtro.trim().toLowerCase() + "%");
         while (resultadoConsulta.next()) {
-            Titulo titulo = new Titulo();
-
-//            titulo.setDataRealizacao(resultadoConsulta.getString("dataCadastro"));
-//            titulo.setDataVencimento(resultadoConsulta.getString("dataVencimento"));
-            titulo.setValorTitulo(resultadoConsulta.getDouble("valorTitulo"));
-            titulo.setNumeroParcela(resultadoConsulta.getInt("numeroParcela"));
-            titulo.setPendente(resultadoConsulta.getString("pendente"));
-
-            TipoTitulo tipo = new TipoTitulo();
-            tipo.setIdTipoTitulo(resultadoConsulta.getInt("tipoTituloId"));
-            tipo.setNomeTipoTitulo(resultadoConsulta.getString("nomeTipoTitulo"));
-            titulo.setTipoTitulo(tipo);
-
-            Categoria categoria = new Categoria();
-            categoria.setIdCategoria(resultadoConsulta.getInt("categoriaId"));
-            categoria.setNomeCategoria(resultadoConsulta.getString("nomeCategoria"));
-            titulo.setCategoria(categoria);
-
-            Subcategoria subcategoria = new Subcategoria();
-            subcategoria.setIdSubcategoria(resultadoConsulta.getInt("subcategoriaId"));
-            subcategoria.setNomeSubcategoria(resultadoConsulta.getString("nomeSubcategoria"));
-            titulo.setSubCategoria(subcategoria);
-
-            Pessoa pess = new Pessoa();
-            pess.setIdPessoa(resultadoConsulta.getInt("pessoaId"));
-            titulo.setPessoa(pess);
-            pess.setNomePessoa(resultadoConsulta.getString("nomePessoa"));
-            titulo.setPessoa(pess);
-
-            titulo.setNomeTitulo(resultadoConsulta.getString("nomeTitulo"));
-            titulo.setIdTitulo(resultadoConsulta.getInt("idTitulo"));
-            titulo.setCedente(resultadoConsulta.getString("cedente"));
-
-            retorno = titulo;
+            return Load(resultadoConsulta);
         }
 
         return retorno;
+    }
+
+    public Titulo Load(ResultSet resultadoConsulta) throws SQLException {
+
+        Titulo titulo = new Titulo();
+        if (resultadoConsulta.getString("dataCadastro") != null) {
+            try {
+                Date temp = new SimpleDateFormat("dd/MM/yyyy").parse(resultadoConsulta.getString("dataCadastro"));
+                titulo.setDataRealizacao(temp);
+            } catch (ParseException ex) {
+                Logger.getLogger(TituloDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        };
+
+        if (resultadoConsulta.getString("dataVencimento") != null) {
+            try {
+                Date temp = new SimpleDateFormat("dd/MM/yyyy").parse(resultadoConsulta.getString("dataVencimento"));
+                titulo.setDataVencimento(temp);
+            } catch (ParseException ex) {
+                Logger.getLogger(TituloDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        };
+
+        titulo.setValorTitulo(resultadoConsulta.getDouble("valorTitulo"));
+        titulo.setNumeroParcela(resultadoConsulta.getInt("numeroParcela"));
+        titulo.setPendente(resultadoConsulta.getString("pendente"));
+
+        TipoTitulo tipo = new TipoTitulo();
+        tipo.setIdTipoTitulo(resultadoConsulta.getInt("tipoTituloId"));
+        tipo.setNomeTipoTitulo(resultadoConsulta.getString("nomeTipoTitulo"));
+        titulo.setTipoTitulo(tipo);
+
+        Categoria categoria = new Categoria();
+        categoria.setIdCategoria(resultadoConsulta.getInt("categoriaId"));
+        categoria.setNomeCategoria(resultadoConsulta.getString("nomeCategoria"));
+        titulo.setCategoria(categoria);
+
+        Subcategoria subcategoria = new Subcategoria();
+        subcategoria.setIdSubcategoria(resultadoConsulta.getInt("subcategoriaId"));
+        subcategoria.setNomeSubcategoria(resultadoConsulta.getString("nomeSubcategoria"));
+        titulo.setSubCategoria(subcategoria);
+
+        Pessoa pess = new Pessoa();
+        pess.setIdPessoa(resultadoConsulta.getInt("pessoaId"));
+        titulo.setPessoa(pess);
+        pess.setNomePessoa(resultadoConsulta.getString("nomePessoa"));
+        titulo.setPessoa(pess);
+
+        titulo.setNomeTitulo(resultadoConsulta.getString("nomeTitulo"));
+        titulo.setIdTitulo(resultadoConsulta.getInt("idTitulo"));
+        titulo.setCedente(resultadoConsulta.getString("cedente"));
+
+        return titulo;
     }
 
 }

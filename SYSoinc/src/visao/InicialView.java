@@ -1,6 +1,9 @@
 package visao;
 
 import java.awt.BorderLayout;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class InicialView extends javax.swing.JFrame {
 
@@ -290,8 +293,13 @@ public class InicialView extends javax.swing.JFrame {
     private void lbAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbAddMouseClicked
         pnlInferior.removeAll();
         pnlInferior.setLayout(new BorderLayout());
-        AddTitulo view = new AddTitulo();
-        pnlInferior.add(view);
+        AddTitulo view;
+        try {
+            view = new AddTitulo();
+            pnlInferior.add(view);
+        } catch (ParseException ex) {
+            Logger.getLogger(InicialView.class.getName()).log(Level.SEVERE, null, ex);
+        }
         pack();
     }//GEN-LAST:event_lbAddMouseClicked
 

@@ -38,13 +38,11 @@ public class AddTitulo extends javax.swing.JPanel {
     List<Pessoa> listaPessoa;
     ArrayList<Titulo> resultadoPesquisa;
 
-
     public AddTitulo() throws ParseException {
         initComponents();
         atualizarPesquisa();
         formatarCampos();
-        
-        
+
         //Combobox de categoria
         cbCategorias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));
         ControleCategoria controlador = new ControleCategoria();
@@ -68,6 +66,7 @@ public class AddTitulo extends javax.swing.JPanel {
         ControleTitulo controle = new ControleTitulo();
         DefaultTableModel model = (DefaultTableModel) tblEditTitulo.getModel();
         model.setNumRows(0);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
         try {
             this.resultadoPesquisa = controle.pesquisar(tfPesquisa.getText().trim());
@@ -79,25 +78,25 @@ public class AddTitulo extends javax.swing.JPanel {
                 titulo.getNomeTitulo(),
                 titulo.getValorTitulo(),
                 titulo.getNumeroParcela(),
-                titulo.getDataVencimento(),
-                titulo.getDataRealizacao(),
+                titulo.getDataVencimento() != null ? sdf.format(titulo.getDataVencimento()) : null,
+                titulo.getDataRealizacao() != null ? sdf.format(titulo.getDataRealizacao()) : null,
                 titulo.getPendente(),
                 titulo.getPessoa().getNomePessoa(),
                 titulo.getCedente(),});
         };
     }
-    
-    private void formatarCampos(){
-        
-        try { 
+
+    private void formatarCampos() {
+
+        try {
             MaskFormatter mascara = new MaskFormatter("##/##/####");
-            mascara.install(tfVencimento); 
+            mascara.install(tfVencimento);
             MaskFormatter mascara2 = new MaskFormatter("##/##/####");
-            mascara2.install(tfRealizacao); 
-            
+            mascara2.install(tfRealizacao);
+
         } catch (ParseException ex) {
-           JOptionPane.showMessageDialog(null, "Erro ao formatar campo de texto", "ERRO", JOptionPane.ERROR_MESSAGE);
-        }   
+            JOptionPane.showMessageDialog(null, "Erro ao formatar campo de texto", "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -354,69 +353,80 @@ public class AddTitulo extends javax.swing.JPanel {
         int iPess = cbCedente.getSelectedIndex();
         int iSubcat = cbSubcategoria.getSelectedIndex();
 
-        if (iSubcat >= 1) {                                                                  //verifica se a subcategoria foi selecionada
-            titulo.setNomeTitulo(tfTitulo.getText());
-            titulo.setCedente(tfCedente.getText());                                          //falta máscara do documento
+        if (iSubcat < 0) {
+            JOptionPane.showMessageDialog(this, "Subcategoria é um campo obrigatório!", "ERRO", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        titulo.setNomeTitulo(tfTitulo.getText());
+        titulo.setCedente(tfCedente.getText());
+
+        try {
             titulo.setValorTitulo(Double.parseDouble(tfValor.getText()));
-            
-            try {
-                //titulo.setDataRealizacao(tfRealizacao.getText());
+        } catch (NumberFormatException num) {
+            JOptionPane.showMessageDialog(this, "Campo valor inválido!", "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+
+        //Formatação de data, e verifica se há campo em branco
+        try {
+            if (!tfRealizacao.getText().trim().startsWith("/")) {
                 Date temp = new SimpleDateFormat("dd/MM/yyyy").parse(tfRealizacao.getText());
                 titulo.setDataRealizacao(temp);
-            } catch (ParseException ex) {
-                Logger.getLogger(AddTitulo.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-            //titulo.setDataVencimento(tfVencimento.getText());
-            try {
+        } catch (ParseException ex) {
+            Logger.getLogger(AddTitulo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //Formatação de data, e verifica se há campo em branco
+        try {
+            if (tfVencimento.getText().length() >= 8) {
                 Date temp = new SimpleDateFormat("dd/MM/yyyy").parse(tfVencimento.getText());
                 titulo.setDataVencimento(temp);
-            } catch (ParseException ex) {
-                Logger.getLogger(AddTitulo.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            };
 
-            TipoTitulo tipo = new TipoTitulo();
-            tipo.setIdTipoTitulo(Integer.parseInt(grupoTipo.getSelection().getActionCommand()));
-            titulo.setTipoTitulo(tipo);
-
-            //combobox categoria/subcategora, salvando posição selecionada da lista e recuperando objeto:
-            Categoria categoria = new Categoria();
-            categoria.setIdCategoria(listaCategoria.get(iCat - 1).getIdCategoria());
-            titulo.setCategoria(categoria);
-            Subcategoria subcategoria = new Subcategoria();
-            subcategoria.setIdSubcategoria(listaSubcategoria.get(iSubcat - 1).getIdSubcategoria());
-            titulo.setSubCategoria(subcategoria);
-
-            //combobox pessoa, salvando posição selecionada da lista e recuperando objeto:
-            Pessoa pess = new Pessoa();
-            pess.setIdPessoa(listaPessoa.get(iPess - 1).getIdPessoa());
-            titulo.setPessoa(pess);
-
-            titulo.setCedente(tfCedente.getText());
-            titulo.setNumeroParcela(Integer.parseInt(tfParcela.getText()));
-
-            //salvando titulo
-            ControleTitulo controle = new ControleTitulo();
-
-            try {
-                controle.salvar(titulo);
-                //setando o campos em branco novamente
-                tfTitulo.setText("");
-                tfCedente.setText("");
-                tfValor.setText("");
-                tfRealizacao.setText("");
-                tfVencimento.setText("");
-                cbCategorias.setSelectedIndex(-1);
-                cbSubcategoria.setSelectedIndex(-1);
-                grupoTipo.clearSelection();
-
-            } catch (SQLException ex) {
-                Logger.getLogger(AddTitulo.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Subcategoria é um campo obrigatório!", "ERRO", JOptionPane.ERROR_MESSAGE);
+        } catch (ParseException ex) {
+            Logger.getLogger(AddTitulo.class.getName()).log(Level.SEVERE, null, ex);
         }
-        atualizarPesquisa();
+
+        TipoTitulo tipo = new TipoTitulo();
+        tipo.setIdTipoTitulo(Integer.parseInt(grupoTipo.getSelection().getActionCommand()));
+        titulo.setTipoTitulo(tipo);
+
+        //combobox categoria/subcategora, salvando posição selecionada da lista e recuperando objeto:
+        Categoria categoria = new Categoria();
+        categoria.setIdCategoria(listaCategoria.get(iCat - 1).getIdCategoria());
+        titulo.setCategoria(categoria);
+        Subcategoria subcategoria = new Subcategoria();
+        subcategoria.setIdSubcategoria(listaSubcategoria.get(iSubcat - 1).getIdSubcategoria());
+        titulo.setSubCategoria(subcategoria);
+
+        //combobox pessoa, salvando posição selecionada da lista e recuperando objeto:
+        Pessoa pess = new Pessoa();
+        pess.setIdPessoa(listaPessoa.get(iPess - 1).getIdPessoa());
+        titulo.setPessoa(pess);
+
+        titulo.setCedente(tfCedente.getText());
+        titulo.setNumeroParcela(Integer.parseInt(tfParcela.getText()));
+        titulo.setPendente("Pendente");
+
+        //salvando titulo
+        ControleTitulo controle = new ControleTitulo();
+        try {
+            controle.salvar(titulo);
+            //setando o campos em branco novamente
+            tfTitulo.setText("");
+            tfCedente.setText("");
+            tfValor.setText("");
+            tfRealizacao.setText("");
+            tfVencimento.setText("");
+            cbCategorias.setSelectedIndex(-1);
+            cbSubcategoria.setSelectedIndex(-1);
+            grupoTipo.clearSelection();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AddTitulo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    atualizarPesquisa();
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void tfCedenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCedenteActionPerformed

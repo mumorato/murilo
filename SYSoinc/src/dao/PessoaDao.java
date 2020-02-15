@@ -74,8 +74,6 @@ public class PessoaDao extends Dao<Pessoa> {
             pessoa.setCidade(cidade);
             cidade.setNomeCidade(resultadoConsulta.getString("nomeCidade"));
             
-//            pessoa.setCidadeId(resultadoConsulta.getInt("cidadeId"));
-//            pessoa.setNomeCidade(resultadoConsulta.getString("nomeCidade"));
             retorno.add(pessoa);
         }
 

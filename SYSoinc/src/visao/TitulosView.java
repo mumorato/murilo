@@ -7,6 +7,7 @@ package visao;
 
 import controle.ControleTitulo;
 import java.awt.BorderLayout;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -43,6 +44,7 @@ public class TitulosView extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Falha na Pesquisa!", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
         for (Titulo titulo : this.resultadoPesquisa) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             model.addRow(new Object[]{
                 titulo.getIdTitulo(),
                 titulo.getNomeTitulo(),
@@ -51,8 +53,8 @@ public class TitulosView extends javax.swing.JPanel {
                 titulo.getSubCategoria().getNomeSubcategoria(),
                 titulo.getTipoTitulo().getNomeTipoTitulo(),
                 titulo.getNumeroParcela(),
-                titulo.getDataVencimento(),
-                titulo.getDataRealizacao(),
+                titulo.getDataVencimento() != null ? sdf.format(titulo.getDataVencimento()) : null,
+                titulo.getDataRealizacao() != null ? sdf.format(titulo.getDataRealizacao()) : null,
                 titulo.getPendente(),
                 titulo.getPessoa().getNomePessoa(),
                 titulo.getCedente(),});
@@ -71,6 +73,7 @@ public class TitulosView extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Falha na Pesquisa!", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
         for (Titulo titulo : this.resultadoPesquisa) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             model.addRow(new Object[]{
                 titulo.getIdTitulo(),
                 titulo.getNomeTitulo(),
@@ -79,8 +82,8 @@ public class TitulosView extends javax.swing.JPanel {
                 titulo.getSubCategoria().getNomeSubcategoria(),
                 titulo.getTipoTitulo().getNomeTipoTitulo(),
                 titulo.getNumeroParcela(),
-                titulo.getDataVencimento(),
-                titulo.getDataRealizacao(),
+                titulo.getDataVencimento() != null ? sdf.format(titulo.getDataVencimento()) : null,
+                titulo.getDataRealizacao() != null ? sdf.format(titulo.getDataRealizacao()) : null,
                 titulo.getPendente(),
                 titulo.getPessoa().getNomePessoa(),
                 titulo.getCedente(),});
@@ -113,6 +116,7 @@ public class TitulosView extends javax.swing.JPanel {
         btPesquisa = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         btAtualizar = new javax.swing.JButton();
+        btApagar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -197,12 +201,20 @@ public class TitulosView extends javax.swing.JPanel {
             }
         });
 
+        btApagar.setText("Remover");
+        btApagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btApagarActionPerformed(evt);
+            }
+        });
+
         jLayeredPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(cbFiltro, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(tfPesquisa, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(btPesquisa, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(btAtualizar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(btApagar, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -224,7 +236,10 @@ public class TitulosView extends javax.swing.JPanel {
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
                 .addGap(100, 100, 100)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btAtualizar)
+                    .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                        .addComponent(btApagar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btAtualizar))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1080, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(100, Short.MAX_VALUE))
         );
@@ -241,7 +256,9 @@ public class TitulosView extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btAtualizar)
+                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btAtualizar)
+                    .addComponent(btApagar))
                 .addGap(7, 7, 7))
         );
 
@@ -278,8 +295,13 @@ public class TitulosView extends javax.swing.JPanel {
         atualizarPesquisa();
     }//GEN-LAST:event_btAtualizarActionPerformed
 
+    private void btApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btApagarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btApagarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btApagar;
     private javax.swing.JButton btAtualizar;
     private javax.swing.JButton btPesquisa;
     private javax.swing.JComboBox<String> cbFiltro;
