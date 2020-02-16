@@ -64,10 +64,10 @@ public class UpdateView extends javax.swing.JFrame {
 
     public void setId(int id) {
         txtId.setText(String.valueOf(id));
-        consultar();
+        updateCampos();
     }
 
-    private void consultar() {
+    private void updateCampos() {
 
         try {
             Titulo tituloUp = new Titulo();
@@ -142,6 +142,7 @@ public class UpdateView extends javax.swing.JFrame {
         txtId = new javax.swing.JTextField();
         btPendente = new javax.swing.JRadioButton();
         btEncerrado = new javax.swing.JRadioButton();
+        btExcluir = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -237,6 +238,13 @@ public class UpdateView extends javax.swing.JFrame {
             }
         });
 
+        btExcluir.setText("Excluir");
+        btExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btExcluirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlInfLayout = new javax.swing.GroupLayout(pnlInf);
         pnlInf.setLayout(pnlInfLayout);
         pnlInfLayout.setHorizontalGroup(
@@ -252,7 +260,9 @@ public class UpdateView extends javax.swing.JFrame {
                         .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlInfLayout.createSequentialGroup()
                         .addGroup(pnlInfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -265,8 +275,8 @@ public class UpdateView extends javax.swing.JFrame {
                         .addGroup(pnlInfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tfCedente)
                             .addGroup(pnlInfLayout.createSequentialGroup()
-                                .addComponent(tfVencimento, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
+                                .addComponent(tfVencimento)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(tfRealizacao, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
@@ -291,6 +301,7 @@ public class UpdateView extends javax.swing.JFrame {
                         .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlInfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btSalvar)
+                        .addComponent(btExcluir)
                         .addComponent(btCancelar)))
                 .addContainerGap())
         );
@@ -479,6 +490,19 @@ public class UpdateView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btEncerradoActionPerformed
 
+    private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
+        ControleTitulo controle = new ControleTitulo();
+        Titulo titulo = new Titulo();
+        titulo.setIdTitulo(Integer.parseInt(txtId.getText()));
+        try {
+            controle.excluir(titulo);
+            this.dispose();
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(UpdateView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        JOptionPane.showMessageDialog(this, "Titulo excluído!", "Concluído", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_btExcluirActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -517,6 +541,7 @@ public class UpdateView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCancelar;
     private javax.swing.JRadioButton btEncerrado;
+    private javax.swing.JButton btExcluir;
     private javax.swing.JRadioButton btPendente;
     private javax.swing.JButton btSalvar;
     private javax.swing.JComboBox<String> cbCategorias;

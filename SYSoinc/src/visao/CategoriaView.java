@@ -412,18 +412,16 @@ public class CategoriaView extends javax.swing.JPanel {
         Categoria categoria = new Categoria();
         categoria.setNomeCategoria(tfCategoria.getText());
         categoria.setTipoCategoria(buttonGroup1.getSelection().getActionCommand());
-        
-        Subcategoria subcategoria = new Subcategoria();
-        subcategoria.setNomeSubcategoria(" ");
 
+//        Subcategoria subcategoria = new Subcategoria();
+//        subcategoria.setNomeSubcategoria(" ");
         ControleCategoria controle = new ControleCategoria();
         try {
             controle.salvar(categoria);
             JOptionPane.showMessageDialog(this, "Categoria salva!", "Concluído", JOptionPane.INFORMATION_MESSAGE);
             atualizarPesquisaCategoria();
             tfCategoria.setText("");//setando o campo em branco
-            
-            
+
         } catch (Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "Erro ao salvar o novo item.", "ERRO", JOptionPane.ERROR_MESSAGE);
@@ -432,16 +430,17 @@ public class CategoriaView extends javax.swing.JPanel {
 
     private void btInserirSubcatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btInserirSubcatActionPerformed
         Subcategoria subcategoria = new Subcategoria();
-
         subcategoria.setNomeSubcategoria(tfSubcategoria.getText());
         subcategoria.setCategoriaId(cbCategorias.getSelectedIndex());
-        //subcategoria.setTipoCategoria(buttonGroup1.getSelection().getActionCommand());
         ControleSubcategoria controle = new ControleSubcategoria();
         try {
             controle.salvar(subcategoria);
             JOptionPane.showMessageDialog(this, "Subcategoria salva!", "Concluído", JOptionPane.INFORMATION_MESSAGE);
             atualizarPesquisaSubcategoria();
-            tfSubcategoria.setText("");//setando o campo em branco
+            //setando o campo em branco
+            tfSubcategoria.setText("");
+            cbCategorias.setSelectedIndex(-1);
+
         } catch (Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "Erro ao salvar o novo item.", "ERRO", JOptionPane.ERROR_MESSAGE);

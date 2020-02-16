@@ -7,6 +7,7 @@ package visao;
 
 import controle.ControleTitulo;
 import java.awt.BorderLayout;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -116,7 +117,7 @@ public class TitulosView extends javax.swing.JPanel {
         btPesquisa = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         btAtualizar = new javax.swing.JButton();
-        btApagar = new javax.swing.JButton();
+        btRemover = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -201,10 +202,10 @@ public class TitulosView extends javax.swing.JPanel {
             }
         });
 
-        btApagar.setText("Remover");
-        btApagar.addActionListener(new java.awt.event.ActionListener() {
+        btRemover.setText("Remover");
+        btRemover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btApagarActionPerformed(evt);
+                btRemoverActionPerformed(evt);
             }
         });
 
@@ -214,7 +215,7 @@ public class TitulosView extends javax.swing.JPanel {
         jLayeredPane1.setLayer(btPesquisa, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(btAtualizar, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(btApagar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(btRemover, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -237,7 +238,7 @@ public class TitulosView extends javax.swing.JPanel {
                 .addGap(100, 100, 100)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                        .addComponent(btApagar)
+                        .addComponent(btRemover)
                         .addGap(18, 18, 18)
                         .addComponent(btAtualizar))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1080, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -258,7 +259,7 @@ public class TitulosView extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btAtualizar)
-                    .addComponent(btApagar))
+                    .addComponent(btRemover))
                 .addGap(7, 7, 7))
         );
 
@@ -295,15 +296,31 @@ public class TitulosView extends javax.swing.JPanel {
         atualizarPesquisa();
     }//GEN-LAST:event_btAtualizarActionPerformed
 
-    private void btApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btApagarActionPerformed
+    private void btRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverActionPerformed
+        if (tblTitulo.getSelectedRow() < 0) {
+            return;
+        };
+
+        ControleTitulo controle = new ControleTitulo();
+        Titulo titulo = new Titulo();
+        int id = (int) tblTitulo.getValueAt(tblTitulo.getSelectedRow(), 0);
+        titulo.setIdTitulo(id);
+        try {
+            controle.excluir(titulo);
+            atualizarPesquisa();
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(UpdateView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        JOptionPane.showMessageDialog(this, "Titulo removido!", "Concluído", JOptionPane.INFORMATION_MESSAGE);
+
         // TODO add your handling code here:
-    }//GEN-LAST:event_btApagarActionPerformed
+    }//GEN-LAST:event_btRemoverActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btApagar;
     private javax.swing.JButton btAtualizar;
     private javax.swing.JButton btPesquisa;
+    private javax.swing.JButton btRemover;
     private javax.swing.JComboBox<String> cbFiltro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

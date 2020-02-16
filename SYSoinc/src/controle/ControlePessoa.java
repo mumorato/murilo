@@ -23,6 +23,7 @@ public class ControlePessoa {
 
     Dao dao = DaoFactory.getDAO(new Pessoa());
     List<Pessoa> listaPessoa;
+    Pessoa pessoa;
 
     public void salvar(Pessoa pessoa) throws SQLException {
         if (pessoa.getIdPessoa() > 0) {
@@ -38,6 +39,11 @@ public class ControlePessoa {
 
     public ArrayList<Pessoa> pesquisar(String filtro) throws SQLException {
         return dao.pesquisar(filtro);
+    }
+        public Pessoa consulta(int filtro) throws SQLException {
+        PessoaDao consulta = new PessoaDao();
+        pessoa = consulta.consulta(filtro);
+        return pessoa;
     }
 
     public List<Pessoa> getPessoa() {

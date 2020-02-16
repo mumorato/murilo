@@ -138,6 +138,11 @@ public class AddTitulo extends javax.swing.JPanel {
         jRadioButton2.setSelected(true);
         jRadioButton2.setText("Despesa");
         jRadioButton2.setActionCommand("0");
+        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton2ActionPerformed(evt);
+            }
+        });
 
         grupoTipo.add(jRadioButton1);
         jRadioButton1.setText("Receita");
@@ -418,9 +423,10 @@ public class AddTitulo extends javax.swing.JPanel {
             tfValor.setText("");
             tfRealizacao.setText("");
             tfVencimento.setText("");
+            cbCedente.setSelectedIndex(-1);
             cbCategorias.setSelectedIndex(-1);
             cbSubcategoria.setSelectedIndex(-1);
-            grupoTipo.clearSelection();
+            jRadioButton2.setSelected(true);
 
         } catch (SQLException ex) {
             Logger.getLogger(AddTitulo.class.getName()).log(Level.SEVERE, null, ex);
@@ -436,6 +442,10 @@ public class AddTitulo extends javax.swing.JPanel {
     private void tfVencimentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tfVencimentoMouseClicked
 
     }//GEN-LAST:event_tfVencimentoMouseClicked
+
+    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -59,22 +59,7 @@ public class PessoaDao extends Dao<Pessoa> {
         ResultSet resultadoConsulta = executarConsultaSQL(
                 SQL, "%" + filtro.trim().toLowerCase() + "%");
         while (resultadoConsulta.next()) {
-            Pessoa pessoa = new Pessoa();
-
-            pessoa.setIdPessoa(resultadoConsulta.getInt("idPessoa"));
-            pessoa.setNomePessoa(resultadoConsulta.getString("nomePessoa"));
-            pessoa.setTipoPessoa(resultadoConsulta.getString("tipoPessoa"));
-            pessoa.setCpfCnpj(resultadoConsulta.getString("cpfCnpj"));
-            pessoa.setTelefone(resultadoConsulta.getString("telefone"));
-            pessoa.setEndereco(resultadoConsulta.getString("endereco"));
-            pessoa.setBairro(resultadoConsulta.getString("bairro"));
-            
-            Cidade cidade = new Cidade();
-            cidade.setIdCidade(resultadoConsulta.getInt("idCidade"));
-            pessoa.setCidade(cidade);
-            cidade.setNomeCidade(resultadoConsulta.getString("nomeCidade"));
-            
-            retorno.add(pessoa);
+            retorno.add(Load(resultadoConsulta));
         }
 
         return retorno;
@@ -97,7 +82,7 @@ public class PessoaDao extends Dao<Pessoa> {
             pessoa.setTelefone(rs.getString("telefone"));
             pessoa.setEndereco(rs.getString("endereco"));
             pessoa.setBairro(rs.getString("bairro"));
-            
+
             Cidade cidade = new Cidade();
             cidade.setIdCidade(rs.getInt("cidadeId"));
             pessoa.setCidade(cidade);
@@ -108,10 +93,39 @@ public class PessoaDao extends Dao<Pessoa> {
     }
 
     @Override
-    public Pessoa consulta(int filtro) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Pessoa consulta(int id) throws SQLException {
+
+        Pessoa retorno = new Pessoa();
+        String filtro = Integer.toString(id);
+        String SQL = "select * FROM PESSOA INNER JOIN CIDADE ON PESSOA.cidadeId = CIDADE.idCidade INNER JOIN ESTADO ON CIDADE.estadoId = ESTADO.idEstado where lower(idPessoa) like ?";
+        ResultSet resultadoConsulta = executarConsultaSQL(
+                SQL, "%" + filtro.trim().toLowerCase() + "%");
+        while (resultadoConsulta.next()) {
+            return Load(resultadoConsulta);
+        }
+
+        return retorno;
     }
 
-    
+    public Pessoa Load(ResultSet resultadoConsulta) throws SQLException {
+
+        Pessoa pessoa = new Pessoa();
+
+        pessoa.setIdPessoa(resultadoConsulta.getInt("idPessoa"));
+        pessoa.setNomePessoa(resultadoConsulta.getString("nomePessoa"));
+        pessoa.setTipoPessoa(resultadoConsulta.getString("tipoPessoa"));
+        pessoa.setCpfCnpj(resultadoConsulta.getString("cpfCnpj"));
+        pessoa.setTelefone(resultadoConsulta.getString("telefone"));
+        pessoa.setEndereco(resultadoConsulta.getString("endereco"));
+        pessoa.setBairro(resultadoConsulta.getString("bairro"));
+
+        Cidade cidade = new Cidade();
+        cidade.setIdCidade(resultadoConsulta.getInt("idCidade"));
+        cidade.setEstadoId(resultadoConsulta.getInt("estadoId"));
+        cidade.setNomeCidade(resultadoConsulta.getString("nomeCidade"));
+        pessoa.setCidade(cidade);
+        
+        return pessoa;
+    }
 
 }

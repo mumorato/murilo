@@ -31,7 +31,6 @@ public class InicialView extends javax.swing.JFrame {
         pnlInferior = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1280, 710));
         setMinimumSize(new java.awt.Dimension(1280, 710));
         setResizable(false);
 
@@ -208,6 +207,7 @@ public class InicialView extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void lbInicioMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbInicioMouseEntered

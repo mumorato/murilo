@@ -49,7 +49,7 @@
                   <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="btApagar" min="-2" max="-2" attributes="0"/>
+                          <Component id="btRemover" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="btAtualizar" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -75,7 +75,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btAtualizar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btApagar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btRemover" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
               </Group>
@@ -242,12 +242,12 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btAtualizarActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btApagar">
+        <Component class="javax.swing.JButton" name="btRemover">
           <Properties>
             <Property name="text" type="java.lang.String" value="Remover"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btApagarActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btRemoverActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
